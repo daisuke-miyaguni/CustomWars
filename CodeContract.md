@@ -36,9 +36,9 @@ Scriptは､Assets/(各自)/Scripts/フォルダ内に保存｡
 ## GitHub
 ### コミットメッセージはすべて英語で書くこと｡
 - 内容(パスカルケース) + ファイル名  
-(例:Edit Player)  
-(例:Add Player)  
-(例:Delete Player)
+(例:edit Player)  
+(例:add Player)  
+(例:delete Player)
 
 ### ブランチ名は各自の姓で先頭を大文字にすること｡
 (例:Miyaguni)
