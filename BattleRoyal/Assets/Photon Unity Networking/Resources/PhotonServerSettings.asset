@@ -36,10 +36,5 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - ColorRpc
-  - DoJump
-  - Flash
-  - Marco
-  - Polo
-  - TaggedPlayer
+  - MoveScene
   DisableAutoOpenWizard: 1

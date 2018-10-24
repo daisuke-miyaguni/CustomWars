@@ -349,7 +349,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Creat
+  m_Text: 'Start
 
 '
 --- !u!222 &1011418310
@@ -366,6 +366,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1028270449}
+  - component: {fileID: 1028270451}
   - component: {fileID: 1028270448}
   - component: {fileID: 1028270450}
   m_Layer: 0
@@ -386,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8918c41846f8f468d031a686309298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: RoomTest
 --- !u!4 &1028270449
 Transform:
   m_ObjectHideFlags: 0
@@ -411,7 +412,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c36637a89919049bc97da80f5265fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joinButton: {fileID: 1410731809}
+  buttons:
+  - {fileID: 1410731809}
+  - {fileID: 1427738438}
+  maxPlayerList: 3
+  minPlayerList: 2
+  gameStartTime: 5
+  sceneTransitioner: {fileID: 1028270448}
+--- !u!114 &1028270451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1028270447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &1096449878
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +725,7 @@ GameObject:
   - component: {fileID: 1427738439}
   - component: {fileID: 1427738438}
   m_Layer: 5
-  m_Name: CreatRoomButton
+  m_Name: StertButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -751,13 +784,13 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1427738439}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1028270450}
-        m_MethodName: CreatRoom
+        m_MethodName: BattleStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
