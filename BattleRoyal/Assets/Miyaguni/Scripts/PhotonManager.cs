@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhotonManager : Photon.MonoBehaviour {
+public class PhotonManager : Photon.MonoBehaviour
+{
 	PhotonView pView;
+    PlayerSpawner playerSpawner;
 
-	void Start(){
+	void Start()
+    {
+        playerSpawner = GetComponent<PlayerSpawner>();
 		Connect();
 	}
 
-	void Connect(){
+	void Connect()
+    {
 		PhotonNetwork.ConnectUsingSettings("v1.0");
 	}
 
-	void OnJoinedLobby(){
+	void OnJoinedLobby()
+    {
 		Debug.Log("Join Lobby");
     }
 
     //ルーム一覧が取れると
-    void OnReceivedRoomListUpdate(){
+    void OnReceivedRoomListUpdate()
+    {
         //ルーム一覧を取る
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         if (rooms.Length == 0) {
@@ -26,22 +33,26 @@ public class PhotonManager : Photon.MonoBehaviour {
 			CreateRoom();
         } else {
 			JoinRoom();
-        }  
+        }
     }
 
 	//ルーム作成
-    public void CreateRoom() {
+    public void CreateRoom()
+    {
         PhotonNetwork.CreateRoom("Room");
 		Debug.Log("Creat Room");
     }
 
-    public void JoinRoom() {
+    public void JoinRoom()
+    {
         PhotonNetwork.JoinRoom("Room");
     }
 
     //ルーム入室した時に呼ばれるコールバックメソッド
-    void OnJoinedRoom() {
+    void OnJoinedRoom()
+    {
         // Roomに参加しているプレイヤー情報を配列で取得.
         PhotonPlayer[] player = PhotonNetwork.playerList;
+        playerSpawner.Spawn();
     }
 }
