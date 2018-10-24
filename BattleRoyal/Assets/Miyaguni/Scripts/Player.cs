@@ -5,95 +5,54 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class Player:Photon.MonoBehaviour {      
-    public float move = 100f;
-    public float rotate = 10f;
-    public float JumpForce = 10f;
+public class Player:Photon.MonoBehaviour
+{
+    [SerializeField]
+    float jumpForce;
 
-    bool change;
-    float fleezTime;
-    float gameTime = 60.0f;
+    string advanceController = "Horizontal";
+    string sideController = "Vertical";
+
+    [SerializeField]
+    string floorTagName;
 
     PhotonView p_photonView;
 
-    [SerializeField]
-    GameObject childFlea;
-    [SerializeField]
-    GameObject[] Text;
-
-    public static int[] playerPoint = { 0, 0 };
-
-    IEnumerator Start() {
+    void Start()
+    {
         p_photonView = GetComponent<PhotonView>();
-        if (p_photonView.isMine) {
-            //UIの設定
-            Text[0] = GameObject.Find("1P Point Text");
-            Text[1] = GameObject.Find("2P Point Text");
-            Text[2] = GameObject.FindWithTag("TimeText");
-            //カメラをプレイヤーの子どもにする
-            Camera.main.transform.parent = gameObject.transform; 
-            //0.3秒後に処理
-            yield return new WaitForSeconds(0.3f);
-            //初期ノミの設定
-            if (PhotonNetwork.isMasterClient) {
-            }                                                                                                                                
-            Debug.Log(PhotonNetwork.player.ID + " ");
-        }
     }
 
-    void Update() {
+    void Update()
+    {
         // 持ち主でないのなら制御させない
-        if (p_photonView.isMine) {  
-            Camera.main.transform.position = gameObject.transform.Find("CameraPos").transform.position;
-            Camera.main.transform.rotation = gameObject.transform.Find("CameraPos").transform.rotation;
-
-            //Playerにノミがある時ない時の操作
-            float x = Input.GetAxis("Vertical");
-            float z = Input.GetAxis("Horizontal");
-            transform.Rotate(0, z * rotate, 0);
-            if (childFlea.activeSelf) {
-                transform.Translate(0, 0, x * move * 1.2f);
-            } else {
-                transform.Translate(0, 0, x * move);
-            }
+        if (p_photonView.isMine)
+        {  
+            Move();
         }
     }
 
-    private void FixedUpdate() {
-        fleezTime -= Time.deltaTime;
-
-        gameTime = Mathf.Clamp(gameTime, 0.0f, gameTime);
-
-        if (p_photonView.isMine) {
-            Text[0].GetComponent<Text>().text = playerPoint[0].ToString();
-            Text[1].GetComponent<Text>().text = playerPoint[1].ToString();
-            Text[2].GetComponent<Text>().text = gameTime.ToString("F1");
-        }
-
-        if (gameTime <= 0) {
-            Pointer();
-        }
-    }   
-
-    void Pointer() {
-        SceneManager.LoadScene(2);
+    void Move()
+    {
+        float advance = Input.GetAxis(advanceController);
+        float side = Input.GetAxis(sideController);
+        transform.Translate(advance / 10.0f, 0, side / 10.0f);
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Player" && fleezTime <= 0) {
-        }
-
-        if (other.gameObject.tag == "Item" && p_photonView.isMine) {
-        }
-    }
-
-    void OnTriggerStay(Collider other) {
+    void OnTriggerStay(Collider other)
+    {
         if (!p_photonView.isMine)
             return;
         //Playerのジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && other.gameObject.tag == "Floor") {
-            Rigidbody rigidbody = GetComponent<Rigidbody>();
-            rigidbody.AddForce(0, 1 * JumpForce, 0);
+        if (Input.GetKeyDown(KeyCode.Space) && other.gameObject.tag == floorTagName)
+        {
+            Jump();
         }
+    }
+
+    void Jump()
+    {
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.AddForce(transform.up * jumpForce);
     }
 }
