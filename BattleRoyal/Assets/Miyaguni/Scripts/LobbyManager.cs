@@ -83,6 +83,11 @@ public class LobbyManager : Photon.MonoBehaviour
         }
 	}
 
+	public void BattleStartOnClick()
+	{
+        StartCoroutine(BattleStart());
+    }
+
     // バトルを開始する
     IEnumerator BattleStart()
 	{

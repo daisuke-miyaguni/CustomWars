@@ -5,31 +5,29 @@ using UnityEngine.UI;
 
 public class PlayerSpawner : Photon.MonoBehaviour
 {
-    [SerializeField]
-    Vector3[] startPos;
-    
-    string playerNumberText = "Number: ";
+    [SerializeField] float minStartPos_X;
+    [SerializeField] float minStartPos_Z;
+    [SerializeField] float maxStartPos_X;
+    [SerializeField] float maxStartPos_Z;
 
-    [SerializeField]
-    Text playerNumber;
+    [SerializeField] float spawnWaitTime;
 
-    [SerializeField]
-    Text playerMaster;
+    [SerializeField] string spawnPlayerName;
+    // PhotonView pView;
 
     void Start()
     {
-        MasterClientChecker();
+        // pView = GetComponent<PhotonView>();
+        Spawn();
+        StartCoroutine(Spawn());
     }
 
-    void MasterClientChecker()
+    public IEnumerator Spawn()
     {
-        playerMaster.text = PhotonNetwork.isMasterClient.ToString();
-    }
+        yield return new WaitForSeconds(spawnWaitTime);
+        float spawnX = Random.Range(minStartPos_X, maxStartPos_X);
+        float spawnZ = Random.Range(minStartPos_Z, maxStartPos_Z);
 
-    public void Spawn()
-    {
-        int myNum = PhotonNetwork.player.ID;
-        GameObject player = PhotonNetwork.Instantiate("Cube", startPos[myNum-1], Quaternion.Euler(Vector3.zero), 0);
-        playerNumber.text = playerNumberText + myNum.ToString();
+        GameObject player = PhotonNetwork.Instantiate(spawnPlayerName, new Vector3(spawnX, 1.0f, spawnZ), Quaternion.Euler(Vector3.zero), 0);
     }
 }
