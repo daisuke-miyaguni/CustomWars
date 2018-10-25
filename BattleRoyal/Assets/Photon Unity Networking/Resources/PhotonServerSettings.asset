@@ -37,4 +37,5 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - MoveScene
+  - ShowElapsedTime
   DisableAutoOpenWizard: 1
