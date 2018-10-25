@@ -42,4 +42,8 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - TaggedPlayer
+  - CountTime
+  - FireBullet
+  - DecreaseLife
+  - Die
   DisableAutoOpenWizard: 1
