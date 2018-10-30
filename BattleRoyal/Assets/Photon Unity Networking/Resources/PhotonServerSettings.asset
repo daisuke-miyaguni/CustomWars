@@ -46,4 +46,8 @@ MonoBehaviour:
   - FireBullet
   - DecreaseLife
   - Die
+  - HPManagement
+  - ChangeHP
+  - Death
+  - Attack
   DisableAutoOpenWizard: 1
