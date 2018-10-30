@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Desk
-  - Area
+  - weapon
   layers:
   - Default
   - TransparentFX
