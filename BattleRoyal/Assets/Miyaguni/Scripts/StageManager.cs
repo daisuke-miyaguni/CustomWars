@@ -9,10 +9,9 @@ public class StageManager : MonoBehaviour
     [SerializeField] float collisionOnTime;
     [SerializeField] float[] reductionScales;
 	[SerializeField] string destroyObjectTag;
+	string player = "Player";
     // reduction
 	int reductionCount;
-
-
 
 	void Start()
 	{
@@ -40,6 +39,7 @@ public class StageManager : MonoBehaviour
 			ReceveReductionEvent();
 		}
 	}
+
 	void Reduction()
 	{
 		sphereCollider.radius -= reducingSpeed * Time.deltaTime;
@@ -54,7 +54,13 @@ public class StageManager : MonoBehaviour
 	{
 		if(other.gameObject.tag == destroyObjectTag)
 		{
-			other.gameObject.SetActive(false);
+			other.gameObject.GetComponent<SafeAreaOut>().SafeAreaExit();
+		}
+
+		if(other.gameObject.tag == player)
+		{
+			Debug.Log("エリアに間に合わなかった");
+			// other.gameObject.GetComponent<PlayerController>().コールデス();
 		}
 	}
 }
