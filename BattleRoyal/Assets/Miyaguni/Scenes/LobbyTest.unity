@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8918c41846f8f468d031a686309298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: RoomTest
+  sceneName: BattleTest
 --- !u!4 &1028270449
 Transform:
   m_ObjectHideFlags: 0
@@ -417,7 +417,7 @@ MonoBehaviour:
   - {fileID: 1427738438}
   maxPlayerList: 3
   minPlayerList: 2
-  gameStartTime: 5
+  gameStartTime: 3
   sceneTransitioner: {fileID: 1028270448}
 --- !u!114 &1028270451
 MonoBehaviour:
@@ -790,7 +790,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1028270450}
-        m_MethodName: BattleStart
+        m_MethodName: BattleStartOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

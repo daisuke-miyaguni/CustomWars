@@ -6,5 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Kawasaki/Scenes/test_kawasaki.unity
-    guid: 7d1e429d2c9039c4c820d08518923300
+    path: Assets/Miyaguni/Scenes/LobbyTest.unity
+    guid: 631193a1313fe5944ae043bcc1dcb697
+  - enabled: 1
+    path: Assets/Miyaguni/Scenes/RoomTest.unity
+    guid: 60f45aa0500578c4185b2bc72474fb72
