@@ -31,6 +31,14 @@ MonoBehaviour:
   - Death
   - ChangeHP
   - Attack
-  - MoveScene
+  - Chat
+  - DestroyRpc
+  - InstantiateRpc
+  - PickupItemInit
+  - PunPickup
+  - PunPickupSimple
+  - PunRespawn
+  - RequestForPickupItems
+  - RequestForPickupTimes
   - ShowElapsedTime
   DisableAutoOpenWizard: 1

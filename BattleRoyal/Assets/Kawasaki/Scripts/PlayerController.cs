@@ -23,10 +23,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject weaponPrefab;
     private float weaponPower = 200;
 
+    private MobileInputController controller;
+
     void Start()
     {
         myPV = GetComponent<PhotonView>();
         myRB = GetComponent<Rigidbody>();
+        controller = GameObject.Find("LeftJoyStick").GetComponent<MobileInputController>();
 
         if (myPV.isMine)
         {
@@ -82,8 +85,11 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 GetMoveDirection()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
+        // float x = Input.GetAxisRaw("Horizontal");
+        // float z = Input.GetAxisRaw("Vertical");
+        float x = controller.Horizontal;
+        float z = controller.Vertical;
+
 
         return new Vector3(x, 0, z);
     }
