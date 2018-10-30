@@ -50,4 +50,6 @@ MonoBehaviour:
   - ChangeHP
   - Death
   - Attack
+  - MoveScene
+  - ShowElapsedTime
   DisableAutoOpenWizard: 1

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     int damage = -1;
     int healing = 2;
     [SerializeField] private GameObject weaponPrefab;
-    private float weaponPower = 100;
+    private float weaponPower = 200;
 
     void Start()
     {
@@ -69,14 +69,23 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                myPV.RPC("Attack", PhotonTargets.All, transform.position, weaponPower);
+                Vector3 posUp = transform.position+new Vector3(0,2,0);
+                myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
             }
         }
     }
-
+    // 移動処理
     private void Move()
     {
         myRB.velocity = GetMoveDirection() * moveSpeed;
+    }
+
+    private Vector3 GetMoveDirection()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+
+        return new Vector3(x, 0, z);
     }
 
     private void RotateCamera()
@@ -95,13 +104,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private Vector3 GetMoveDirection()
-    {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
 
-        return new Vector3(x, 0, z);
-    }
 
     [PunRPC]
     private void ChangeHP(int value)
