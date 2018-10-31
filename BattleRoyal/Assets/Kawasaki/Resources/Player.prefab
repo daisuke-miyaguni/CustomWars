@@ -521,6 +521,7 @@ MonoBehaviour:
   rotateSpeed: 3
   weaponPrefab: {fileID: 1372130122460068, guid: f19b33c77dc61a8419703211cb5086af,
     type: 2}
+  jumpForce: 5
 --- !u!136 &136591946811144364
 CapsuleCollider:
   m_ObjectHideFlags: 1
