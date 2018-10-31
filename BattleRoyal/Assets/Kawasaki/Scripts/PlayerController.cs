@@ -52,8 +52,9 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            CheckInput();
             Move();
+            CheckInput();
+
         }
 
     }
@@ -99,7 +100,7 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
-        if (GetMoveDirection().x > 0 || GetMoveDirection().z > 0)
+        if (GetMoveDirection().x != 0 || GetMoveDirection().z != 0)
         {
             myRB.velocity = new Vector3(GetMoveDirection().x * moveSpeed,
             myRB.velocity.y,
