@@ -38,4 +38,6 @@ MonoBehaviour:
   - RequestForPickupTimes
   - MoveScene
   - ShowElapsedTime
+  - GameOver
+  - ShowPlayerCount
   DisableAutoOpenWizard: 1
