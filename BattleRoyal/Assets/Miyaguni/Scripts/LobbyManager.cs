@@ -9,8 +9,8 @@ public class LobbyManager : Photon.MonoBehaviour
 
 	[SerializeField] Button joinButton;    // 参加ボタン
     [SerializeField] Button startButton;    // 参加ボタン
-	[SerializeField] Text playerCountText;
-	[SerializeField] Text playerStateText;
+	[SerializeField] Text playerCountText;    // プレイヤー数の表示テキスト
+	[SerializeField] Text playerStateText;	  // プレイヤーの状態表示テキスト
 
     [SerializeField] int maxPlayerList;	   // 最大人数
 	[SerializeField] int minPlayerList;	   // 最小人数
@@ -19,10 +19,10 @@ public class LobbyManager : Photon.MonoBehaviour
 
 	[SerializeField] SceneTransitioner sceneTransitioner;	// シーン移動者
 
-    string roomName = "Room";	// ルーム名
-	string playerCount = "PlayerCount: ";
-	string playerStateHost = "Host";
-	string playerStateGuest = "Guest";
+    string roomName = "Room";    // ルーム名
+	string playerCount = "PlayerCount: ";    // PlayerCountの文字列
+	string playerStateHost = "Host";    // PlayerがHostのときの文字列
+	string playerStateGuest = "Guest";		// PlayerがGuestのときの文字列
 
 	void Start()
 	{
@@ -46,7 +46,9 @@ public class LobbyManager : Photon.MonoBehaviour
 			// 部屋を作る
 			PhotonNetwork.CreateRoom(roomName, new RoomOptions()
 			{
+				// Roomのリストを取得可能にする
 				isVisible = true,
+				// 最大人数を決める
 				maxPlayers = 4,
 			},null);
         }
@@ -66,8 +68,9 @@ public class LobbyManager : Photon.MonoBehaviour
 	// ルームに参加した
 	void OnJoinedRoom()
 	{
+		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
-		// ホストならスタートボタンを可視化する
+		// ホストかゲストかを判定して可視化
 		if(PhotonNetwork.isMasterClient)
 		{
 			playerStateText.text = playerStateHost;
@@ -85,9 +88,13 @@ public class LobbyManager : Photon.MonoBehaviour
 		}
 	}
 
+	// 他のPlayerが入室してきた
 	void OnPhotonPlayerConnected()
 	{
+		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
+
+		// Host以外この先の処理を行わない
         if(!PhotonNetwork.isMasterClient)
 		{
 			return;
@@ -97,19 +104,23 @@ public class LobbyManager : Photon.MonoBehaviour
 		if(PhotonNetwork.playerList.Length == maxPlayerList)
 		{
 			StartCoroutine(BattleStart());
-		}
+		}// 最小人数に達したらスタートできるようにする
 		else if(PhotonNetwork.playerList.Length >= minPlayerList)
 		{
 			startButton.interactable = true;
         }
 	}
 
+	// 他のPlayerが退室した、切断した
 	void OnPhotonPlayerDisconnected()
 	{
+		// 人数更新
 		playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
+		// ホストかゲストか識別更新して可視化
         if (PhotonNetwork.isMasterClient)
         {
             playerStateText.text = playerStateHost;
+			// 人数によってButtonを押せるか押せないか
             if (PhotonNetwork.playerList.Length >= minPlayerList)
             {
                 startButton.interactable = true;
@@ -127,6 +138,7 @@ public class LobbyManager : Photon.MonoBehaviour
         }      
 	}
 
+	// Battleをスタートした
 	public void BattleStartOnClick()
 	{
         StartCoroutine(BattleStart());
@@ -135,8 +147,11 @@ public class LobbyManager : Photon.MonoBehaviour
     // バトルを開始する
     IEnumerator BattleStart()
 	{
+		// スタートボタンを押せないようにする
 		startButton.interactable = false;
+		// ゲームスタートまでのウェイトタイム待ってその後処理する
 		yield return new WaitForSeconds(gameStartTime);
+		// この処理内で人数が最少以上であればゲームスタートシーンを呼び出す
         if (PhotonNetwork.playerList.Length >= minPlayerList && PhotonNetwork.isMasterClient)
         {
             // SceneTrasitionerを参照してシーン遷移
