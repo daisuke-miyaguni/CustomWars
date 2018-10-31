@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            print(myRB.velocity);
+            // print(myRB.velocity);
 
             if (playerHP <= 0)
             {
@@ -86,15 +86,16 @@ public class PlayerController : MonoBehaviour
         {
             myPV.RPC("ChangeHP", PhotonTargets.All, healing);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector3 posUp = transform.position + new Vector3(0, 2, 0);
-            myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            Jump();
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     Vector3 posUp = transform.position + new Vector3(0, 2, 0);
+        //     myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
+        // }
+
+        // if (Input.GetKeyDown(KeyCode.J))
+        // {
+        //     Jump();
+        // }
 
     }
     // 移動処理
@@ -121,8 +122,29 @@ public class PlayerController : MonoBehaviour
     // ジャンプ
     public void Jump()
     {
-        myRB.velocity = new Vector3(GetMoveDirection().x, jumpForce, GetMoveDirection().z);
-        // myRB.AddForce(transform.up * jumpForce, ForceMode.Acceleration);
+        if (myPV.isMine)
+        {
+            myRB.velocity = new Vector3(GetMoveDirection().x, jumpForce, GetMoveDirection().z);
+            // myRB.AddForce(transform.up * jumpForce, ForceMode.Acceleration);
+        }
+    }
+
+    // 攻撃入力
+    public void InputAttack()
+    {
+        if (myPV.isMine)
+        {
+            Vector3 posUp = transform.position + new Vector3(0, 2, 0);
+            myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
+        }
+    }
+
+    // 攻撃
+    [PunRPC]
+    private void Attack(Vector3 pos, float power)
+    {
+        GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
+        weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
     }
 
     private void RotateCamera()
@@ -177,13 +199,7 @@ public class PlayerController : MonoBehaviour
     {
     }
 
-    // 攻撃
-    [PunRPC]
-    private void Attack(Vector3 pos, float power)
-    {
-        GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
-        weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
-    }
+
 
 
 
@@ -198,4 +214,5 @@ public class PlayerController : MonoBehaviour
     {
 
     }
+
 }
