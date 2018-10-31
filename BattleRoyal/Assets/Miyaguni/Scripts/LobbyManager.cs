@@ -70,17 +70,11 @@ public class LobbyManager : Photon.MonoBehaviour
 	{
 		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
-		// ホストかゲストかを判定して可視化
-		if(PhotonNetwork.isMasterClient)
-		{
-			playerStateText.text = playerStateHost;
-        }
-		else
-		{
-        	// 入室ボタンを押せないようにする
-        	joinButton.interactable = false;
-			playerStateText.text = playerStateGuest;
-		}
+		// Player状態更新
+		PlayerStateCheck();
+		// 入室ボタンを押せないようにする
+		joinButton.interactable = false;
+
         // 制限した数より上回ってたら切断する
         if(PhotonNetwork.playerList.Length > maxPlayerList)
 		{
@@ -93,8 +87,10 @@ public class LobbyManager : Photon.MonoBehaviour
 	{
 		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
+		// Buttonの操作
+        ButtonsControll();
 
-		// Host以外この先の処理を行わない
+        // Host以外この先の処理を行わない
         if(!PhotonNetwork.isMasterClient)
 		{
 			return;
@@ -104,11 +100,7 @@ public class LobbyManager : Photon.MonoBehaviour
 		if(PhotonNetwork.playerList.Length == maxPlayerList)
 		{
 			StartCoroutine(BattleStart());
-		}// 最小人数に達したらスタートできるようにする
-		else if(PhotonNetwork.playerList.Length >= minPlayerList)
-		{
-			startButton.interactable = true;
-        }
+		}
 	}
 
 	// 他のPlayerが退室した、切断した
@@ -116,26 +108,45 @@ public class LobbyManager : Photon.MonoBehaviour
 	{
 		// 人数更新
 		playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
-		// ホストかゲストか識別更新して可視化
+		// Player状態の更新
+		PlayerStateCheck();
+		// Buttonの操作
+		ButtonsControll();
         if (PhotonNetwork.isMasterClient)
         {
             playerStateText.text = playerStateHost;
 			// 人数によってButtonを押せるか押せないか
-            if (PhotonNetwork.playerList.Length >= minPlayerList)
-            {
-                startButton.interactable = true;
-            }
+			ButtonsControll();
+        }
+	}
+
+	void ButtonsControll()
+	{
+		// ホストのみ処理
+		if(PhotonNetwork.isMasterClient){
+			// 最少人数以上ならスタートを押せるようにする、そうでないなら押せないように
+			if(PhotonNetwork.playerList.Length >= minPlayerList)
+			{
+				startButton.interactable = true;
+			}
 			else
 			{
 				startButton.interactable = false;
 			}
-        }
-        else
-        {
-            // 入室ボタンを押せないようにする
-            joinButton.interactable = false;
-            playerStateText.text = playerStateGuest;
-        }      
+		}
+	}
+
+    // ホストかゲストか識別更新して可視化
+    void PlayerStateCheck()
+	{
+		if(PhotonNetwork.isMasterClient)
+		{
+			playerStateText.text = playerStateHost;
+		}
+		else
+		{
+			playerStateText.text = playerStateGuest;
+		}
 	}
 
 	// Battleをスタートした

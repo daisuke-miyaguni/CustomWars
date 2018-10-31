@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114341804633077042}
   - component: {fileID: 114297548788144546}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: MiyaguniCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

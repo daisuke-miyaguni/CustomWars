@@ -323,7 +323,7 @@ MonoBehaviour:
   maxStartPos_X: 4
   maxStartPos_Z: 4
   spawnWaitTime: 0.3
-  spawnPlayerName: Cube
+  spawnPlayerName: MiyaguniCube
 --- !u!114 &1257599066
 MonoBehaviour:
   m_ObjectHideFlags: 0

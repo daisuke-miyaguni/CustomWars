@@ -566,7 +566,7 @@ MonoBehaviour:
   startButton: {fileID: 1427738438}
   playerCountText: {fileID: 628814668}
   playerStateText: {fileID: 794238097}
-  maxPlayerList: 5
+  maxPlayerList: 4
   minPlayerList: 2
   gameStartTime: 3
   sceneTransitioner: {fileID: 1028270448}
