@@ -10,10 +10,11 @@ public class GameManager : MonoBehaviour
     //ログインボタンを押したときに実行される
     public void Connect()   
     {
-        if (!PhotonNetwork.connected) {                         //Photonに接続できていなければ
+        if (!PhotonNetwork.connected) {                 //Photonに接続できていなければ
             PhotonNetwork.ConnectUsingSettings(null);   //Photonに接続する
             Debug.Log("Photonに接続しました。");
         }
+        
     }
  
     //Auto-JoinLobbyにチェックを入れているとPhotonに接続後OnJoinLobby()が呼ばれる。

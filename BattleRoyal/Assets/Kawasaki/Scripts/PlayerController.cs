@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private MobileInputController controller;
 
+    [SerializeField] private float jumpForce;
+
     void Start()
     {
         myPV = GetComponent<PhotonView>();
@@ -46,41 +48,64 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    void FixedUpdate()
+    {
+        if (myPV.isMine)
+        {
+            Move();
+            CheckInput();
+
+        }
+
+    }
 
     void Update()
     {
         if (myPV.isMine)
         {
-            Move();
-
-            // ChangeHP();
-            // RotateCamera();
+            print(myRB.velocity);
 
             if (playerHP <= 0)
             {
                 myPV.RPC("Death", PhotonTargets.All);
             }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                myPV.RPC("ChangeHP", PhotonTargets.All, damage);
-            }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                myPV.RPC("ChangeHP", PhotonTargets.All, healing);
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Vector3 posUp = transform.position+new Vector3(0,2,0);
-                myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
-            }
         }
+    }
+
+    // 入力確認
+    private void CheckInput()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            myPV.RPC("ChangeHP", PhotonTargets.All, damage);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            myPV.RPC("ChangeHP", PhotonTargets.All, healing);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Vector3 posUp = transform.position + new Vector3(0, 2, 0);
+            myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Jump();
+        }
+
     }
     // 移動処理
     private void Move()
     {
-        myRB.velocity = GetMoveDirection() * moveSpeed;
+        if (GetMoveDirection().x != 0 || GetMoveDirection().z != 0)
+        {
+            myRB.velocity = new Vector3(GetMoveDirection().x * moveSpeed,
+            myRB.velocity.y,
+            GetMoveDirection().z * jumpForce);
+        }
     }
 
     private Vector3 GetMoveDirection()
@@ -90,8 +115,14 @@ public class PlayerController : MonoBehaviour
         float x = controller.Horizontal;
         float z = controller.Vertical;
 
-
         return new Vector3(x, 0, z);
+    }
+
+    // ジャンプ
+    public void Jump()
+    {
+        myRB.velocity = new Vector3(GetMoveDirection().x, jumpForce, GetMoveDirection().z);
+        // myRB.AddForce(transform.up * jumpForce, ForceMode.Acceleration);
     }
 
     private void RotateCamera()
@@ -154,8 +185,17 @@ public class PlayerController : MonoBehaviour
         weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
     }
 
+
+
+
     // 回復
     public void Recover()
     {
+    }
+
+    // カバンを開く
+    public void OpenBag()
+    {
+
     }
 }
