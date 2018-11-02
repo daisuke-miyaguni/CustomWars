@@ -11,39 +11,53 @@ public class PlayerController : MonoBehaviour
     private PhotonView myPV;
     private Rigidbody myRB;
     private Camera myCamera;
+    private Button attackButton;
+    private Button jumpButton;
+    private Button itemButton;
     [SerializeField] private Slider hpSlider;
 
-    // [SerializeField] private GameObject playerUIPrefab;
+    // playerステータス
     [SerializeField] private float moveSpeed;
     [SerializeField] private float playerHP;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private float jumpForce;
+
+    [SerializeField] private GameObject weaponPrefab;
+    [SerializeField] private MobileInputController controller;
 
     int damage = -1;
     int healing = 2;
-    [SerializeField] private GameObject weaponPrefab;
     private float weaponPower = 200;
 
-    private MobileInputController controller;
 
-    [SerializeField] private float jumpForce;
+    void Awake()
+    {
+        // photonview取得
+        myPV = GetComponent<PhotonView>();
+
+    }
 
     void Start()
     {
-        myPV = GetComponent<PhotonView>();
-        myRB = GetComponent<Rigidbody>();
-        controller = GameObject.Find("LeftJoyStick").GetComponent<MobileInputController>();
 
         if (myPV.isMine)
         {
-            // カメラ
+            // rigidbody取得
+            myRB = GetComponent<Rigidbody>();
+            // 左スティック取得
+            controller = GameObject.Find("LeftJoyStick").GetComponent<MobileInputController>();
+            // 攻撃ボタン取得、設定
+            attackButton = GameObject.Find("AttackButton").GetComponent<Button>();
+            attackButton.onClick.AddListener(this.OnClickAttack);
+            // ジャンプボタン取得、設定
+            jumpButton = GameObject.Find("JumpButton").GetComponent<Button>();
+            jumpButton.onClick.AddListener(this.Jump);
+
+            // カメラ取得、位置調整
             myCamera = Camera.main;
             myCamera.transform.parent = transform;
             myCamera.transform.position = transform.position + new Vector3(0, 0.8f, -5);
-
-            //HPバー
-            // GameObject myUI = Instantiate(playerUIPrefab, transform.position, Quaternion.identity);
-            // myUI.GetComponent<Transform>().SetParent(GameObject.Find("Canvas").GetComponent<Transform>());
-            // hpSlider = myUI.GetComponentInChildren<Slider>();
+            //hp初期値設定
             hpSlider.value = playerHP;
         }
 
@@ -53,51 +67,21 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             Move();
-            CheckInput();
-
         }
-
     }
 
     void Update()
     {
         if (myPV.isMine)
         {
-            // print(myRB.velocity);
-
             if (playerHP <= 0)
             {
                 myPV.RPC("Death", PhotonTargets.All);
             }
-
-
         }
     }
 
-    // 入力確認
-    private void CheckInput()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            myPV.RPC("ChangeHP", PhotonTargets.All, damage);
-        }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            myPV.RPC("ChangeHP", PhotonTargets.All, healing);
-        }
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     Vector3 posUp = transform.position + new Vector3(0, 2, 0);
-        //     myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.J))
-        // {
-        //     Jump();
-        // }
-
-    }
     // 移動処理
     private void Move()
     {
@@ -111,8 +95,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 GetMoveDirection()
     {
-        // float x = Input.GetAxisRaw("Horizontal");
-        // float z = Input.GetAxisRaw("Vertical");
         float x = controller.Horizontal;
         float z = controller.Vertical;
 
@@ -130,7 +112,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 攻撃入力
-    public void InputAttack()
+    public void OnClickAttack()
     {
         if (myPV.isMine)
         {
@@ -149,8 +131,6 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera()
     {
-        // if (Input.GetMouseButton(0))
-        // {
         Vector3 angle = new Vector3(
             Input.GetAxis("Mouse X") * rotateSpeed,
             Input.GetAxis("Mouse Y") * rotateSpeed,
@@ -159,12 +139,9 @@ public class PlayerController : MonoBehaviour
 
         myCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
         myCamera.transform.RotateAround(transform.position, myCamera.transform.right, angle.y * -1);
-        // }
     }
 
-
-
-
+    // hp変更
     [PunRPC]
     private void ChangeHP(int value)
     {
@@ -198,11 +175,6 @@ public class PlayerController : MonoBehaviour
     public void Avoid()
     {
     }
-
-
-
-
-
 
     // 回復
     public void Recover()

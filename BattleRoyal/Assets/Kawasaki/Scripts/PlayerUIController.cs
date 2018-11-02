@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerUIController : MonoBehaviour {
+public class PlayerUIController : MonoBehaviour
+{
+    private PlayerController playerController;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+        playerController = transform.parent.GetComponent<PlayerController>();
+    }
+
+	public void InputAttack(){
+        // playerController.InputAttack();
+
+    }
 }
