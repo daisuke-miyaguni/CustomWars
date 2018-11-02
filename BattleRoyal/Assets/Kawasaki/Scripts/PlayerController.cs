@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private Button attackButton;
     private Button jumpButton;
     private Button itemButton;
+    private Button inventoryButton;
+    private Button avoidButton;
+    private GameObject inventory;
     [SerializeField] private Slider hpSlider;
 
     // playerステータス
@@ -52,6 +55,12 @@ public class PlayerController : MonoBehaviour
             // ジャンプボタン取得、設定
             jumpButton = GameObject.Find("JumpButton").GetComponent<Button>();
             jumpButton.onClick.AddListener(this.Jump);
+            // インベントリボタン取得、設定
+            inventoryButton = GameObject.Find("InventoryButton").GetComponent<Button>();
+            inventoryButton.onClick.AddListener(this.OpenInventory);
+            // 回避ボタン取得、設定
+            avoidButton = GameObject.Find("AvoidButton").GetComponent<Button>();
+            inventoryButton.onClick.AddListener(this.Avoid);
 
             // カメラ取得、位置調整
             myCamera = Camera.main;
@@ -59,6 +68,9 @@ public class PlayerController : MonoBehaviour
             myCamera.transform.position = transform.position + new Vector3(0, 0.8f, -5);
             //hp初期値設定
             hpSlider.value = playerHP;
+
+            inventory = GameObject.Find("Inventory");
+            inventory.SetActive(false);
         }
 
     }
@@ -66,6 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
+            // RotateCamera();
             Move();
         }
     }
@@ -182,8 +195,16 @@ public class PlayerController : MonoBehaviour
     }
 
     // カバンを開く
-    public void OpenBag()
+    public void OpenInventory()
     {
+        if (!inventory.activeSelf)
+        {
+            inventory.SetActive(true);
+        }
+        else
+        {
+            inventory.SetActive(false);
+        }
 
     }
 
