@@ -40,4 +40,5 @@ MonoBehaviour:
   - ShowElapsedTime
   - GameOver
   - ShowPlayerCount
+  - PlayerDecrease
   DisableAutoOpenWizard: 1
