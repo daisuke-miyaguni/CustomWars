@@ -7,7 +7,7 @@ public class ItemSpawner : Photon.MonoBehaviour
 	// [SerializeField] Vector3 itempSpawnPos;    // アイテムのスポーンポジション
 	[SerializeField] Vector3[] itempBoxSpawnPos;    // アイテムボックスのスポーンポジション
 	//int[] itemBoxCount = {0, 1, 2, 3};
-	List<int> itemBoxCount = new List<int>{0, 1, 2, 3};
+	List<int> itemBoxCount = new List<int>{0, 1, 2, 3}; // アイテムボックス番号
 
 	[SerializeField] float itemSpawnWaitTime;	 // アイテムスポーンまでのウェイトタイム
 	// [SerializeField] float minRandomPos_X;	// Xポジションランダム化の最小値
@@ -20,7 +20,10 @@ public class ItemSpawner : Photon.MonoBehaviour
 
     void Start ()
 	{
-		StartCoroutine(ItemSpawn());
+		if(PhotonNetwork.isMasterClient)
+		{
+			StartCoroutine(ItemSpawn());
+		}
 	}
 
 	IEnumerator ItemSpawn()
@@ -39,5 +42,7 @@ public class ItemSpawner : Photon.MonoBehaviour
 			Quaternion.Euler(Vector3.zero),
 			0);
         }
+
+		Destroy(gameObject);
 	}
 }
