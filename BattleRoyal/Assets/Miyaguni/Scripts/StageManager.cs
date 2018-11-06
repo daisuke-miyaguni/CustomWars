@@ -5,12 +5,19 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
 	SphereCollider sphereCollider;    // 安地範囲
+
 	[SerializeField] float reducingSpeed;    // 縮小スピード
     [SerializeField] float collisionOnTime;    // 判定スタートまでの時間
+
     [SerializeField] float[] reductionScales;    // 安地の大きさ
+
 	[SerializeField] string deskTag;    // 机のタグ名
+
 	string player = "Player";    // playerのタグ名
+
 	int reductionCount;    // 範囲番号
+
+	PhotonView photonView;
 
 	void Start()
 	{
@@ -20,10 +27,19 @@ public class StageManager : MonoBehaviour
 		sphereCollider = GetComponent<SphereCollider>();
 		sphereCollider.enabled = false;
 
-		// 安地の位置をランダムで決める
-		gameObject.transform.position = new Vector3(Random.Range(-60f, 60f), 0.0f, Random.Range(-60f, 60f));
-		
+		photonView = GetComponent<PhotonView>();
+		if(PhotonNetwork.isMasterClient)
+		{
+            photonView.RPC("InitPosition", PhotonTargets.AllViaServer);
+        }
 		Invoke("TriggerOn", collisionOnTime);
+	}
+
+	void InitPosition()
+	{
+        // 安地の位置をランダムで決める
+        gameObject.transform.position = new Vector3(Random.Range(-60f, 60f), 0.0f, Random.Range(-60f, 60f));
+		Destroy(photonView.GetComponent<PhotonView>());
 	}
 
 	// 判定の初期化(指定秒後に安地判定)
