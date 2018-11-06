@@ -31,6 +31,8 @@ MonoBehaviour:
   - Death
   - ChangeHP
   - Attack
+  - GameOver
+  - ShowPlayerCount
   - Chat
   - DestroyRpc
   - InstantiateRpc
@@ -41,6 +43,4 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - ShowElapsedTime
-  - GameOver
-  - ShowPlayerCount
   DisableAutoOpenWizard: 1
