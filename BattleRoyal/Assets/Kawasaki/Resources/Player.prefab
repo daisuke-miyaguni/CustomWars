@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 114940983301563146}
   - component: {fileID: 114334119227943738}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,11 +516,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpSlider: {fileID: 114672112226734676}
+  attackButton: {fileID: 0}
   moveSpeed: 5
   playerHP: 10
   rotateSpeed: 3
   weaponPrefab: {fileID: 1372130122460068, guid: f19b33c77dc61a8419703211cb5086af,
     type: 2}
+  controller: {fileID: 0}
   jumpForce: 5
 --- !u!136 &136591946811144364
 CapsuleCollider:
