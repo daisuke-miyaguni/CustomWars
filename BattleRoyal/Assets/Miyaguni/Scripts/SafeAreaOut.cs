@@ -8,6 +8,8 @@ public class SafeAreaOut : MonoBehaviour
 
 	[SerializeField] float deskMoveSpeed;    // 机が寄っていくスピード
 
+    [SerializeField] float destroyTime = 9.0f;    // 削除カウント時間
+
 	GameObject area;	// 安地のゲームオブジェクト
 
     void Update()
@@ -21,11 +23,11 @@ public class SafeAreaOut : MonoBehaviour
         if (area != null)
         {
             gameObject.transform.position -= gameObject.transform.forward * Time.deltaTime * deskMoveSpeed;
+			destroyTime -= Time.deltaTime;
         }
 
-		// 一定の距離離れたら削除
-		if(Mathf.Abs(gameObject.transform.position.x) > 150.0f ||
-		   Mathf.Abs(gameObject.transform.position.z) > 150.0f)
+		// 一定の時間離れたら削除
+		if(destroyTime < 0.0f)
 		{
 			Destroy(gameObject);
 		}
