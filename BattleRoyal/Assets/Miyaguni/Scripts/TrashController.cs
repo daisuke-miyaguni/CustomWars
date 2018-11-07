@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class TrashController : MonoBehaviour
 {
-	[SerializeField] string deskTag;
-    [SerializeField] string weaponTag;
+	[SerializeField] string deskTag;	// 机のタグ
+    [SerializeField] string weaponTag;    // 武器のタグ
 
-    [SerializeField] float power;
-    [SerializeField] float weaponPower;
+    [SerializeField] float power;	  // ゴミにかかるパワー
+    [SerializeField] float weaponPower;	   // ゴミにかかる武器のパワー
 
-    Rigidbody rb;
+    Rigidbody rb;	  // 重力
 	
+	// 物質が当たったときの処理
 	void OnCollisionEnter(Collision other)
 	{
+		float trashSpeed = power;	  // ゴミが飛んでくスピード
 		if(other.gameObject.tag != deskTag)
 		{
 			rb = GetComponent<Rigidbody>();
 			
+			// 武器のときスピードを更新する
 			if(other.gameObject.tag == weaponTag){
-				power *= weaponPower;
+				trashSpeed = power * weaponPower;
 			}
+
+			// 当たった方向と逆に力を加えて飛んでいく
             gameObject.transform.LookAt(other.gameObject.transform);
-            rb.AddForce(transform.forward * (-power), ForceMode.Impulse);
+            rb.AddForce(transform.forward * (-trashSpeed), ForceMode.Impulse);
         }
 	}
 }
