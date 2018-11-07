@@ -18,10 +18,14 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	private GameObject resultPanel;    //リザルトパネルUI
 	[SerializeField]
 	private Text rankText;    //順位を表示するテキストUI
+	[SerializeField]
+	private StageManager stageManager;    //ステージ縮小のスクリプト
 
 	void Start ()
 	{
 		myPhotonView = GetComponent<PhotonView>();
+		resultPanel.SetActive(false);
+		playerNumber = PhotonNetwork.playerList.Length;
 	}
 	
 	// Update is called once per frame
@@ -55,7 +59,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		
 		if ((int)elapsedTime == scaleDownStartTime)
 		{
-			//ステージ縮小へ
+			stageManager.ReceveReductionEvent();    //ステージ縮小へ
 		}
 	}
 
@@ -71,11 +75,17 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		playerNumberText.text = playerNumber.ToString();
 	}
 
-	//リザルトの処理を開始する（仮組み）:
-	public void GoToResult ()
+	//リザルトの処理を開始する
+	public void GoToResult (bool isDisconnected)
 	{
 		resultPanel.SetActive(true);
-		rankText.text = "Your rank is " + playerNumber + " ！";
+		if (isDisconnected)
+		{
+		    rankText.text = "切断されました\nYour rank is " + playerNumber + " ！";
+		} else
+		{
+			rankText.text = "Your rank is " + playerNumber + " ！";
+		}
 		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
 	}
 
@@ -84,6 +94,11 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	private void PlayerDecrease ()
 	{
 		playerNumber -= 1;
+	}
+
+	void OnPhotonPlayerDisconnected()
+	{
+		GoToResult(true);
 	}
 
 }

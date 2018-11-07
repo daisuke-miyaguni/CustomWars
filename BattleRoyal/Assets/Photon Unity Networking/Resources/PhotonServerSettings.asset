@@ -27,6 +27,12 @@ MonoBehaviour:
   NetworkLogging: 1
   RunInBackground: 1
   RpcList:
+  - MoveScene
+  - Death
+  - ChangeHP
+  - Attack
+  - GameOver
+  - ShowPlayerCount
   - Chat
   - DestroyRpc
   - InstantiateRpc
@@ -36,9 +42,6 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - MoveScene
   - ShowElapsedTime
-  - GameOver
-  - ShowPlayerCount
   - PlayerDecrease
   DisableAutoOpenWizard: 1
