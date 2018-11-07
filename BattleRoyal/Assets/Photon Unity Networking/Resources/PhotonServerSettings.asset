@@ -43,4 +43,6 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - ShowElapsedTime
+  - Recover
+  - TakeDamage
   DisableAutoOpenWizard: 1
