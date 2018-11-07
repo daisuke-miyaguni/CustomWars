@@ -34,11 +34,16 @@ public class FootStepsManager : MonoBehaviour
 	void InstantFootSteps()
 	{
         time += Time.deltaTime;
+		FootStepChecker();
 		footStepsTime += Time.deltaTime;
         if (time > 0.35f)
         {
             time = 0;
-            Instantiate(footSteps, player.transform.position, player.transform.rotation);
+            Instantiate(
+				footSteps,
+				new Vector3(player.transform.position.x, 0.1f, player.transform.transform.position.z),
+				player.transform.rotation
+			);
         }
 	}
 

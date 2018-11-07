@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FootStepsController : MonoBehaviour
+public class IndiainkFootStepsController : MonoBehaviour
 {
-    [SerializeField] int stepTime = 90;
+    [SerializeField] int stepTime;
 
     void Start()
     {
@@ -15,9 +15,9 @@ public class FootStepsController : MonoBehaviour
     {
         for (int i = 0; i < stepTime; i++)
         {
-            GetComponent<MeshRenderer>().material.color = new Color(1, 1, 1, 1 - 1.0f * i / stepTime);
+            GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0, 1 - 1.0f * i / stepTime);
             yield return null;
         }
         Destroy(gameObject);
-	}
+    }
 }

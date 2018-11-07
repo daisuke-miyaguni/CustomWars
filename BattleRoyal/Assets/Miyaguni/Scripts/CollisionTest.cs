@@ -23,12 +23,13 @@ public class CollisionTest : MonoBehaviour
 	void Move()
 	{
 		// X移動
-        float moveX = Input.GetAxis(moveXAxis) * speed;
+        float moveX = Input.GetAxis(moveXAxis);
 		// Z移動
         float moveZ = Input.GetAxis(moveZAxis) * speed;
 		//Player移動
 		rigidbody.AddForce(transform.forward * moveZ, ForceMode.Force);
-        rigidbody.AddForce(transform.right * moveX, ForceMode.Force);
+        //rigidbody.AddForce(transform.right * moveX, ForceMode.Force);
+		transform.Rotate(0,moveX,0);
 
         // クリックでターゲットに向かって飛んでいく
         if (Input.GetMouseButtonDown(0))
