@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class TrashController : MonoBehaviour
 {
-	[SerializeField] string weaponTag;
-	[SerializeField] float power;
-	Rigidbody rb;
+	[SerializeField] string deskTag;
+    [SerializeField] string weaponTag;
+
+    [SerializeField] float power;
+    [SerializeField] float weaponPower;
+
+    Rigidbody rb;
 	
 	void OnCollisionEnter(Collision other)
 	{
-		if(other.gameObject.tag == weaponTag)
+		if(other.gameObject.tag != deskTag)
 		{
 			rb = GetComponent<Rigidbody>();
-			gameObject.transform.LookAt(other.gameObject.transform);
-			rb.AddForce(transform.forward * (-power), ForceMode.Impulse);
-		}
+			
+			if(other.gameObject.tag == weaponTag){
+				power *= weaponPower;
+			}
+            gameObject.transform.LookAt(other.gameObject.transform);
+            rb.AddForce(transform.forward * (-power), ForceMode.Impulse);
+        }
 	}
 }

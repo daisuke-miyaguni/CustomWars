@@ -43,4 +43,5 @@ MonoBehaviour:
   - RequestForPickupItems
   - RequestForPickupTimes
   - DestroyRpc
+  - InitPosition
   DisableAutoOpenWizard: 1

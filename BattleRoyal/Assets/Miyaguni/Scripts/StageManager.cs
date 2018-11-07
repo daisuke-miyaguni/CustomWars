@@ -35,6 +35,7 @@ public class StageManager : MonoBehaviour
 		Invoke("TriggerOn", collisionOnTime);
 	}
 
+	[PunRPC]
 	void InitPosition()
 	{
         // 安地の位置をランダムで決める
