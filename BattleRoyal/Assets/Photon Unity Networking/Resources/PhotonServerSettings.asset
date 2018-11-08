@@ -42,6 +42,7 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - DestroyRpc
-  - InitPosition
+  - ShowElapsedTime
+  - Recover
+  - TakeDamage
   DisableAutoOpenWizard: 1

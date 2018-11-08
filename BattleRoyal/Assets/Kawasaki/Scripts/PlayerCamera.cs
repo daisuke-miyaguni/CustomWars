@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    private GameObject player;
+    private Camera myCamera;
     [SerializeField] private float rotateSpeed;
 
     void Start()
     {
-        player = transform.parent.gameObject;
+        // カメラ取得、位置調整
+        myCamera = Camera.main;
+        myCamera.transform.parent = transform;
+        myCamera.transform.position = transform.position + new Vector3(0, 0.8f, -5);
     }
 
     void Update()
     {
         RotateCamera();
+
     }
 
     private void RotateCamera()
     {
-        // if (Input.GetMouseButton(0))
-        // {
         Vector3 angle = new Vector3(
             Input.GetAxis("Mouse X") * rotateSpeed,
             Input.GetAxis("Mouse Y") * rotateSpeed,
             0
         );
 
-        transform.RotateAround(player.transform.position, Vector3.up, angle.x);
-        transform.RotateAround(player.transform.position, transform.right, angle.y * -1);
-        // }
+        myCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
+        myCamera.transform.RotateAround(transform.position, myCamera.transform.right, angle.y * -1);
     }
 }
