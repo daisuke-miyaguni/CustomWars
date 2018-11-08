@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isJump;
 
+    private GameObject playerCamera;
+
 
 
     void Awake()
@@ -70,10 +72,18 @@ public class PlayerController : MonoBehaviour
             // 回避ボタン取得、設定
             avoidButton = GameObject.Find("AvoidButton").GetComponent<Button>();
             inventoryButton.onClick.AddListener(this.Avoid);
+
+
             // カメラ取得、位置調整
-            myCamera = Camera.main;
-            myCamera.transform.parent = transform;
-            myCamera.transform.position = transform.position + new Vector3(0, 0.8f, -5);
+            // myCamera = Camera.main;
+            // myCamera.transform.parent = transform;
+            // myCamera.transform.position = transform.position + new Vector3(0, 0.8f, -5);
+
+            playerCamera = GameObject.Find("Camera");
+            playerCamera.transform.parent = transform;
+            playerCamera.transform.position = transform.position;
+
+
 
             //hp初期値設定
             currentHP = maxHP;
@@ -98,7 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            // RotateCamera();
+            RotateCamera();
         }
 
         // if (myPV.isMine)
@@ -114,12 +124,17 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
-        if (GetMoveDirection().x != 0 || GetMoveDirection().z != 0)
-        {
-            myRB.velocity = new Vector3(GetMoveDirection().x * moveSpeed,
+        myRB.velocity = new Vector3(
+            GetMoveDirection().x * moveSpeed,
             myRB.velocity.y,
-            GetMoveDirection().z * moveSpeed);
-        }
+            GetMoveDirection().z * moveSpeed
+        );
+        // if (GetMoveDirection().x != 0 || GetMoveDirection().z != 0)
+        // {
+        //     myRB.velocity = new Vector3(GetMoveDirection().x * moveSpeed,
+        //     myRB.velocity.y,
+        //     GetMoveDirection().z * moveSpeed);
+        // }
     }
 
     // 移動方向取得
@@ -136,17 +151,34 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 angle = new Vector3(
             Input.GetAxis("Mouse X") * rotateSpeed,
-            Input.GetAxis("Mouse Y") * rotateSpeed * -1,
+            Input.GetAxis("Mouse Y") * rotateSpeed,
             0
         );
 
-        myCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
+        playerCamera.transform.eulerAngles += new Vector3(angle.y, angle.x, angle.z);
 
-        float rotationX = myCamera.transform.rotation.x;
-        if (rotationX < angleMax && rotationX > angleMin)
-        {
-            myCamera.transform.RotateAround(transform.position, myCamera.transform.right, angle.y);
-        }
+
+        float angle_x = 180f <= playerCamera.transform.eulerAngles.x ? playerCamera.transform.eulerAngles.x - 360 : playerCamera.transform.eulerAngles.x;
+        playerCamera.transform.eulerAngles = new Vector3(
+            Mathf.Clamp(angle_x, angleMin, angleMax),
+            playerCamera.transform.eulerAngles.y,
+            playerCamera.transform.eulerAngles.z
+        );
+
+
+        // Vector3 angle = new Vector3(
+        //     Input.GetAxis("Mouse X") * rotateSpeed,
+        //     Input.GetAxis("Mouse Y") * rotateSpeed * -1,
+        //     0
+        // );
+
+        // myCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
+
+        // float rotationX = myCamera.transform.rotation.x;
+        // if (rotationX < angleMax && rotationX > angleMin)
+        // {
+        //     myCamera.transform.RotateAround(transform.position, myCamera.transform.right, angle.y);
+        // }
     }
 
     // ジャンプ
@@ -230,6 +262,11 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == "Stage")
             {
                 isJump = true;
+            }
+            // ステージ外判定
+            if (other.gameObject.tag == "ステージ外タグ")
+            {
+                myPV.RPC("Death", PhotonTargets.All);
             }
         }
     }
