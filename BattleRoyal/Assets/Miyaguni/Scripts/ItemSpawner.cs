@@ -37,7 +37,7 @@ public class ItemSpawner : Photon.MonoBehaviour
         {
 			int spawnNum = itemBoxCount[Random.Range(0, itemBoxCount.Count)];
 			itemBoxCount.Remove(spawnNum);
-            GameObject itemBox = PhotonNetwork.Instantiate(itempBoxName,
+            PhotonNetwork.Instantiate(itempBoxName,
 			itempBoxSpawnPos[spawnNum],
 			Quaternion.Euler(Vector3.zero),
 			0);

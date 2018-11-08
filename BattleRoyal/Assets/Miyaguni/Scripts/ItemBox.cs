@@ -72,7 +72,7 @@ public class ItemBox : MonoBehaviour
 		for(int i = 0; i < itemCount; i++)
 		{
 			int itemNum = Random.Range(0, itemName.Count);
-			GameObject item = PhotonNetwork.Instantiate(
+			PhotonNetwork.Instantiate(
 				itemName[itemNum],
 				gameObject.transform.position,
 				gameObject.transform.rotation,

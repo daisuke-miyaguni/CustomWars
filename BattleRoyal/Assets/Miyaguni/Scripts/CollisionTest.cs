@@ -7,13 +7,18 @@ public class CollisionTest : MonoBehaviour
 {
 	[SerializeField] GameObject targetObject;    // ターゲットにするオブジェクト
 
-	[SerializeField] Rigidbody rigidbody;	  // リジッドボディ
+	Rigidbody rb;     // 重力
 
 	[SerializeField] float power;     // パワー
     [SerializeField] float speed;     // スピード
 
     [SerializeField] string moveXAxis;
     [SerializeField] string moveZAxis;
+
+	void Start()
+	{
+		rb = GetComponent<Rigidbody>();
+	}
 
 	void Update()
 	{
@@ -23,19 +28,21 @@ public class CollisionTest : MonoBehaviour
 	void Move()
 	{
 		// X移動
-        float moveX = Input.GetAxis(moveXAxis);
+        float moveX = Input.GetAxis(moveXAxis) * speed;
 		// Z移動
         float moveZ = Input.GetAxis(moveZAxis) * speed;
 		//Player移動
-		rigidbody.AddForce(transform.forward * moveZ, ForceMode.Force);
-        //rigidbody.AddForce(transform.right * moveX, ForceMode.Force);
-		transform.Rotate(0,moveX,0);
+		rb.AddForce(transform.forward * moveZ, ForceMode.Force);
+        rb.AddForce(transform.right * moveX, ForceMode.Force);
 
         // クリックでターゲットに向かって飛んでいく
         if (Input.GetMouseButtonDown(0))
         {
-            transform.LookAt(targetObject.transform);
-            rigidbody.AddForce(transform.forward * power, ForceMode.Impulse);
+			if(targetObject != null)
+			{
+            	transform.LookAt(targetObject.transform);
+            	rb.AddForce(transform.forward * power, ForceMode.Impulse);
+			}
         }
 	}
 }
