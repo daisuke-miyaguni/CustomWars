@@ -13,9 +13,13 @@ public class StageManager : MonoBehaviour
 
 	[SerializeField] string deskTag;    // 机のタグ名
 
-	string player = "Player";    // playerのタグ名
-
 	int reductionCount;    // 範囲番号
+
+	// 範囲番号ゲッター
+	public int GetReductionCount()
+	{
+		return reductionCount;
+	}
 
 	PhotonView photonView;
 
@@ -89,13 +93,6 @@ public class StageManager : MonoBehaviour
 		if(other.gameObject.tag == deskTag)
 		{
 			other.gameObject.GetComponent<SafeAreaOut>().SafeAreaExit();
-		}
-
-		// Playerが安地に間に合わなかったらPlayerの安地外処理を呼び出す
-		if(other.gameObject.tag == player)
-		{
-			Debug.Log("エリアに間に合わなかった");
-			// other.gameObject.GetComponent<PlayerController>().コールデス();
 		}
 	}
 }
