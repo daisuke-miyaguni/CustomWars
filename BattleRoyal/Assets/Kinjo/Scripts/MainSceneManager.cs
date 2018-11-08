@@ -4,31 +4,49 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MainSceneManager : Photon.MonoBehaviour {
+	[SerializeField]
 	private int playerNumber;    //プレイヤー数
 	private float elapsedTime;    //経過時間
-	private PhotonView myPhotonView;    //自身のPhotonView
-	private bool isHost = false;    //Hostかどうか
 	[SerializeField]
 	private Text elapsedTimeText;    //経過時間を表示するテキストUI
 	[SerializeField]
 	private Text playerNumberText;    //プレイヤー数を表示するテキストUI
 	[SerializeField]
-	private float scaleDownStartTime;    	//縮小が始まる時間
+	private int scaleDownStartTime;    	//縮小が始まる時間
+	private PhotonView myPhotonView;    //自身のPhotonView
+	[SerializeField]
+	private GameObject resultPanel;    //リザルトパネルUI
+	[SerializeField]
+	private Text rankText;    //順位を表示するテキストUI
+
 	void Start ()
 	{
 		myPhotonView = GetComponent<PhotonView>();
-		DetermineIfHost();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (isHost)
-		{
-			CalculateElapsedTime();
-			myPhotonView.RPC("ShowPlayerCount",PhotonTargets.AllViaServer);
-		}
+		CalculateElapsedTime();
 	}
+
+	//経過時間とプレイヤー数の同期
+	void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting) {
+            //データの送信
+            stream.SendNext(elapsedTime);
+            stream.SendNext(playerNumber);
+        } else {
+            //データの受信
+            elapsedTime = (float)stream.ReceiveNext();
+            playerNumber = (int)stream.ReceiveNext();
+        }
+		
+		ShowPlayerCount();
+		ShowElapsedTime();
+    }
+
 
 	//経過時間を計算する
 	private void CalculateElapsedTime ()
@@ -39,51 +57,33 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		{
 			//ステージ縮小へ
 		}
-
-		myPhotonView.RPC("ShowElapsedTime", PhotonTargets.AllViaServer,elapsedTime);
-	}
-
-	//ホストかどうかを判別する
-	private void DetermineIfHost ()
-	{
-		if (PhotonNetwork.player.ID == 1)
-		{
-			isHost = true;
-			//RoomInfo[] roomInfo = PhotonNetwork.GetRoomList();
-			//if (roomInfo == null||roomInfo.Length == 0) return;
-
-			//
-			//playerNumber = roomInfo[0].PlayerCount;    //開始時のゲーム全体のプレイヤー数の同期
-			Debug.Log(playerNumber);
-			//myPhotonView.RPC("ShowPlayerCount",PhotonTargets.AllViaServer);
-		}
 	}
 
 	//経過時間を表示する
-	[PunRPC]
-	private void ShowElapsedTime (float receiveTime)
+	private void ShowElapsedTime ()
 	{
-		elapsedTimeText.text = receiveTime.ToString("f0");
+		elapsedTimeText.text = elapsedTime.ToString("f0");
 	}
 
 	//プレイヤー数を表示する
-	[PunRPC]
 	private void ShowPlayerCount ()
 	{
 		playerNumberText.text = playerNumber.ToString();
 	}
 
-	//ゲームオーバーの処理をする（仮組み）
-	[PunRPC]
-	private void GameOver ()
+	//リザルトの処理を開始する（仮組み）:
+	public void GoToResult ()
 	{
-		playerNumber -= 1;
-		playerNumberText.text = "がめおべーら";
+		resultPanel.SetActive(true);
+		rankText.text = "Your rank is " + playerNumber + " ！";
+		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
 	}
 
-	//デバッグ用の自爆ボタン
-	public void DebugStart ()
+	//プレイヤー数の更新,マスタークライアントで行う
+	[PunRPC]
+	private void PlayerDecrease ()
 	{
-		myPhotonView.RPC("GameOver",PhotonTargets.AllViaServer);
-	} 
+		playerNumber -= 1;
+	}
+
 }

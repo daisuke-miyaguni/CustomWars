@@ -80,6 +80,7 @@ public class LobbyManager : Photon.MonoBehaviour
 		{
 			PhotonNetwork.Disconnect();
 		}
+		Debug.Log("参加した");
 	}
 
 	// 他のPlayerが入室してきた
