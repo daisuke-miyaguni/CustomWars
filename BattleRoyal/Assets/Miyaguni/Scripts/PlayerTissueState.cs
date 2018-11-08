@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerTissueState : MonoBehaviour
 {
 	string tissueName = "Tissue";
-    string deskName = "Desk";
 
 	[SerializeField] float fanPower;
 
