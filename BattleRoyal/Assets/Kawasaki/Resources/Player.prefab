@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 54672678772930014}
   - component: {fileID: 114970504186686824}
   - component: {fileID: 114095490833070944}
+  - component: {fileID: 114470588769984226}
   - component: {fileID: 114433715124477748}
   m_Layer: 0
   m_Name: Player
@@ -205,7 +206,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 087ac0428c463df4494cb320f01dd78d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -381,6 +382,17 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &114470588769984226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1089386421770678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 509bd2e140014394aafd8a78d5d86449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114588802093583512
 MonoBehaviour:
   m_ObjectHideFlags: 1

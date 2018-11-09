@@ -45,4 +45,6 @@ MonoBehaviour:
   - ShowElapsedTime
   - Recover
   - TakeDamage
+  - DestroyRpc
+  - InitPosition
   DisableAutoOpenWizard: 1

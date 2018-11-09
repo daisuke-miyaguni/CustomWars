@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     private bool isJump;
 
     private GameObject playerCamera;
+    Vector2 startPos;
+    Vector3 targetPos;
 
 
 
@@ -75,13 +77,13 @@ public class PlayerController : MonoBehaviour
 
 
             // カメラ取得、位置調整
-            // myCamera = Camera.main;
+            myCamera = Camera.main;
             // myCamera.transform.parent = transform;
             // myCamera.transform.position = transform.position + new Vector3(0, 0.8f, -5);
 
-            playerCamera = GameObject.Find("Camera");
-            playerCamera.transform.parent = transform;
-            playerCamera.transform.position = transform.position;
+            // playerCamera = GameObject.Find("Camera");
+            // playerCamera.transform.parent = transform;
+            // playerCamera.transform.position = transform.position;
 
 
 
@@ -93,6 +95,9 @@ public class PlayerController : MonoBehaviour
             inventory.SetActive(false);
 
             isJump = true;
+
+
+            targetPos = gameObject.transform.position;
         }
     }
 
@@ -108,7 +113,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            RotateCamera();
+            // RotateCamera();
         }
 
         // if (myPV.isMine)
@@ -124,24 +129,45 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
-        myRB.velocity = new Vector3(
-            GetMoveDirection().x * moveSpeed,
-            myRB.velocity.y,
-            GetMoveDirection().z * moveSpeed
-        );
+        // カメラの方向から、X-Z平面の単位ベクトルを取得
+        Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+
+        // 方向キーの入力値とカメラの向きから、移動方向を決定
+        Vector3 moveForward = cameraForward * GetMoveDirection().z + Camera.main.transform.right * GetMoveDirection().x;
+
+        // 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
+        myRB.velocity = moveForward * moveSpeed + new Vector3(0, myRB.velocity.y, 0);
+
+        // キャラクターの向きを進行方向に
+        if (moveForward != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(moveForward);
+        }
+
+
+        // //ジョイスティックが傾いている方向を向く
+        // Vector3 direction = GetMoveDirection();
         // if (GetMoveDirection().x != 0 || GetMoveDirection().z != 0)
         // {
-        //     myRB.velocity = new Vector3(GetMoveDirection().x * moveSpeed,
-        //     myRB.velocity.y,
-        //     GetMoveDirection().z * moveSpeed);
+        //     transform.localRotation = Quaternion.LookRotation(direction);
+        //     transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         // }
+
+
+        // myRB.velocity = new Vector3(
+        //     GetMoveDirection().x * moveSpeed,
+        //     myRB.velocity.y,
+        //     GetMoveDirection().z * moveSpeed
+        // );
     }
 
     // 移動方向取得
     private Vector3 GetMoveDirection()
     {
-        float x = controller.Horizontal;
-        float z = controller.Vertical;
+        // float x = controller.Horizontal;
+        // float z = controller.Vertical;
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
         return new Vector3(x, 0, z);
     }
@@ -149,21 +175,74 @@ public class PlayerController : MonoBehaviour
     // カメラ操作
     private void RotateCamera()
     {
-        Vector3 angle = new Vector3(
-            Input.GetAxis("Mouse X") * rotateSpeed,
-            Input.GetAxis("Mouse Y") * rotateSpeed,
-            0
-        );
+        myCamera.transform.position += gameObject.transform.position - targetPos;
+        targetPos = gameObject.transform.position;
 
-        playerCamera.transform.eulerAngles += new Vector3(angle.y, angle.x, angle.z);
+        // マウスの右クリックを押している間
+        if (Input.GetMouseButton(1))
+        {
+            // マウスの移動量
+            float mouseInputX = Input.GetAxis("Mouse X");
+            float mouseInputY = Input.GetAxis("Mouse Y");
+            // targetの位置のY軸を中心に、回転（公転）する
+            myCamera.transform.RotateAround(targetPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+            // カメラの垂直移動（※角度制限なし、必要が無ければコメントアウト）
+            // myCamera.transform.RotateAround(targetPos, transform.right, mouseInputY * Time.deltaTime * 200f);
 
 
-        float angle_x = 180f <= playerCamera.transform.eulerAngles.x ? playerCamera.transform.eulerAngles.x - 360 : playerCamera.transform.eulerAngles.x;
-        playerCamera.transform.eulerAngles = new Vector3(
-            Mathf.Clamp(angle_x, angleMin, angleMax),
-            playerCamera.transform.eulerAngles.y,
-            playerCamera.transform.eulerAngles.z
-        );
+
+
+            // playerCamera.transform.position = transform.position;
+
+
+            // if (Input.touchCount == 1)
+            // {
+            //     //回転
+            //     Touch t1 = Input.GetTouch(0);
+            //     if (t1.phase == TouchPhase.Began)
+            //     {
+            //         startPos = t1.position;
+            //     }
+            //     else if (t1.phase == TouchPhase.Moved || t1.phase == TouchPhase.Stationary)
+            //     {
+            //         float tx = t1.position.x - startPos.x; //横移動量(-1<tx<1)
+            //         float ty = t1.position.y - startPos.y; //縦移動量(-1<ty<1)
+            //         print(new Vector2(tx, ty).normalized);
+            //         Vector2 angle = new Vector2(tx, ty).normalized;
+
+
+            //         playerCamera.transform.eulerAngles += new Vector3(angle.y, angle.x, 0);
+
+
+            //         float angle_x = 180f <= playerCamera.transform.eulerAngles.x ? playerCamera.transform.eulerAngles.x - 360 : playerCamera.transform.eulerAngles.x;
+            //         playerCamera.transform.eulerAngles = new Vector3(
+            //             Mathf.Clamp(angle_x, angleMin, angleMax),
+            //             playerCamera.transform.eulerAngles.y,
+            //             playerCamera.transform.eulerAngles.z
+            //         );
+
+
+            // if (Input.GetMouseButton(1))
+            // {
+            //     Vector3 angle = new Vector3(
+            //         Input.GetAxis("Mouse X") * rotateSpeed,
+            //         Input.GetAxis("Mouse Y") * rotateSpeed,
+            //         0
+            //     );
+            //     print(angle);
+
+            //     playerCamera.transform.eulerAngles += new Vector3(angle.y, angle.x, angle.z);
+
+
+            //     float angle_x = 180f <= playerCamera.transform.eulerAngles.x ? playerCamera.transform.eulerAngles.x - 360 : playerCamera.transform.eulerAngles.x;
+            //     playerCamera.transform.eulerAngles = new Vector3(
+            //         Mathf.Clamp(angle_x, angleMin, angleMax),
+            //         playerCamera.transform.eulerAngles.y,
+            //         playerCamera.transform.eulerAngles.z
+            //     );
+        }
+
+
 
 
         // Vector3 angle = new Vector3(
@@ -179,6 +258,8 @@ public class PlayerController : MonoBehaviour
         // {
         //     myCamera.transform.RotateAround(transform.position, myCamera.transform.right, angle.y);
         // }
+
+
     }
 
     // ジャンプ
@@ -264,7 +345,7 @@ public class PlayerController : MonoBehaviour
                 isJump = true;
             }
             // ステージ外判定
-            if (other.gameObject.tag == "ステージ外タグ")
+            if (other.gameObject.tag == "AreaOut")
             {
                 myPV.RPC("Death", PhotonTargets.All);
             }
