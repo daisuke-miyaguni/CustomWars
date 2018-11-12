@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSpawner : Photon.MonoBehaviour
+public class ItemBoxSpawner : Photon.MonoBehaviour
 {
 	// [SerializeField] Vector3 itempSpawnPos;    // アイテムのスポーンポジション
 	[SerializeField] Vector3[] itempBoxSpawnPos;    // アイテムボックスのスポーンポジション
