@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TrashController : MonoBehaviour
 {
-	[SerializeField] string deskTag;	// 机のタグ
+	[SerializeField] string deskTag;    // 机のタグ
+    [SerializeField] string dustTag;	// 机のタグ
     [SerializeField] string weaponTag;    // 武器のタグ
 
     [SerializeField] float power;	  // ゴミにかかるパワー
@@ -16,7 +17,7 @@ public class TrashController : MonoBehaviour
 	void OnCollisionEnter(Collision other)
 	{
 		float trashSpeed = power;	  // ゴミが飛んでくスピード
-		if(other.gameObject.tag != deskTag)
+		if(other.gameObject.tag != deskTag && other.gameObject.tag != dustTag)
 		{
 			rb = GetComponent<Rigidbody>();
 			
