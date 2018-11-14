@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
     private PhotonView myPV;
     private Rigidbody myRB;
     private Camera myCamera;
@@ -20,14 +19,14 @@ public class PlayerController : MonoBehaviour
     private const int maxHP = 100;
     private int currentHP = maxHP;
     [SerializeField] private Slider hpSlider;
+    [SerializeField] private GameObject weapon;
 
     // playerステータス
     [SerializeField] private float moveSpeed;
     // [SerializeField] private float playerHP;
-    [SerializeField] private float rotateSpeed;
+    // [SerializeField] private float rotateSpeed;
     [SerializeField] private float jumpForce;
 
-    [SerializeField] private GameObject weaponPrefab;
     private MobileInputController controller;
 
     private List<string> itemList = new List<string>();
@@ -109,22 +108,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (myPV.isMine)
-        {
-            // RotateCamera();
-        }
-
-        // if (myPV.isMine)
-        // {
-        //     if (currentHP <= 0)
-        //     {
-        //         myPV.RPC("Death", PhotonTargets.All);
-        //     }
-        // }
-    }
-
 
     // 移動処理
     private void Move()
@@ -162,104 +145,14 @@ public class PlayerController : MonoBehaviour
     }
 
     // 移動方向取得
-    private Vector3 GetMoveDirection()
+    public Vector3 GetMoveDirection()
     {
-        // float x = controller.Horizontal;
-        // float z = controller.Vertical;
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = controller.Horizontal;
+        float z = controller.Vertical;
+        // float x = Input.GetAxis("Horizontal");
+        // float z = Input.GetAxis("Vertical");
 
         return new Vector3(x, 0, z);
-    }
-
-    // カメラ操作
-    private void RotateCamera()
-    {
-        myCamera.transform.position += gameObject.transform.position - targetPos;
-        targetPos = gameObject.transform.position;
-
-        // マウスの右クリックを押している間
-        if (Input.GetMouseButton(1))
-        {
-            // マウスの移動量
-            float mouseInputX = Input.GetAxis("Mouse X");
-            float mouseInputY = Input.GetAxis("Mouse Y");
-            // targetの位置のY軸を中心に、回転（公転）する
-            myCamera.transform.RotateAround(targetPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
-            // カメラの垂直移動（※角度制限なし、必要が無ければコメントアウト）
-            // myCamera.transform.RotateAround(targetPos, transform.right, mouseInputY * Time.deltaTime * 200f);
-
-
-
-
-            // playerCamera.transform.position = transform.position;
-
-
-            // if (Input.touchCount == 1)
-            // {
-            //     //回転
-            //     Touch t1 = Input.GetTouch(0);
-            //     if (t1.phase == TouchPhase.Began)
-            //     {
-            //         startPos = t1.position;
-            //     }
-            //     else if (t1.phase == TouchPhase.Moved || t1.phase == TouchPhase.Stationary)
-            //     {
-            //         float tx = t1.position.x - startPos.x; //横移動量(-1<tx<1)
-            //         float ty = t1.position.y - startPos.y; //縦移動量(-1<ty<1)
-            //         print(new Vector2(tx, ty).normalized);
-            //         Vector2 angle = new Vector2(tx, ty).normalized;
-
-
-            //         playerCamera.transform.eulerAngles += new Vector3(angle.y, angle.x, 0);
-
-
-            //         float angle_x = 180f <= playerCamera.transform.eulerAngles.x ? playerCamera.transform.eulerAngles.x - 360 : playerCamera.transform.eulerAngles.x;
-            //         playerCamera.transform.eulerAngles = new Vector3(
-            //             Mathf.Clamp(angle_x, angleMin, angleMax),
-            //             playerCamera.transform.eulerAngles.y,
-            //             playerCamera.transform.eulerAngles.z
-            //         );
-
-
-            // if (Input.GetMouseButton(1))
-            // {
-            //     Vector3 angle = new Vector3(
-            //         Input.GetAxis("Mouse X") * rotateSpeed,
-            //         Input.GetAxis("Mouse Y") * rotateSpeed,
-            //         0
-            //     );
-            //     print(angle);
-
-            //     playerCamera.transform.eulerAngles += new Vector3(angle.y, angle.x, angle.z);
-
-
-            //     float angle_x = 180f <= playerCamera.transform.eulerAngles.x ? playerCamera.transform.eulerAngles.x - 360 : playerCamera.transform.eulerAngles.x;
-            //     playerCamera.transform.eulerAngles = new Vector3(
-            //         Mathf.Clamp(angle_x, angleMin, angleMax),
-            //         playerCamera.transform.eulerAngles.y,
-            //         playerCamera.transform.eulerAngles.z
-            //     );
-        }
-
-
-
-
-        // Vector3 angle = new Vector3(
-        //     Input.GetAxis("Mouse X") * rotateSpeed,
-        //     Input.GetAxis("Mouse Y") * rotateSpeed * -1,
-        //     0
-        // );
-
-        // myCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
-
-        // float rotationX = myCamera.transform.rotation.x;
-        // if (rotationX < angleMax && rotationX > angleMin)
-        // {
-        //     myCamera.transform.RotateAround(transform.position, myCamera.transform.right, angle.y);
-        // }
-
-
     }
 
     // ジャンプ
@@ -287,13 +180,13 @@ public class PlayerController : MonoBehaviour
         // }
     }
 
-    // 攻撃
-    [PunRPC]
-    private void Attack(Vector3 pos, float power)
-    {
-        GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
-        weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
-    }
+    // // 攻撃
+    // [PunRPC]
+    // private void Attack(Vector3 pos, float power)
+    // {
+    //     GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
+    //     weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
+    // }
 
 
 
@@ -323,8 +216,21 @@ public class PlayerController : MonoBehaviour
         hpSlider.value = currentHP;
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (myPV.isMine)
+        {
+            // 着地
+            if (other.gameObject.tag == "Stage")
+            {
+                isJump = true;
+            }
+        }
+    }
 
-    public void OnTriggerEnter(Collider other)
+
+
+    private void OnTriggerEnter(Collider other)
     {
         if (myPV.isMine)
         {
@@ -338,11 +244,6 @@ public class PlayerController : MonoBehaviour
             {
                 itemList.Add(other.gameObject.name);
                 Destroy(other.gameObject);
-            }
-
-            if (other.gameObject.tag == "Stage")
-            {
-                isJump = true;
             }
             // ステージ外判定
             if (other.gameObject.tag == "AreaOut")

@@ -1,14 +1,32 @@
 fileFormatVersion: 2
-guid: 2cb60de83485bfc4084f4cab31d42727
+guid: 9ca2a4ae064b25d43b73d2412235bc06
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: blinn8
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCube34
+    100000: group1
+    100002: pasted__pCylinder7
+    100004: pCylinder5
+    100006: pCylinder7
+    100008: pCylinder8
+    100010: transform1
+    100012: transform2
+    100014: transform3
+    100016: //RootNode
+    400000: group1
+    400002: pasted__pCylinder7
+    400004: pCylinder5
+    400006: pCylinder7
+    400008: pCylinder8
+    400010: transform1
+    400012: transform2
+    400014: transform3
+    400016: //RootNode
+    2100000: blinn1
+    2100002: blinn2
+    2100004: blinn3
+    2300000: pCylinder8
+    3300000: pCylinder8
+    4300000: pCylinder8
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -29,7 +47,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -70,12 +88,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 2
     human: []
-    skeleton:
-    - name: player_00(Clone)
-      parentName: 
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -89,7 +102,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
