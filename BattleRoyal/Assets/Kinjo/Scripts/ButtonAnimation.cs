@@ -18,6 +18,7 @@ Image imageComponent;
 		{
 			StopCoroutine("Flashing");
 			StartCoroutine("GoToLobby");
+			//SceneManager.LoadScene(1);
 		}
 	}
 
@@ -32,11 +33,12 @@ Image imageComponent;
 
 	IEnumerator GoToLobby()
 	{
-		while(true)
+		for(int i = 0; i < 8; i ++)
 		{
 			imageComponent.enabled = !imageComponent.enabled;
 			yield return new WaitForSeconds(interval / 4);
 		}
+		SceneManager.LoadScene(1);
 	}
 
 }
