@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 114952440788918402}
   - component: {fileID: 114950297480925704}
   m_Layer: 5
-  m_Name: StertButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
