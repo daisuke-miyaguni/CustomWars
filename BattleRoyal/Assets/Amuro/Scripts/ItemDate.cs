@@ -10,7 +10,7 @@ public class ItemData : Object
     private string itemInformation;         //アイテム説明
     private int itemPower;                  //アイテム攻撃力
 
-    public ItemData(Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power)
+    public ItemData(Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power)           //アイテムデータの基盤
     {
         itemSprite = image;
         itemName = Name;

@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class CreateSlotScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject slot;
+    private GameObject slot;                            //インスペクターでPropetySlotをアタッチ
 
     [SerializeField]
-    private MyItemStatus myItemStatus;
+    private MyItemStatus myItemStatus;                  //インスペクターでプレイヤーをアタッチ
 
     [SerializeField]
-    private ItemDataBase itemDataBase;
+    private ItemDataBase itemDataBase;                  //インスペクターでItemDataBaseスクリプトの入っているオブジェクトをアタッチ
 
     private ItemData myItemData;
 
