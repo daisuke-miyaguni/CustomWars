@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainSceneManager : Photon.MonoBehaviour {
+public class MainSceneSecond : Photon.MonoBehaviour {
 	[SerializeField]
 	private int playerNumber;    //プレイヤー数
-	int activePlayerNumber;    //初期のプレイヤー数
 	private bool alive = true;
 	private float elapsedTime;    //経過時間
-	private bool isDead = false;    //死んだかどうか
+	private bool isAlive = true;    //生きているか
 	[SerializeField]
 	private Text elapsedTimeText;    //経過時間を表示するテキストUI
 	[SerializeField]
@@ -25,13 +24,14 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	[SerializeField]
 	private StageManager stageManager;    //ステージ縮小のスクリプト
 	bool isScaleDownBegan = false;    //縮小が始まったかどうか
+	[SerializeField]
+	Text uiText;
 
 	void Start ()
 	{
 		myPhotonView = GetComponent<PhotonView>();
 		resultPanel.SetActive(false);
-		activePlayerNumber = PhotonNetwork.playerList.Length;
-		playerNumber = activePlayerNumber;
+		playerNumber = PhotonNetwork.playerList.Length;
 	}
 	
 	// Update is called once per frame
@@ -47,12 +47,10 @@ public class MainSceneManager : Photon.MonoBehaviour {
             //データの送信
             stream.SendNext(elapsedTime);
             stream.SendNext(playerNumber);
-			stream.SendNext(activePlayerNumber);
         } else {
             //データの受信
             elapsedTime = (float)stream.ReceiveNext();
             playerNumber = (int)stream.ReceiveNext();
-			activePlayerNumber = (int)stream.ReceiveNext();
         }
 		
 		ShowPlayerCount();
@@ -80,34 +78,24 @@ public class MainSceneManager : Photon.MonoBehaviour {
 			return;
 		}
 		elapsedTimeText.text = elapsedTime.ToString("f0");
-
-	
 	}
 
 	//プレイヤー数を表示する
 	private void ShowPlayerCount ()
 	{
-		playerNumberText.text = activePlayerNumber.ToString();
+		playerNumberText.text = playerNumber.ToString();
 	}
 
 	//リザルトの処理を開始する
-	public void GoToResult (int isDisconnected)
+	public void GoToResult ()
 	{
 		resultPanel.SetActive(true);
-		if (isDisconnected == 0)
-		{
-		    rankText.text = "切断されました\nYour rank is " + activePlayerNumber + " ！";
-			return;
-		} 
-		else if (isDisconnected ==1)
-		{
-			rankText.text = "Your rank is " + activePlayerNumber + " ！";
-		}
-
-		if (activePlayerNumber == 2 || isDisconnected == 2)
+		rankText.text = "Your rank is " + playerNumber + " ！";
+		if (playerNumber == 2)
 		{
 			myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
 		}
+
 		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
 	}
 
@@ -115,9 +103,10 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	[PunRPC]
 	private void PlayerDecrease ()
 	{
-		activePlayerNumber -= 1;
+		playerNumber -= 1;
 	}
 
+	//勝利プレイヤーのリザルトを表示する
 	[PunRPC]
 	private void ShowWinnerResult ()
 	{
@@ -131,38 +120,27 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//切断したときリザルトを表示する
 	void OnDisconnectedFromPhoton()
 	{
-		GoToResult(0);
+		uiText.text = "切断した";
 	}
 
 	//切断されたときの処理
 	void OnPhotonPlayerDisconnected()
 	{
-		if (playerNumber == activePlayerNumber)
-		{
-			if (PhotonNetwork.masterClient.IsMasterClient) 
-			{
-				activePlayerNumber = PhotonNetwork.playerList.Length;
-				playerNumber = activePlayerNumber;
-				playerNumberText.text = "ppp";
-			}
-		}
-
-		if (activePlayerNumber == 1) GoToResult(2);
-
+		uiText.text = "切断された";
 	}
 
 	//タイトルシーンへ移動する
 	public void GoToTitle ()
 	{
-		PhotonNetwork.LeaveRoom();
-		playerNumber -= 1;
+		//PhotonNetwork.LeaveRoom();
 		SceneManager.LoadScene(0);
 	}
 
 	//切断する
 	public void Disconnect()
 	{
-		PhotonNetwork.Disconnect();
+
+		//PhotonNetwork.Disconnect();
 	}
 
 }
