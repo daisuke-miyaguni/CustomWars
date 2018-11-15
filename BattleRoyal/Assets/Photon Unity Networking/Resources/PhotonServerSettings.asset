@@ -19,7 +19,7 @@ MonoBehaviour:
   EnabledRegions: -1
   Protocol: 0
   ServerAddress: 
-  ServerPort: 4530
+  ServerPort: 5055
   VoiceServerPort: 5055
   JoinLobby: 1
   EnableLobbyStatistics: 0
@@ -27,21 +27,23 @@ MonoBehaviour:
   NetworkLogging: 1
   RunInBackground: 1
   RpcList:
-  - MoveScene
-  - Death
-  - ChangeHP
   - Attack
-  - GameOver
-  - ShowPlayerCount
+  - BoxOpen
+  - ChangeHP
   - Chat
-  - DestroyRpc
+  - Death
+  - BoxOpen
   - InstantiateRpc
+  - MoveScene
   - PickupItemInit
+  - PlayerDecrease
   - PunPickup
   - PunPickupSimple
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - ShowElapsedTime
-  - PlayerDecrease
+  - DestroyRpc
+  - InitPosition
+  - ShowWinnerResult
+  - MonitorRoomNumber
   DisableAutoOpenWizard: 1

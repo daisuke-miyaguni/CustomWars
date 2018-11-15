@@ -7,15 +7,21 @@ public class ItemBox : MonoBehaviour
 {
 	[SerializeField] string weaponTagName;    // 武器のタグ名
     [SerializeField] string playerTagName;	  // Playerのタグ名
+
     [SerializeField] Image openIcon;	// 開くを伝えるアイコン
 
-    [SerializeField] string[] itemName;		// Itemの名前
+    // [SerializeField] string[] itemName;		// Itemの名前
+	[SerializeField] List<string> itemName = new List<string>{};    // Itemの名前
+
+	[SerializeField] int itemCount;
 
 	BoxCollider bc;		// 宝箱のオープン範囲
 	CapsuleCollider cc;		// Icon表示範囲
+	PhotonView photonView;
 
 	void Start()
 	{
+		photonView = GetComponent<PhotonView>();
 		bc = GetComponent<BoxCollider>();
 		cc = GetComponent<CapsuleCollider>();
 	}
@@ -25,7 +31,7 @@ public class ItemBox : MonoBehaviour
 	{
 		if(other.gameObject.tag == weaponTagName)
 		{
-			BoxOpen();
+			photonView.RPC("BoxOpen", PhotonTargets.AllViaServer);
 		}
 	}
 
@@ -51,16 +57,29 @@ public class ItemBox : MonoBehaviour
         }
 	}
 
-	// 箱が開く処理
+    // 箱が開く処理
+    [PunRPC]
 	void BoxOpen()
 	{
 		// ランダムに生成する処理
-		GameObject item = PhotonNetwork.Instantiate(
-			itemName[Random.Range(0, itemName.Length)],
-			gameObject.transform.position, 
-			gameObject.transform.rotation,
-			0
-		);
+		// GameObject item = PhotonNetwork.Instantiate(
+		// 	itemName[Random.Range(0, itemName.Count)],
+		// 	gameObject.transform.position, 
+		// 	gameObject.transform.rotation,
+		// 	0
+		// );
+
+		for(int i = 0; i < itemCount; i++)
+		{
+			int itemNum = Random.Range(0, itemName.Count);
+			GameObject item = PhotonNetwork.Instantiate(
+				itemName[itemNum],
+				gameObject.transform.position,
+				gameObject.transform.rotation,
+				0
+			);
+			itemName.Remove(itemName[itemNum]);
+		}
 		// 箱の当たり判定削除
 		Destroy(bc.GetComponent<BoxCollider>());
 		// Iconの表示範囲削除
