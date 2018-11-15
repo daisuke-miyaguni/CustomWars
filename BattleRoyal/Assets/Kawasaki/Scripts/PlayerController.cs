@@ -286,4 +286,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    [SerializeField] int parryDamage;
+
+    public void Parryed()
+    {
+        currentHP -= parryDamage;
+        // 操作を制御
+    }
+
+
+    public void ParrySuccess()
+    {
+        // アニメーション再生
+    }
 }
