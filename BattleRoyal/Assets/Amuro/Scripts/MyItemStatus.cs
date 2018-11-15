@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MyItemStatus : MonoBehaviour
 {
+    private ItemData itemData;
+    private ItemParam param;
+
     public enum Item
     {
         parts1,
@@ -22,49 +24,27 @@ public class MyItemStatus : MonoBehaviour
 
     }
 
-
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Item_1" && Input.GetKeyDown(KeyCode.I))
+        if(other.gameObject.tag == "Item")
         {
-            Parts1TakeUp();
-        }
-
-        if (other.gameObject.tag == "Item_2" && Input.GetKeyDown(KeyCode.I))
-        {
-            Parts2TakeUp();
-        }
-
-        if (other.gameObject.tag == "Item_3" && Input.GetKeyDown(KeyCode.I))
-        {
-            Parts3TakeUp();
-        }
-
-        if (other.gameObject.tag == "Item_4" && Input.GetKeyDown(KeyCode.I))
-        {
-            MonTakeUp();
+            param = other.gameObject.GetComponent<ItemParam>();
+            var type = param.GetItems();
+            Debug.Log(type);
         }
     }
 
-    void Parts1TakeUp()
+
+    private void OnTriggerStay(Collider other)                  //アイテムプレファブのアイテムタイプを取得して、アイテム所持情報に反映させる
     {
-        itemFlags[(int)Item.parts1] = true;
+        if (other.gameObject.tag == "Item" && Input.GetKeyDown(KeyCode.I))
+        {
+            param = other.gameObject.GetComponent<ItemParam>();
+            var type = param.GetItems();
+            itemFlags[(int)type] = true;
+        }
     }
 
-    void Parts2TakeUp()
-    {
-        itemFlags[(int)Item.parts2] = true;
-    }
-
-    void Parts3TakeUp()
-    {
-        itemFlags[(int)Item.parts3] = true;
-    }
-
-    void MonTakeUp()
-    {
-        itemFlags[(int)Item.mon] = true;
-    }
 
     public bool GetItemFlag(Item item)
     {

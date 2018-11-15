@@ -56,7 +56,7 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    Player.atk += plusPower;                                            //Player.atkをプレイヤーの攻撃力に当たる変数に変えて使用
 
                     Destroy(dataName);
                     break;
@@ -124,7 +124,7 @@ public class CustomSlot : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        Player.atk -= plusPower;
+        Player.atk -= plusPower;                                                                //パーツを外したときに追加された分だけの攻撃力を減少させる
 
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         informationText.text = null;

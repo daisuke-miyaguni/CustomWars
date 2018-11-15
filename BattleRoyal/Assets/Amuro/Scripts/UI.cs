@@ -5,17 +5,13 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    private ItemDataBase itemDataBase;
 
-    public GameObject Inv;
-
-    private CreateSlotScript createSlotScript;
+    public GameObject basePanel;
 
 	// Use this for initialization
 	void Start ()
     {
-        //Base_P = transform.Find("base_panel").gameObject;
-        Inv.SetActive(false);
+        basePanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -29,7 +25,6 @@ public class UI : MonoBehaviour
 
     void Inventory()
     {
-        Inv.SetActive(!Inv.activeSelf);
-       // createSlotScript.CreateSlot(itemDataBase.GetItemData());
+        basePanel.SetActive(!basePanel.activeSelf);
     }
 }
