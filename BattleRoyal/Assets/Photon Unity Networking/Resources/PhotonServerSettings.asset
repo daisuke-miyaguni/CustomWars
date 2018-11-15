@@ -42,8 +42,10 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
+  - ShowElapsedTime
+  - Recover
+  - TakeDamage
   - DestroyRpc
   - InitPosition
   - ShowWinnerResult
-  - MonitorRoomNumber
   DisableAutoOpenWizard: 1

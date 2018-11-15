@@ -7,6 +7,8 @@ TagManager:
   - weapon
   - Area
   - Desk
+  - Item
+  - AreaOut
   layers:
   - Default
   - TransparentFX

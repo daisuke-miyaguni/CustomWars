@@ -34,6 +34,6 @@ public class PlayerSpawner : Photon.MonoBehaviour
         float spawnZ = Random.Range(minStartPos_Z, maxStartPos_Z);
 
         // Playerをスポーン
-        GameObject player = PhotonNetwork.Instantiate(spawnPlayerName, new Vector3(spawnX, 1.0f, spawnZ), Quaternion.Euler(Vector3.zero), 0);
+        PhotonNetwork.Instantiate(spawnPlayerName, new Vector3(spawnX, 1.0f, spawnZ), Quaternion.Euler(Vector3.zero), 0);
     }
 }

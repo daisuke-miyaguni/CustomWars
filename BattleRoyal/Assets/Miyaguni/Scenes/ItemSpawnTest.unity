@@ -133,7 +133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &86641774
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &618400534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,15 +331,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 618400533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844a853ac096714abcf0bfa4182b14d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e19971a63f1c92499fd4a4860ba3da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itempBoxSpawnPos:
-  - {x: -50, y: 1, z: 50}
-  - {x: -50, y: 1, z: 10}
-  - {x: -10, y: 1, z: 10}
-  - {x: -10, y: 1, z: 50}
-  itemSpawnWaitTime: 2
+  - {x: -50, y: 0.5, z: 50}
+  - {x: -50, y: 0.5, z: 10}
+  - {x: -10, y: 0.5, z: 10}
+  - {x: -10, y: 0.5, z: 50}
+  itemSpawnWaitTime: 3
   itempBoxName: MiyaguniItemBox
 --- !u!4 &618400535
 Transform:
@@ -496,7 +496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &811088660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,15 +505,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 811088659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844a853ac096714abcf0bfa4182b14d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e19971a63f1c92499fd4a4860ba3da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itempBoxSpawnPos:
-  - {x: -50, y: 1, z: -50}
-  - {x: -50, y: 1, z: -10}
-  - {x: -10, y: 1, z: -50}
-  - {x: -10, y: 1, z: -10}
-  itemSpawnWaitTime: 2
+  - {x: -50, y: 0.5, z: -10}
+  - {x: -10, y: 0.5, z: -50}
+  - {x: -10, y: 0.5, z: -10}
+  - {x: -50, y: 0.5, z: -50}
+  itemSpawnWaitTime: 3
   itempBoxName: MiyaguniItemBox
 --- !u!4 &811088661
 Transform:
@@ -838,7 +838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1390373061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,15 +847,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1390373060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844a853ac096714abcf0bfa4182b14d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e19971a63f1c92499fd4a4860ba3da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itempBoxSpawnPos:
-  - {x: 50, y: 1, z: 50}
-  - {x: 50, y: 1, z: 10}
-  - {x: 10, y: 1, z: 50}
-  - {x: 10, y: 1, z: 10}
-  itemSpawnWaitTime: 2
+  - {x: 50, y: 0.5, z: 50}
+  - {x: 50, y: 0.5, z: 10}
+  - {x: 10, y: 0.5, z: 50}
+  - {x: 10, y: 0.5, z: 10}
+  itemSpawnWaitTime: 3
   itempBoxName: MiyaguniItemBox
 --- !u!4 &1390373062
 Transform:
@@ -1012,7 +1012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2030376373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,15 +1021,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2030376372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c844a853ac096714abcf0bfa4182b14d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e19971a63f1c92499fd4a4860ba3da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itempBoxSpawnPos:
-  - {x: 10, y: 1, z: -50}
-  - {x: 10, y: 1, z: -10}
-  - {x: 50, y: 1, z: -50}
-  - {x: 50, y: 1, z: -10}
-  itemSpawnWaitTime: 2
+  - {x: 10, y: 0.5, z: -50}
+  - {x: 50, y: 0.5, z: -50}
+  - {x: 10, y: 0.5, z: -10}
+  - {x: 50, y: 0.5, z: -10}
+  itemSpawnWaitTime: 3
   itempBoxName: MiyaguniItemBox
 --- !u!4 &2030376374
 Transform:
@@ -1089,8 +1089,8 @@ MonoBehaviour:
   startButton: {fileID: 854294002}
   playerCountText: {fileID: 854294001}
   playerStateText: {fileID: 854294000}
-  maxPlayerList: 100
-  minPlayerList: 1
+  maxPlayerList: 4
+  minPlayerList: 2
   gameStartTime: 0.1
   sceneTransitioner: {fileID: 2070705311}
 --- !u!114 &2070705311

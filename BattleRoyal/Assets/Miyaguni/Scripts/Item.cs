@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : Photon.MonoBehaviour
+public class Item : MonoBehaviour
 {
 	[SerializeField] string playerTag;
 	PhotonView photonView;
