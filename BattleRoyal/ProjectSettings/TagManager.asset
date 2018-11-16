@@ -9,6 +9,9 @@ TagManager:
   - Desk
   - Item
   - AreaOut
+  - panel
+  - dustbox
+  - Item_Name
   layers:
   - Default
   - TransparentFX

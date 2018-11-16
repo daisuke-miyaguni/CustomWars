@@ -5,26 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainSceneManager : Photon.MonoBehaviour {
-	[SerializeField]
-	private int playerNumber;    //プレイヤー数
+	[SerializeField]private int playerNumber;    //プレイヤー数
 	int activePlayerNumber;    //初期のプレイヤー数
 	private bool alive = true;
 	private float elapsedTime;    //経過時間
 	private bool isDead = false;    //死んだかどうか
-	[SerializeField]
-	private Text elapsedTimeText;    //経過時間を表示するテキストUI
-	[SerializeField]
-	private Text playerNumberText;    //プレイヤー数を表示するテキストUI
-	[SerializeField]
-	private float scaleDownStartTime;    	//縮小開始時の経過時間を指定
+	[SerializeField]private Text elapsedTimeText;    //経過時間を表示するテキストUI
+	[SerializeField]private Text playerNumberText;    //プレイヤー数を表示するテキストUI
+	[SerializeField]private float scaleDownStartTime;    	//縮小開始時の経過時間を指定
 	private PhotonView myPhotonView;    //自身のPhotonView
-	[SerializeField]
-	private GameObject resultPanel;    //リザルトパネルUI
-	[SerializeField]
-	private Text rankText;    //順位を表示するテキストUI
-	[SerializeField]
-	private StageManager stageManager;    //ステージ縮小のスクリプト
+	[SerializeField]private GameObject resultPanel;    //リザルトパネルUI
+	[SerializeField]private Text rankText;    //順位を表示するテキストUI
+	[SerializeField]private StageManager stageManager;    //ステージ縮小のスクリプト
 	bool isScaleDownBegan = false;    //縮小が始まったかどうか
+	[SerializeField] private int lobbyScene;
 
 	void Start ()
 	{
@@ -34,7 +28,6 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		playerNumber = activePlayerNumber;
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
 		CalculateElapsedTime();
@@ -151,12 +144,12 @@ public class MainSceneManager : Photon.MonoBehaviour {
 
 	}
 
-	//タイトルシーンへ移動する
+	//ロビーへ移動する
 	public void GoToTitle ()
 	{
 		PhotonNetwork.LeaveRoom();
 		playerNumber -= 1;
-		SceneManager.LoadScene(0);
+		SceneManager.LoadScene(lobbyScene);
 	}
 
 	//切断する
