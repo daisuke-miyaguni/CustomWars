@@ -17,7 +17,7 @@ public class LobbyManager : Photon.MonoBehaviour
 
 	[SerializeField] float gameStartTime;	// ゲームスタートまでの待機時間
 
-	[SerializeField] SceneTransitioner sceneTransitioner;	// シーン移動者
+	[SerializeField] PhotonSceneTransitioner photonSceneTransitioner;	// シーン移動者
 
     string roomName = "Room";    // ルーム名
 	string playerCount = "PlayerCount: ";    // PlayerCountの文字列
@@ -26,7 +26,7 @@ public class LobbyManager : Photon.MonoBehaviour
 
 	void Start()
 	{
-		sceneTransitioner = GetComponent<SceneTransitioner>();
+        photonSceneTransitioner = GetComponent<PhotonSceneTransitioner>();
 		Connect();
 	}
 
@@ -167,7 +167,7 @@ public class LobbyManager : Photon.MonoBehaviour
         if (PhotonNetwork.playerList.Length >= minPlayerList && PhotonNetwork.isMasterClient)
         {
             // SceneTrasitionerを参照してシーン遷移
-            sceneTransitioner.ReceveMoveScene();
+            photonSceneTransitioner.ReceveMoveScene();
         }
 	}
 }
