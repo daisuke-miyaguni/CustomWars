@@ -10,7 +10,8 @@ public class LobbyManager : Photon.MonoBehaviour
 	[SerializeField] Button joinButton;    // 参加ボタン
     [SerializeField] Button startButton;    // 参加ボタン
 	[SerializeField] Text playerCountText;    // プレイヤー数の表示テキスト
-	[SerializeField] Text playerStateText;	  // プレイヤーの状態表示テキスト
+	[SerializeField] Text playerStateText;    // プレイヤーの状態表示テキスト
+    [SerializeField] Text playerIDText;	  // プレイヤーのID表示テキスト
 
     [SerializeField] int maxPlayerList;	   // 最大人数
 	[SerializeField] int minPlayerList;	   // 最小人数
@@ -70,6 +71,8 @@ public class LobbyManager : Photon.MonoBehaviour
 	{
 		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
+        // IDの表示
+        playerIDText.text = PhotonNetwork.player.ID.ToString();
 		// Player状態更新
 		PlayerStateCheck();
 		// 入室ボタンを押せないようにする
@@ -88,6 +91,8 @@ public class LobbyManager : Photon.MonoBehaviour
 	{
 		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
+        // IDの表示
+        playerIDText.text = PhotonNetwork.player.ID.ToString();
 		// Buttonの操作
         ButtonsControll();
 
@@ -111,6 +116,8 @@ public class LobbyManager : Photon.MonoBehaviour
 		playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
 		// Player状態の更新
 		PlayerStateCheck();
+        // IDの表示
+        playerIDText.text = PhotonNetwork.player.ID.ToString();
 		// Buttonの操作
 		ButtonsControll();
         if (PhotonNetwork.isMasterClient)

@@ -10,15 +10,21 @@ public class Item : MonoBehaviour
 	public void Start ()
 	{
 		photonView = GetComponent<PhotonView>();
-		photonView.enabled = false;
+		// photonView.enabled = false;
 	}
 
-	public void OnTriggerEnter(Collider other)
+	public void OnCollisionEnter(Collision other)
 	{
 		if(other.gameObject.tag == playerTag)
 		{
-			photonView.enabled = true;
-			Destroy(gameObject);
+			// photonView.enabled = true;
+			photonView.RPC("WasgetItem", PhotonTargets.AllViaServer);
 		}
+	}
+
+	[PunRPC]
+	void WasgetItem()
+	{
+		Destroy(gameObject);
 	}
 }

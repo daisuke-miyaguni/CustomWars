@@ -34,15 +34,19 @@ public class PlayerController : MonoBehaviour
 
     private List<string> itemList = new List<string>();
 
+    private Animator animator;
+
     int damage = 10;
     int healing = 2;
     private float weaponPower = 200;
+    BoxCollider weaponCollider;
 
     // player parry情報
     [SerializeField] private SphereCollider sphereCollider;
     [SerializeField] private bool parryState;
     [SerializeField] private float parryTime = 0.5f;
     [SerializeField] private int wasparryedDamage = 15;
+    [SerializeField] private float rebelliousTime = 0.3f;
 
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
@@ -52,8 +56,6 @@ public class PlayerController : MonoBehaviour
     private GameObject playerCamera;
     Vector2 startPos;
     Vector3 targetPos;
-
-
 
     void Awake()
     {
@@ -66,6 +68,9 @@ public class PlayerController : MonoBehaviour
         sphereCollider = gameObject.transform.Find("ParryScale").GetComponent<SphereCollider>();
         sphereCollider.enabled = false;
         parryState = sphereCollider.enabled;
+        weaponCollider = weapon.GetComponent<BoxCollider>();
+        weaponCollider.enabled = false;
+        animator = weapon.GetComponent<Animator>();
 
         if (myPV.isMine)
         {
@@ -84,7 +89,7 @@ public class PlayerController : MonoBehaviour
             inventoryButton.onClick.AddListener(this.OpenInventory);
             // 回避ボタン取得、設定
             avoidButton = GameObject.Find("AvoidButton").GetComponent<Button>();
-            inventoryButton.onClick.AddListener(this.Avoid);
+            avoidButton.onClick.AddListener(this.Avoid);
             // パリイボタン取得、設定
             parryButton = GameObject.Find("ParryButton").GetComponent<Button>();
             parryButton.onClick.AddListener(this.ParryClick);
@@ -98,8 +103,6 @@ public class PlayerController : MonoBehaviour
             // playerCamera.transform.parent = transform;
             // playerCamera.transform.position = transform.position;
 
-
-
             //hp初期値設定
             currentHP = maxHP;
             hpSlider.value = currentHP;
@@ -107,13 +110,11 @@ public class PlayerController : MonoBehaviour
             hpText.text = "HP: " + currentHP.ToString();
             otherHpBar.SetActive(false);
             myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
-            
 
             inventory = GameObject.Find("Inventory");
             inventory.SetActive(false);
 
             isJump = true;
-
 
             targetPos = gameObject.transform.position;
         }
@@ -135,6 +136,8 @@ public class PlayerController : MonoBehaviour
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        sphereCollider.enabled = parryState;
+
         if (stream.isWriting)
         {
             stream.SendNext(parryState);
@@ -144,7 +147,6 @@ public class PlayerController : MonoBehaviour
             parryState = (bool)stream.ReceiveNext();
         }
 
-        sphereCollider.enabled = parryState;
     }
 
 
@@ -211,7 +213,7 @@ public class PlayerController : MonoBehaviour
     public void OnClickAttack()
     {
         Vector3 posUp = transform.position + new Vector3(0, 2, 0);
-        myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
+        myPV.RPC("CallAttack", PhotonTargets.AllViaServer/*, posUp, weaponPower */);
         // if (myPV.isMine)
         // {
         //     Vector3 posUp = transform.position + new Vector3(0, 2, 0);
@@ -219,15 +221,23 @@ public class PlayerController : MonoBehaviour
         // }
     }
 
-    // // 攻撃
-    // [PunRPC]
-    // private void Attack(Vector3 pos, float power)
-    // {
-    //     GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
-    //     weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
-    // }
+    // 攻撃
+    [PunRPC]
+    private void CallAttack(/*Vector3 pos, float power */)
+    {
+        // GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
+        // weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
+        StartCoroutine(Attack());
+    }
 
-
+    IEnumerator Attack()
+    {
+        weaponCollider.enabled = true;
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(parryTime);
+        weaponCollider.enabled = false;
+        animator.ResetTrigger("Attack");
+    }
 
     // ダメージを受ける
     [PunRPC]
@@ -272,8 +282,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (myPV.isMine)
@@ -293,12 +301,10 @@ public class PlayerController : MonoBehaviour
             // ステージ外判定
             if (other.gameObject.tag == "AreaOut")
             {
-                myPV.RPC("Death", PhotonTargets.All);
+                myPV.RPC("Death", PhotonTargets.AllViaServer);
             }
         }
     }
-
-
 
     // 死亡
     [PunRPC]
@@ -306,16 +312,16 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
         // PhotonNetwork.Disconnect();
-        // SceneManager.LoadScene("hoge");
-
+        if (myPV.isMine)
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 
     // 回避
     public void Avoid()
     {
     }
-
-
 
     // カバンを開く
     public void OpenInventory()
@@ -333,7 +339,7 @@ public class PlayerController : MonoBehaviour
 
     public void ParryClick()
     {
-        if(myPV.isMine)
+        if (myPV.isMine)
         {
             myPV.RPC("CallParry", PhotonTargets.AllViaServer);
         }
@@ -349,9 +355,11 @@ public class PlayerController : MonoBehaviour
     {
         sphereCollider.enabled = true;
         parryState = true;
+        parryButton.interactable = false;
         yield return new WaitForSeconds(parryTime);
         sphereCollider.enabled = false;
         parryState = false;
+        parryButton.interactable = true;
     }
 
     public void CallWasparryed()
@@ -367,6 +375,7 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
+            StartCoroutine(Rebellious());
         }
 
         if (currentHP <= 0)
@@ -374,5 +383,20 @@ public class PlayerController : MonoBehaviour
             currentHP = 0;
             myPV.RPC("Death", PhotonTargets.Others);
         }
+    }
+
+    IEnumerator Rebellious()
+    {
+        attackButton.interactable = false;
+        avoidButton.interactable = false;
+        jumpButton.interactable = false;
+        parryButton.interactable = false;
+        controller.gameObject.SetActive(false);
+        yield return new WaitForSeconds(rebelliousTime);
+        attackButton.interactable = true;
+        avoidButton.interactable = true;
+        jumpButton.interactable = true;
+        parryButton.interactable = true;
+        controller.gameObject.SetActive(true);
     }
 }

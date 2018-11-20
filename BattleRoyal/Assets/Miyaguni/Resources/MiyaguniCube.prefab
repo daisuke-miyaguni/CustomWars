@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 54488525379039714}
   - component: {fileID: 114259340127924366}
   - component: {fileID: 114465146785457782}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MiyaguniCube
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -129,7 +129,8 @@ GameObject:
   - component: {fileID: 23528680973943540}
   - component: {fileID: 114803523347596606}
   - component: {fileID: 54801297216387972}
-  m_Layer: 0
+  - component: {fileID: 95174764708150736}
+  m_Layer: 10
   m_Name: Weapon
   m_TagString: weapon
   m_Icon: {fileID: 0}
@@ -207,13 +208,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1424425618346632}
-  m_LocalRotation: {x: -0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0.7, y: 0.35, z: -1}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 0.7, y: 0.35, z: 1}
   m_LocalScale: {x: 0.15, y: 2, z: 0.15}
   m_Children: []
   m_Father: {fileID: 4316253873582652}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -70, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!4 &4316253873582652
 Transform:
   m_ObjectHideFlags: 1
@@ -222,7 +223,7 @@ Transform:
   m_GameObject: {fileID: 1272040985108542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4394088430798566}
   - {fileID: 4191246279077460}
@@ -237,7 +238,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369770956679868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4316253873582652}
@@ -408,6 +409,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95174764708150736
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424425618346632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 231337be0e00c70468aff740b763932f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114026707966924588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -449,13 +467,14 @@ MonoBehaviour:
   currentHP: 100
   hpSlider: {fileID: 114404578247237076}
   weapon: {fileID: 1424425618346632}
-  hp: {fileID: 1439627588597238}
+  otherHpBar: {fileID: 1439627588597238}
   moveSpeed: 5
   jumpForce: 5
   sphereCollider: {fileID: 0}
   parryState: 0
   parryTime: 0.3
   wasparryedDamage: 15
+  rebelliousTime: 0.3
   angleMax: 30
   angleMin: -15
 --- !u!114 &114341804633077042
