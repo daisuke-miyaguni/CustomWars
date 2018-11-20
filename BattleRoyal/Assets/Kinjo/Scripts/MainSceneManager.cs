@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainSceneManager : Photon.MonoBehaviour {
-	[SerializeField]private int playerNumber;    //プレイヤー数
-	int activePlayerNumber;    //初期のプレイヤー数
+	private int playerNumber;    //プレイヤー数
+	private int activePlayerNumber;    //初期のプレイヤー数
 	private bool alive = true;
 	private float elapsedTime;    //経過時間
 	private bool isDead = false;    //死んだかどうか
@@ -97,7 +97,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 			rankText.text = "Your rank is " + activePlayerNumber + " ！";
 		}
 
-		if (activePlayerNumber == 2 || isDisconnected == 2)
+		if (activePlayerNumber == 2)
 		{
 			myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
 		}
@@ -140,7 +140,10 @@ public class MainSceneManager : Photon.MonoBehaviour {
 			}
 		}
 
-		if (activePlayerNumber == 1) GoToResult(2);
+		if (activePlayerNumber == 1) 
+		{
+			myPhotonView.RPC("ShowWinerResult",PhotonTargets.AllViaServer);
+		}
 
 	}
 
