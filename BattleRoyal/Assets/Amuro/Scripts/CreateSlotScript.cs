@@ -18,7 +18,10 @@ public class CreateSlotScript : MonoBehaviour
 
     private int callNum;
 
-
+    public void SetMyItemStatus(MyItemStatus myPlayer)
+    {
+        this.myItemStatus = myPlayer;
+    }
 
     void OnEnable()
     {

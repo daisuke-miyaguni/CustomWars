@@ -17,6 +17,13 @@ public class CustomSlot : MonoBehaviour
 
     private int plusPower;
 
+    WeaponManager wm;
+
+    public void SetWeaponManager(WeaponManager weaponManager)
+    {
+        this.wm = weaponManager.GetComponent<WeaponManager>();
+    }
+
 
     [SerializeField]
     private Text informationText;
@@ -56,7 +63,8 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;                                            //Player.atkをプレイヤーの攻撃力に当たる変数に変えて使用
+                    // Player.atk += plusPower;                                            //Player.atkをプレイヤーの攻撃力に当たる変数に変えて使用
+                    wm.SetWeaponPower(plusPower);
 
                     Destroy(dataName);
                     break;
@@ -67,7 +75,8 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    wm.SetWeaponPower(plusPower);
 
                     Destroy(dataName);
 
@@ -79,7 +88,8 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    wm.SetWeaponPower(plusPower);
 
                     Destroy(dataName);
 
@@ -124,7 +134,8 @@ public class CustomSlot : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        Player.atk -= plusPower;                                                                //パーツを外したときに追加された分だけの攻撃力を減少させる
+        // Player.atk -= plusPower;                                                                //パーツを外したときに追加された分だけの攻撃力を減少させる
+        wm.SetWeaponPower(-plusPower);
 
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         informationText.text = null;

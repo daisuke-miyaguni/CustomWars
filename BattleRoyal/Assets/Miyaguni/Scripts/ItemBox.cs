@@ -70,7 +70,7 @@ public class ItemBox : MonoBehaviour
 			int itemNum = Random.Range(0, itemName.Count);
             GameObject item = PhotonNetwork.Instantiate
 			(
-				itemName[itemNum],
+				this.itemName[itemNum],
 				this.transform.position,
 				// new Vector3
 				// (
@@ -84,7 +84,7 @@ public class ItemBox : MonoBehaviour
 
             Rigidbody itemRb = item.GetComponent<Rigidbody>();
             itemRb.AddForce(Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, Random.Range(1.5f, itemSpawnPower), ForceMode.VelocityChange);
-            itemName.Remove(itemName[itemNum]);
+            this.itemName.Remove(itemName[itemNum]);
 		}
 
 		// 箱の重力を削除

@@ -48,4 +48,10 @@ MonoBehaviour:
   - DestroyRpc
   - InitPosition
   - ShowWinnerResult
+  - CallAttack
+  - CallParry
+  - Hpber
+  - ShuffleSpawnPos
+  - WasgetItem
+  - Wasparryed
   DisableAutoOpenWizard: 1

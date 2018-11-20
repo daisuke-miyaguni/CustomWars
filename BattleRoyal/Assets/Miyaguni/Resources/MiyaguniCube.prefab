@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 54488525379039714}
   - component: {fileID: 114259340127924366}
   - component: {fileID: 114465146785457782}
+  - component: {fileID: 114365844405057300}
   m_Layer: 9
   m_Name: MiyaguniCube
   m_TagString: Player
@@ -130,6 +131,7 @@ GameObject:
   - component: {fileID: 114803523347596606}
   - component: {fileID: 54801297216387972}
   - component: {fileID: 95174764708150736}
+  - component: {fileID: 114071664737884588}
   m_Layer: 10
   m_Name: Weapon
   m_TagString: weapon
@@ -453,6 +455,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114071664737884588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424425618346632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c3f63ece8f74847935fdc8db542509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114259340127924366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -542,6 +555,17 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &114365844405057300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272040985108542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0469c3e355d7d66479ce837b4314d79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114404578247237076
 MonoBehaviour:
   m_ObjectHideFlags: 1

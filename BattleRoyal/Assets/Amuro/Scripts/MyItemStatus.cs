@@ -42,6 +42,8 @@ public class MyItemStatus : MonoBehaviour
             param = other.gameObject.GetComponent<ItemParam>();
             var type = param.GetItems();
             itemFlags[(int)type] = true;
+            ItemController itemController = other.GetComponent<ItemController>();
+            itemController.GetItem();
         }
     }
 
