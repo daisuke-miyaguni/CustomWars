@@ -19,22 +19,22 @@ public class ItemParam : MonoBehaviour                      //アイテムプレ
         {
             case 0:
                 items = MyItemStatus.Item.parts1;
-                print(items);
+                // print(items);
                 break;
 
             case 1:
                 items = MyItemStatus.Item.parts2;
-                print(items);
+                // print(items);
                 break;
 
             case 2:
                 items = MyItemStatus.Item.parts3;
-                print(items);
+                // print(items);
                 break;
 
             case 3:
                 items = MyItemStatus.Item.mon;
-                print(items);
+                // print(items);
                 break;
 
             default:
