@@ -11,7 +11,7 @@ public class UI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        basePanel.SetActive(false);
+        // basePanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -24,6 +24,11 @@ public class UI : MonoBehaviour
 	}
 
     void Inventory()
+    {
+        basePanel.SetActive(!basePanel.activeSelf);
+    }
+
+    public void OnClick()
     {
         basePanel.SetActive(!basePanel.activeSelf);
     }

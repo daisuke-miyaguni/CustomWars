@@ -272,7 +272,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1257599064}
-  - component: {fileID: 1257599063}
   - component: {fileID: 1257599065}
   - component: {fileID: 1257599066}
   m_Layer: 0
@@ -282,18 +281,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1257599063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1257599062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff8918c41846f8f468d031a686309298, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: LobbyTest
 --- !u!4 &1257599064
 Transform:
   m_ObjectHideFlags: 0

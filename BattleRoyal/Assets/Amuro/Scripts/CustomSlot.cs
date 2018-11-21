@@ -17,6 +17,16 @@ public class CustomSlot : MonoBehaviour
 
     private int plusPower;
 
+    private bool panelParam;
+
+    // private GameObject myPanel;
+
+    WeaponManager wm;
+
+    public void SetWeaponManager(WeaponManager weaponManager)
+    {
+        this.wm = weaponManager.GetComponent<WeaponManager>();
+    }
 
     [SerializeField]
     private Text informationText;
@@ -37,17 +47,30 @@ public class CustomSlot : MonoBehaviour
             return;
         }
 
+        if(panelParam != false)
+        {
+            //print("false");
+            return;
+
+        }
+
+        transform.GetChild(0).GetComponent<Image>().sprite = null;
+        informationText.text = null;
+        myItemData = null;
+
         var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
 
-        if (myItemData.GetItemType() == MyItemStatus.Item.parts1  && dataName != null
-        || myItemData.GetItemType() == MyItemStatus.Item.parts2  && dataName != null
-        || myItemData.GetItemType() == MyItemStatus.Item.parts3  && dataName != null) 
+        if (myItemData.GetItemType() == MyItemStatus.Item.parts1 && panelParam == false
+        || myItemData.GetItemType() == MyItemStatus.Item.parts2  && panelParam == false
+        || myItemData.GetItemType() == MyItemStatus.Item.parts3  && panelParam == false) 
         {
-            dataName = ProcessingSlot.itemSlot;
+            dataName = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
             ShowInformation();
 
-            switch (myItemData.GetItemType())
+            //  myPanel.GetComponent<CustomSlot>().PanelDelete();
+
+            switch (myItemData.GetItemType())               //カスタムパネルに装備
             {
 
 
@@ -56,9 +79,11 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;                                            //Player.atkをプレイヤーの攻撃力に当たる変数に変えて使用
+                    Player.atk += plusPower;
 
-                    Destroy(dataName);
+                    panelParam = true;
+
+                    Destroy(dataName);                      //持ち物欄からパネルを削除
                     break;
 
 
@@ -67,7 +92,10 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    wm.SetWeaponPower(plusPower);
+
+                    panelParam = true;
 
                     Destroy(dataName);
 
@@ -79,7 +107,10 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    wm.SetWeaponPower(plusPower);
+
+                    panelParam = true;
 
                     Destroy(dataName);
 
@@ -89,15 +120,14 @@ public class CustomSlot : MonoBehaviour
                 default:
                     break;
             }
+            //Debug.Log(myPanel);
+
         }
-        
+
+               
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
 
-        print(dataName);
-
-
-
-        
+               
     }
 
     void ShowInformation()
@@ -120,20 +150,28 @@ public class CustomSlot : MonoBehaviour
             return;
         }
 
+        // myPanel = gameObject;
+
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        Player.atk -= plusPower;                                                                //パーツを外したときに追加された分だけの攻撃力を減少させる
+        Player.atk -= plusPower;
+        panelParam = false;
 
-        transform.GetChild(0).GetComponent<Image>().sprite = null;
-        informationText.text = null;
-        myItemData = null;
         
     }
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
         Destroy(instanceDragItemUI);
+    }
+
+    private void PanelDelete()
+    {
+        transform.GetChild(0).GetComponent<Image>().sprite = null;
+        informationText.text = null;
+        myItemData = null;
+        // myPanel = null;
     }
 }
