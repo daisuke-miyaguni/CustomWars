@@ -20,16 +20,16 @@ GameObject:
   m_Component:
   - component: {fileID: 4919444059146370}
   - component: {fileID: 33745754389336252}
-  - component: {fileID: 135984015545515914}
   - component: {fileID: 23852485765110396}
+  - component: {fileID: 135984015545515914}
+  - component: {fileID: 135809318638570890}
   - component: {fileID: 54340468120265694}
-  - component: {fileID: 114921436034611610}
   - component: {fileID: 114388829554876252}
   - component: {fileID: 114076793878915158}
   - component: {fileID: 114179039798897708}
   m_Layer: 8
   m_Name: MiyaguniItemTest3
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &114076793878915158
 MonoBehaviour:
@@ -206,17 +206,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemNum: 2
---- !u!114 &114921436034611610
-MonoBehaviour:
+--- !u!135 &135809318638570890
+SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756564616796304}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85ac912eeae3992468918c95efaa5fe3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135984015545515914
 SphereCollider:
   m_ObjectHideFlags: 1

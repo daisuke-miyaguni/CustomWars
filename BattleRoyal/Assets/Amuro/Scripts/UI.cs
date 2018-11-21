@@ -27,4 +27,9 @@ public class UI : MonoBehaviour
     {
         basePanel.SetActive(!basePanel.activeSelf);
     }
+
+    public void OnClick()
+    {
+        basePanel.SetActive(!basePanel.activeSelf);
+    }
 }

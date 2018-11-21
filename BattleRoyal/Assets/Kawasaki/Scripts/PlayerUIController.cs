@@ -6,20 +6,25 @@ using UnityEngine.UI;
 public class PlayerUIController : MonoBehaviour
 {
     private PlayerController playerController;
+    private MyItemStatus myItemStatus;
 
     [SerializeField] private CreateSlotScript createSlot;
 
     [SerializeField] public Button attackButton;
     [SerializeField] public Button jumpButton;
-    [SerializeField] public Button itemButton;
+    // [SerializeField] public Button itemButton;
     [SerializeField] public Button inventoryButton;
     // [SerializeField] public Button avoidButton;
     [SerializeField] public Button parryButton;
+
+    [SerializeField] public GameObject getButton;
+
     [SerializeField] public GameObject inventory;
 
     public void SetPlayerController(PlayerController player)
     {
         this.playerController = player.GetComponent<PlayerController>();
+        this.myItemStatus = player.gameObject.GetComponent<MyItemStatus>();
         SetButtons();
     }
 
@@ -33,6 +38,11 @@ public class PlayerUIController : MonoBehaviour
 
         inventoryButton.GetComponent<Button>();
         inventoryButton.onClick.AddListener(this.OpenInventory);
+
+        Button get = getButton.GetComponent<Button>();
+        get.onClick.AddListener(myItemStatus.OnClick);
+        getButton.SetActive(false);
+        
 
         // avoidButton.GetComponent<Button>();
         // avoidButton.onClick.AddListener(playerController.Avoid);
@@ -52,10 +62,5 @@ public class PlayerUIController : MonoBehaviour
         {
             inventory.SetActive(true);
         }
-        else
-        {
-            inventory.SetActive(false);
-        }
-
     }
 }

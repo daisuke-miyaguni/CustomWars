@@ -58,7 +58,8 @@ GameObject:
   - component: {fileID: 54488525379039714}
   - component: {fileID: 114259340127924366}
   - component: {fileID: 114465146785457782}
-  - component: {fileID: 114365844405057300}
+  - component: {fileID: 114601528514305724}
+  - component: {fileID: 114085884628403624}
   m_Layer: 9
   m_Name: MiyaguniCube
   m_TagString: Player
@@ -132,6 +133,7 @@ GameObject:
   - component: {fileID: 54801297216387972}
   - component: {fileID: 95174764708150736}
   - component: {fileID: 114071664737884588}
+  - component: {fileID: 114151441051423494}
   m_Layer: 10
   m_Name: Weapon
   m_TagString: weapon
@@ -466,6 +468,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c3f63ece8f74847935fdc8db542509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114085884628403624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272040985108542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86813ab6e0a95f842af946a94d48ee8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fanPower: 10
+--- !u!114 &114151441051423494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424425618346632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114071664737884588}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114259340127924366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -555,17 +595,6 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &114365844405057300
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1272040985108542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0469c3e355d7d66479ce837b4314d79d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114404578247237076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -679,6 +708,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114601528514305724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272040985108542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801aa4e82794a1b4aa587338b5c6c256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  getButton: {fileID: 1651695198228466, guid: 40ff768360e79364d99facd731490fa7, type: 2}
 --- !u!114 &114749574698599368
 MonoBehaviour:
   m_ObjectHideFlags: 1

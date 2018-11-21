@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PhotonSceneTransitioner : MonoBehaviour
 {
-	[SerializeField] string sceneName;    // 移動するシーン名
+	[SerializeField] int sceneNum;    // 移動するシーン名
 	PhotonView photonView;    // PhotonViewの定義
 
 	void Start()
@@ -23,6 +23,6 @@ public class PhotonSceneTransitioner : MonoBehaviour
 	[PunRPC]
 	void MoveScene()
 	{
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneNum);
     }
 }

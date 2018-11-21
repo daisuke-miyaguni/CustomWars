@@ -55,7 +55,7 @@ public class PlayerSpawner : Photon.MonoBehaviour
 
         for (int playerNum = 0; playerNum < PhotonNetwork.playerList.Length; playerNum++)
         {
-            if (PhotonNetwork.player.ID == (playerNum + 1))
+            if (PhotonNetwork.player.ID % 4 == playerNum)
             {
                 // Playerをスポーン
                 PhotonNetwork.Instantiate(spawnPlayerName, spawnPos[playerNum], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);

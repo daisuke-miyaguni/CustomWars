@@ -54,4 +54,6 @@ MonoBehaviour:
   - ShuffleSpawnPos
   - WasgetItem
   - Wasparryed
+  - FullTrashs
+  - EffectStart
   DisableAutoOpenWizard: 1

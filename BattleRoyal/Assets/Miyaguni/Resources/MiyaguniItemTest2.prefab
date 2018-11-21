@@ -20,16 +20,16 @@ GameObject:
   m_Component:
   - component: {fileID: 4919444059146370}
   - component: {fileID: 33745754389336252}
-  - component: {fileID: 135984015545515914}
   - component: {fileID: 23852485765110396}
+  - component: {fileID: 135984015545515914}
+  - component: {fileID: 135204526758548064}
   - component: {fileID: 54525916719693310}
-  - component: {fileID: 114029344033332536}
   - component: {fileID: 114738997136240682}
   - component: {fileID: 114858878902295988}
   - component: {fileID: 114346418451919226}
   m_Layer: 8
   m_Name: MiyaguniItemTest2
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,19 +101,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &114029344033332536
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1756564616796304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85ac912eeae3992468918c95efaa5fe3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114346418451919226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,6 +206,18 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!135 &135204526758548064
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756564616796304}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135984015545515914
 SphereCollider:
   m_ObjectHideFlags: 1

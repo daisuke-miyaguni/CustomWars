@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             // 着地
-            if (other.gameObject.tag == "Stage")
+            if (other.gameObject.tag == "Desk")
             {
                 isJump = true;
             }
@@ -307,7 +307,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == "Item")
             {
                 itemList.Add(other.gameObject.name);
-                Destroy(other.gameObject);
+                // Destroy(other.gameObject);
             }
             // ステージ外判定
             if (other.gameObject.tag == "AreaOut")

@@ -6,6 +6,8 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField] SphereCollider[] sphereCollider;    // 安地範囲
 
+    [SerializeField] GameObject safeArea;
+
     [SerializeField] float safeAreaPosX;
     [SerializeField] float safeAreaPosZ;
 
@@ -37,7 +39,6 @@ public class StageManager : MonoBehaviour
         sphereCollider[0] = GetComponent<SphereCollider>();
         sphereCollider[0].enabled = false;
 
-        GameObject safeArea = GameObject.FindWithTag("AreaOut");
         sphereCollider[1] = safeArea.GetComponent<SphereCollider>();
 
         photonView = GetComponent<PhotonView>();
@@ -71,6 +72,7 @@ public class StageManager : MonoBehaviour
     {
         // 安地の位置をランダムで決める
         gameObject.transform.position = new Vector3(x, 0.0f, z);
+        safeArea.transform.root.position = gameObject.transform.position;
     }
 
     // 判定の初期化(指定秒後に安地判定)

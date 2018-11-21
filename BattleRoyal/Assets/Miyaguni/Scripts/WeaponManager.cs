@@ -30,4 +30,17 @@ public class WeaponManager : MonoBehaviour
 			customSlot.SetWeaponManager(this);
 		}
 	}
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            stream.SendNext(weaponPower);
+        }
+        else
+        {
+            weaponPower = (int)stream.ReceiveNext();
+        }
+
+    }
 }
