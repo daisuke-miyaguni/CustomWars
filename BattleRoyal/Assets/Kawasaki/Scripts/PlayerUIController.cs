@@ -13,7 +13,7 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] public Button jumpButton;
     [SerializeField] public Button itemButton;
     [SerializeField] public Button inventoryButton;
-    [SerializeField] public Button avoidButton;
+    // [SerializeField] public Button avoidButton;
     [SerializeField] public Button parryButton;
     [SerializeField] public GameObject inventory;
 
@@ -34,8 +34,8 @@ public class PlayerUIController : MonoBehaviour
         inventoryButton.GetComponent<Button>();
         inventoryButton.onClick.AddListener(this.OpenInventory);
 
-        avoidButton.GetComponent<Button>();
-        avoidButton.onClick.AddListener(playerController.Avoid);
+        // avoidButton.GetComponent<Button>();
+        // avoidButton.onClick.AddListener(playerController.Avoid);
 
         parryButton.GetComponent<Button>();
         parryButton.onClick.AddListener(playerController.ParryClick);

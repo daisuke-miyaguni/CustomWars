@@ -331,10 +331,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 回避
-    public void Avoid()
-    {
-    }
+    // // 回避
+    // public void Avoid()
+    // {
+    // }
 
 
 
@@ -390,12 +390,12 @@ public class PlayerController : MonoBehaviour
     {
         // Parryの操作制御
         playerUIController.attackButton.interactable = false;
-        playerUIController.avoidButton.interactable = false;
+        // playerUIController.avoidButton.interactable = false;
         playerUIController.jumpButton.interactable = false;
         playerUIController.parryButton.interactable = false;
         yield return new WaitForSeconds(rebelliousTime);
         playerUIController.attackButton.interactable = true;
-        playerUIController.avoidButton.interactable = true;
+        // playerUIController.avoidButton.interactable = true;
         playerUIController.jumpButton.interactable = true;
         playerUIController.parryButton.interactable = true;
     }

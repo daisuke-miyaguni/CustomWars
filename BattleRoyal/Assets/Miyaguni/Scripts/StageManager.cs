@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    SphereCollider sphereCollider;    // 安地範囲
+    [SerializeField] SphereCollider[] sphereCollider;    // 安地範囲
 
     [SerializeField] float safeAreaPosX;
     [SerializeField] float safeAreaPosZ;
@@ -19,7 +19,7 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] string deskTag;    // 机のタグ名
 
-    int reductionCount;    // 範囲番号
+    [SerializeField] int reductionCount;    // 範囲番号
 
     // 範囲番号ゲッター
     public int GetReductionCount()
@@ -34,8 +34,11 @@ public class StageManager : MonoBehaviour
         // 範囲番号の初期化
         reductionCount = 0;
 
-        sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.enabled = false;
+        sphereCollider[0] = GetComponent<SphereCollider>();
+        sphereCollider[0].enabled = false;
+
+        GameObject safeArea = GameObject.FindWithTag("AreaOut");
+        sphereCollider[1] = safeArea.GetComponent<SphereCollider>();
 
         photonView = GetComponent<PhotonView>();
 
@@ -67,13 +70,13 @@ public class StageManager : MonoBehaviour
     void InitPosition(float x, float z)
     {
         // 安地の位置をランダムで決める
-        gameObject.transform.position = new Vector3(initPosX, 0.0f, initPosZ);
+        gameObject.transform.position = new Vector3(x, 0.0f, z);
     }
 
     // 判定の初期化(指定秒後に安地判定)
     void TriggerOn()
     {
-        sphereCollider.enabled = true;
+        sphereCollider[0].enabled = true;
     }
 
     void Update()
@@ -85,16 +88,20 @@ public class StageManager : MonoBehaviour
     void ScaleChecker()
     {
         // 指定より大きいと縮小が始まる
-        if (sphereCollider.radius > reductionScales[reductionCount])
+        if (sphereCollider[0].radius > reductionScales[reductionCount])
         {
             Reduction();
         }
+        else
+        {
+            sphereCollider[1].radius = reductionScales[reductionCount + 1];
+        }
     }
-
+    
     // 縮小処理
     void Reduction()
     {
-        sphereCollider.radius -= reducingSpeed * Time.deltaTime;
+        sphereCollider[0].radius -= reducingSpeed * Time.deltaTime;
     }
 
     // 安地縮小を呼び出す
@@ -103,13 +110,13 @@ public class StageManager : MonoBehaviour
         reductionCount++;
     }
 
-    // 安地外オブジェクト処理
-    void OnTriggerExit(Collider other)
-    {
-        // 机が安地から出たら机の安地外処理を呼び出す
-        if (other.gameObject.tag == deskTag)
-        {
-            other.gameObject.GetComponent<SafeAreaOut>().SafeAreaExit();
-        }
-    }
+    // // 安地外オブジェクト処理
+    // void OnTriggerExit(Collider other)
+    // {
+    //     // 机が安地から出たら机の安地外処理を呼び出す
+    //     if (other.gameObject.tag == deskTag)
+    //     {
+    //         other.gameObject.GetComponent<SafeAreaOut>().SafeAreaExit();
+    //     }
+    // }
 }
