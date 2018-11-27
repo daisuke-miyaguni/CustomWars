@@ -11,52 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3758f8f58fdef43803eb9be1df0608, type: 3}
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
-  AppID: c0475d28-0264-4663-b9c2-2ae580cf5b3f
+  AppID: 
   VoiceAppID: 
   ChatAppID: 
-  HostType: 1
-  PreferredRegion: 3
+  HostType: 0
+  PreferredRegion: 0
   EnabledRegions: -1
   Protocol: 0
   ServerAddress: 
   ServerPort: 5055
   VoiceServerPort: 5055
-  JoinLobby: 1
+  JoinLobby: 0
   EnableLobbyStatistics: 0
   PunLogging: 0
   NetworkLogging: 1
   RunInBackground: 1
-  RpcList:
-  - Attack
-  - BoxOpen
-  - ChangeHP
-  - Chat
-  - Death
-  - BoxOpen
-  - InstantiateRpc
-  - MoveScene
-  - PickupItemInit
-  - PlayerDecrease
-  - PunPickup
-  - PunPickupSimple
-  - PunRespawn
-  - RequestForPickupItems
-  - RequestForPickupTimes
-  - ShowElapsedTime
-  - Recover
-  - TakeDamage
-  - DestroyRpc
-  - InitPosition
-  - ShowWinnerResult
-<<<<<<< HEAD
-=======
-  - CallAttack
-  - CallParry
-  - Hpber
-  - ShuffleSpawnPos
-  - WasgetItem
-  - Wasparryed
-  - FullTrashs
-  - EffectStart
->>>>>>> 8621f3faf9d7d60dfc42066616acb948e9307ec1
-  DisableAutoOpenWizard: 1
+  RpcList: []
+  DisableAutoOpenWizard: 0
