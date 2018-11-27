@@ -1,19 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
 {
     private PlayerController playerController;
+    private MyItemStatus myItemStatus;
 
-    // Use this for initialization
-    void Start()
+    [SerializeField] private CreateSlotScript createSlot;
+
+    [SerializeField] public Button attackButton;
+    [SerializeField] public Button jumpButton;
+    // [SerializeField] public Button itemButton;
+    [SerializeField] public Button inventoryButton;
+    // [SerializeField] public Button avoidButton;
+    [SerializeField] public Button parryButton;
+
+    [SerializeField] public GameObject getButton;
+
+    [SerializeField] public GameObject inventory;
+
+    public void SetPlayerController(PlayerController player)
     {
-        playerController = transform.parent.GetComponent<PlayerController>();
+        this.playerController = player.GetComponent<PlayerController>();
+        this.myItemStatus = player.gameObject.GetComponent<MyItemStatus>();
+        SetButtons();
     }
 
-	public void InputAttack(){
-        // playerController.InputAttack();
+    public void SetButtons()
+    {
+        attackButton.GetComponent<Button>();
+        attackButton.onClick.AddListener(playerController.OnClickAttack);
 
+        jumpButton.GetComponent<Button>();
+        jumpButton.onClick.AddListener(playerController.Jump);
+
+        inventoryButton.GetComponent<Button>();
+        inventoryButton.onClick.AddListener(this.OpenInventory);
+
+        Button get = getButton.GetComponent<Button>();
+        get.onClick.AddListener(myItemStatus.OnClick);
+        getButton.SetActive(false);
+        
+
+        // avoidButton.GetComponent<Button>();
+        // avoidButton.onClick.AddListener(playerController.Avoid);
+
+        parryButton.GetComponent<Button>();
+        parryButton.onClick.AddListener(playerController.ParryClick);
+
+        createSlot.SetMyItemStatus(playerController.GetMyItemStatus());
+
+        inventory.SetActive(false);
+    }
+
+    // カバンを開く
+    public void OpenInventory()
+    {
+        if (!inventory.activeSelf)
+        {
+            inventory.SetActive(true);
+        }
     }
 }

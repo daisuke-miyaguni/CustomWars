@@ -6,8 +6,23 @@ public class BlackboardEraserEffect : MonoBehaviour
 {
 	[SerializeField] GameObject eraserEffect;
 
+	PhotonView bbePV;
+
+	void Start()
+	{
+		bbePV = GetComponent<PhotonView>();
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
-		eraserEffect.SetActive(true);
+		bbePV.RPC("EffectStart", PhotonTargets.AllViaServer);
 	}
+
+	[PunRPC]
+	void EffectStart()
+	{
+        eraserEffect.SetActive(true);
+    }
+
+	
 }

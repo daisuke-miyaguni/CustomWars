@@ -9,6 +9,12 @@ TagManager:
   - Desk
   - Item
   - AreaOut
+  - panel
+  - dustbox
+  - Item_Name
+  - Parry
+  - hoge
+  - Fan
   layers:
   - Default
   - TransparentFX
@@ -18,9 +24,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Item
+  - Player
+  - Weapon
   - 
   - 
   - 

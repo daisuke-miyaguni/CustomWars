@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class ParryChecker : MonoBehaviour
 {
-	PlayerController playerController;
+    PlayerController playerController;
+	Rigidbody rootRb;
 
-	void Start()
-	{
-		playerController = gameObject.transform.parent.GetComponent<PlayerController>();
+    void Start()
+    {
+        playerController = gameObject.transform.root.GetComponent<PlayerController>();
+		rootRb = gameObject.transform.root.GetComponent<Rigidbody>();
 	}
 
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.gameObject.tag == "Parry")
-		{
-			playerController.Parryed();
-			Parry parry = other.GetComponent<Parry>();
-			parry.SuccessPatty();
-		}
-	}
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Parry"
+        && other.gameObject.transform.root != this.gameObject.transform.root)
+        {
+            playerController.CallWasparryed();
+            rootRb.AddForce(gameObject.transform.root.forward * -10f, ForceMode.Impulse);
+        }
+    }
 }

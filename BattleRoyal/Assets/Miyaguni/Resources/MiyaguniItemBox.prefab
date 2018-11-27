@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 23531050561683554}
   - component: {fileID: 114750974907175846}
   - component: {fileID: 114909043433642580}
-  - component: {fileID: 136363036743977384}
+  - component: {fileID: 54873235120762656}
   m_Layer: 0
   m_Name: MiyaguniItemBox
   m_TagString: Untagged
@@ -67,6 +67,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1928096229950174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4113907420004162}
+  - component: {fileID: 136845761975624880}
+  - component: {fileID: 114268919263343782}
+  m_Layer: 0
+  m_Name: ItemBoxOpenIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4113907420004162
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928096229950174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4116832641518868}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4116832641518868
 Transform:
   m_ObjectHideFlags: 1
@@ -77,6 +107,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children:
+  - {fileID: 4113907420004162}
   - {fileID: 224956796479048138}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -122,6 +153,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1871495111859070}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54873235120762656
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1871495111859070}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 2
+  m_Constraints: 122
+  m_CollisionDetection: 2
 --- !u!65 &65790048234280420
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -134,6 +180,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114268919263343782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928096229950174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90131065b7aa4b448a17d85992bbbb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTagName: Player
+  openIcon: {fileID: 114857477887190646}
 --- !u!114 &114461946080224746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,9 +274,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponTagName: weapon
-  playerTagName: Player
-  openIcon: {fileID: 114857477887190646}
-  itemName: []
+  itemName:
+  - MiyaguniItemTest1
+  - MiyaguniItemTest2
+  - MiyaguniItemTest3
+  - MiyaguniItemTest4
+  - MiyaguniItemTest5
+  itemCount: 3
+  itemSpawnPower: 7
 --- !u!114 &114916035158315502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,16 +303,16 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!136 &136363036743977384
+--- !u!136 &136845761975624880
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1871495111859070}
+  m_GameObject: {fileID: 1928096229950174}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 5
+  m_Radius: 3
   m_Height: 1
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
@@ -308,7 +372,7 @@ RectTransform:
   m_Children:
   - {fileID: 224896579152309222}
   m_Father: {fileID: 4116832641518868}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
