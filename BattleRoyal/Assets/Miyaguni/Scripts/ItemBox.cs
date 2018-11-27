@@ -11,11 +11,12 @@ public class ItemBox : MonoBehaviour
     // [SerializeField] Image openIcon;	// 開くを伝えるアイコン
 
     // [SerializeField] string[] itemName;		// Itemの名前
-	[SerializeField] List<string> itemName = new List<string>{};    // Itemの名前
+	[SerializeField] List<GameObject> itemName = new List<GameObject>{};    // Itemの名前
 
 	[SerializeField] int itemCount;
     [SerializeField] float itemSpawnPower;
-
+    
+    [SerializeField] GameObject icon;
 
     BoxCollider bc;		// 宝箱のオープン範囲
 	// CapsuleCollider cc;		// Icon表示範囲
@@ -70,7 +71,7 @@ public class ItemBox : MonoBehaviour
 			int itemNum = Random.Range(0, itemName.Count);
             GameObject item = PhotonNetwork.Instantiate
 			(
-				this.itemName[itemNum],
+				this.itemName[itemNum].name,
 				this.transform.position,
 				// new Vector3
 				// (
@@ -83,18 +84,19 @@ public class ItemBox : MonoBehaviour
 			);
 
             Rigidbody itemRb = item.GetComponent<Rigidbody>();
-            itemRb.AddForce(Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, Random.Range(1.5f, itemSpawnPower), ForceMode.VelocityChange);
+            itemRb.AddForce(Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, Random.Range(0.5f, itemSpawnPower), ForceMode.VelocityChange);
             this.itemName.Remove(itemName[itemNum]);
 		}
 
 		// 箱の重力を削除
-		Destroy(this.gameObject.GetComponent<Rigidbody>());
+		// Destroy(this.gameObject.GetComponent<Rigidbody>());
 		// 箱の当たり判定を削除
         Destroy(bc.GetComponent<CapsuleCollider>());
         // Iconの表示範囲削除
         // Destroy(cc.GetComponent<CapsuleCollider>());
         // Icon削除
         // Destroy(openIcon);
+        Destroy(icon);
 		// 同期を削除
         Destroy(this.photonView.GetComponent<PhotonView>());
 		// このプログラムを削除

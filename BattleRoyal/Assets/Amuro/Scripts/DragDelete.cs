@@ -9,6 +9,15 @@ public class DragDelete : MonoBehaviour
 
     private GameObject slotName;
 
+    GameObject myPlayer;
+
+    [SerializeField] GameObject[] items;
+
+    public void SetMyPlayer(GameObject player)
+    {
+        this.myPlayer = player;
+    }
+
     /* private GameObject panel;
 
     CreateSlotScript create;
@@ -32,40 +41,37 @@ public class DragDelete : MonoBehaviour
         myItemData = dragSlot.GetItem();
 
         slotName = ProcessingSlot.itemSlot;
-       
-
+        // Vector3 p_pos = GameObject.Find("Sphere").transform.position;
+        Vector3 p_pos = myPlayer.transform.position;
 
         switch (myItemData.GetItemType())
         {
             case MyItemStatus.Item.parts1:
 
-                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
-                 GameObject parts1 = (GameObject)Resources.Load("parts1");                  //捨てたアイテムをプレイヤーポジションに生成する
-                 Vector3 p_pos = GameObject.Find("Sphere").transform.position;
-                 Instantiate(parts1, p_pos, Quaternion.identity);
-                 
-                 Destroy(slotName);
-                 break;
+                GameObject parts1 = (GameObject)Resources.Load(items[0].name);                  //捨てたアイテムをプレイヤーポジションに生成する
+                Instantiate(parts1, p_pos, Quaternion.identity);
+
+                Destroy(slotName);
+                break;
 
             case MyItemStatus.Item.parts2:
 
-                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
-                GameObject parts2 = (GameObject)Resources.Load("parts2");
-                p_pos = GameObject.Find("Sphere").transform.position;
+                GameObject parts2 = (GameObject)Resources.Load(items[1].name);
                 Instantiate(parts2, p_pos, Quaternion.identity);
-                
+
                 Destroy(slotName);
 
                 break;
 
             case MyItemStatus.Item.parts3:
 
-                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
-                GameObject parts3 = (GameObject)Resources.Load("parts3");
-                p_pos = GameObject.Find("Sphere").transform.position;
+                GameObject parts3 = (GameObject)Resources.Load(items[2].name);
                 Instantiate(parts3, p_pos, Quaternion.identity);
 
                 Destroy(slotName);
@@ -74,10 +80,9 @@ public class DragDelete : MonoBehaviour
 
             case MyItemStatus.Item.mon:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
 
-                GameObject mon = (GameObject)Resources.Load("mon");
-                p_pos = GameObject.Find("Sphere").transform.position;
+                GameObject mon = (GameObject)Resources.Load(items[3].name);
                 Instantiate(mon, p_pos, Quaternion.identity);
 
                 Destroy(slotName);
@@ -85,9 +90,9 @@ public class DragDelete : MonoBehaviour
                 break;
 
             default:
-                 break;
+                break;
         }
 
     }
-    
+
 }

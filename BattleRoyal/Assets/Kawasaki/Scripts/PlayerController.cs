@@ -117,6 +117,8 @@ public class PlayerController : MonoBehaviour
             // playerCamera.transform.parent = transform;
             // playerCamera.transform.position = transform.position;
 
+            myItemStatus.SetMyItemPV(myPV);
+
             //hp初期値設定
             currentHP = maxHP;
             hpSlider.value = currentHP;

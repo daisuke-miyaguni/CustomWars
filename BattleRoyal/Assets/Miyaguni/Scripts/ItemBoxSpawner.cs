@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ItemBoxSpawner : Photon.MonoBehaviour
 {
-    [SerializeField] Vector3[] itempBoxSpawnPos;    // アイテムボックスのスポーンポジション
+    [SerializeField] Vector3[] itemBoxSpawnPos;    // アイテムボックスのスポーンポジション
 
     [SerializeField] float itemSpawnWaitTime;    // アイテムスポーンまでのウェイトタイム
 
-    [SerializeField] GameObject itempBox;    // アイテムボックス名
+    [SerializeField] GameObject itemBox;    // アイテムボックス名
 
     void Start()
     {
@@ -23,12 +23,12 @@ public class ItemBoxSpawner : Photon.MonoBehaviour
         // 生成まで時間をもたせる
         yield return new WaitForSeconds(itemSpawnWaitTime);
 
-        for (int i = 0; i < itempBoxSpawnPos.Length; i++)
+        for (int i = 0; i < itemBoxSpawnPos.Length; i++)
         {
             PhotonNetwork.Instantiate
             (
-                itempBox.name,
-                itempBoxSpawnPos[i],
+                itemBox.name,
+                itemBoxSpawnPos[i],
                 Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 180.0f), 0)),
                 0
             );

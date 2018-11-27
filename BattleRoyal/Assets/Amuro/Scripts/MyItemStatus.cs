@@ -7,10 +7,15 @@ public class MyItemStatus : MonoBehaviour
 {
     private ItemData itemData;
     private ItemParam param;
-    public GameObject getButton;                //Inve内のgetButtonをアタッチ
+    GameObject getButton;                //Inve内のgetButtonをアタッチ
 
-    PhotonView photonView;
+    // PhotonView photonView;
     PhotonView myItemPV;
+
+    public void SetMyItemPV(PhotonView pv)
+    {
+        myItemPV = pv;
+    }
 
     public enum Item
     {
@@ -29,7 +34,7 @@ public class MyItemStatus : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        myItemPV = GetComponent<PhotonView>();
+        // myItemPV = gameObject.GetComponent<PhotonView>();
         // getButton.GetComponent<Button>();
         getButton = GameObject.Find("getButton");
         getButton.SetActive(false);
@@ -46,56 +51,60 @@ public class MyItemStatus : MonoBehaviour
     } */
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (myItemPV)
+        // if (myItemPV)
+        // {
+        if (other.gameObject.tag == "Item" /* && Input.GetKeyDown(KeyCode.I) */)
         {
-            if (other.gameObject.tag == "Item" /* && Input.GetKeyDown(KeyCode.I) */)
-            {
-                param = other.gameObject.GetComponent<ItemParam>();
+            param = other.gameObject.GetComponent<ItemParam>();
 
-                // var type = param.GetItems();
-                getButton.SetActive(true);
+            // var type = param.GetItems();
+            getButton.SetActive(true);
 
-                /*itemFlags[(int)type] = true;
+            /*itemFlags[(int)type] = true;
 
-                print(type); */
+            print(type); */
 
-                //Parts1TakeUp();
-            }
+            //Parts1TakeUp();
+            // }
         }
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (myItemPV)
-        {
-            param = null;
-            getButton.SetActive(false);
-        }
+        // if (myItemPV)
+        // {
+        param = null;
+        getButton.SetActive(false);
+        // }
     }
 
-    public void OnClick()
+    public void OnGetButton()
     {
-        if (myItemPV)
-        {
-            var type = param.GetItems();
+        // if (myItemPV)
+        // {
+        // myItemPV = GetComponent<PhotonView>();
+        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
 
-            itemFlags[(int)type] = true;
+        var type = param.GetItems();
 
-            getButton.SetActive(false);
-            photonView = param.GetComponent<PhotonView>();
+        itemFlags[(int)type] = true;
 
-            // Destroy(param.gameObject);
-            photonView.RPC("WasgetItem", PhotonTargets.AllViaServer);
-        }
+
+        // Destroy(param.gameObject);
+        // }
     }
 
     [PunRPC]
     void WasgetItem()
     {
-        Destroy(param);
+        Destroy(param.gameObject);
+        if(myItemPV.isMine)
+        {
+            getButton.SetActive(false);
+        }
     }
 
 

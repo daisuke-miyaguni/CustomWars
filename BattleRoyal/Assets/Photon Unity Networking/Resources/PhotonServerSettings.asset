@@ -29,10 +29,15 @@ MonoBehaviour:
   RpcList:
   - Attack
   - BoxOpen
-  - ChangeHP
+  - CallAttack
+  - CallParry
   - Chat
   - Death
-  - BoxOpen
+  - DestroyRpc
+  - EffectStart
+  - FullTrashs
+  - Hpber
+  - InitPosition
   - InstantiateRpc
   - MoveScene
   - PickupItemInit
@@ -40,20 +45,12 @@ MonoBehaviour:
   - PunPickup
   - PunPickupSimple
   - PunRespawn
+  - Recover
   - RequestForPickupItems
   - RequestForPickupTimes
-  - ShowElapsedTime
-  - Recover
-  - TakeDamage
-  - DestroyRpc
-  - InitPosition
   - ShowWinnerResult
-  - CallAttack
-  - CallParry
-  - Hpber
   - ShuffleSpawnPos
+  - TakeDamage
   - WasgetItem
   - Wasparryed
-  - FullTrashs
-  - EffectStart
   DisableAutoOpenWizard: 1

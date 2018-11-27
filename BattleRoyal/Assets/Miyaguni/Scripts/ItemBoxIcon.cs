@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class ItemBoxIcon : MonoBehaviour
 {
 
-    [SerializeField] string playerTagName;	  // Playerのタグ名
+    string playerTagName = "Player";	  // Playerのタグ名
+    string weaponName = "weapon";
 
     [SerializeField] Image openIcon;    // 開くを伝えるアイコン
 
