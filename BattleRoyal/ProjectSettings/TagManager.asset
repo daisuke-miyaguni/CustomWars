@@ -16,6 +16,7 @@ TagManager:
   - hoge
   - Fan
   - AreaCheck
+  - Dust
   layers:
   - Default
   - TransparentFX

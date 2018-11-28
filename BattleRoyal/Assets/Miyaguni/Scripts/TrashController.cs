@@ -12,6 +12,11 @@ public class TrashController : MonoBehaviour
     [SerializeField] float weaponPower;	   // ゴミにかかる武器のパワー
 
     Rigidbody rb;	  // 重力
+
+    void Start()
+    {
+        this.gameObject.name = "Trash";
+    }
 	
 	// 物質が当たったときの処理
 	void OnCollisionEnter(Collision other)

@@ -171,6 +171,31 @@ Prefab:
       propertyPath: m_Mass
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateOption
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateLerpSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateOption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateSpeed
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
   m_IsPrefabParent: 0
@@ -349,6 +374,10 @@ Prefab:
     - target: {fileID: 4604613505063354, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306684978308942, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
+      propertyPath: m_TagString
+      value: Dust
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
@@ -1871,6 +1900,31 @@ Prefab:
       propertyPath: m_Mass
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateOption
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateLerpSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateOption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateSpeed
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
   m_IsPrefabParent: 0
@@ -2464,6 +2518,36 @@ Prefab:
       propertyPath: m_Name
       value: Trash1
       objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateOption
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateLerpSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateOption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateSpeed
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
   m_IsPrefabParent: 0
@@ -2676,6 +2760,31 @@ Prefab:
         type: 2}
       propertyPath: m_Mass
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateOption
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateLerpSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateOption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateSpeed
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -3290,6 +3399,31 @@ Prefab:
         type: 2}
       propertyPath: m_Mass
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateOption
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateLerpSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateOption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateSpeed
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -5995,6 +6129,31 @@ Prefab:
       propertyPath: m_Mass
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateOption
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.InterpolateLerpSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateOption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
+        type: 2}
+      propertyPath: m_PositionModel.ExtrapolateSpeed
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
   m_IsPrefabParent: 0
@@ -8209,6 +8368,10 @@ Prefab:
     - target: {fileID: 4354947401139090, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306684978308942, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
+      propertyPath: m_TagString
+      value: Dust
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
