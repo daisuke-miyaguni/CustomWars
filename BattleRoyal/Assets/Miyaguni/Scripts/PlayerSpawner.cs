@@ -49,5 +49,7 @@ public class PlayerSpawner : Photon.MonoBehaviour
         //         PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[playerNum], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
         //     }
         // }
+
+        Destroy(gameObject);
     }
 }

@@ -27,6 +27,7 @@ MonoBehaviour:
   NetworkLogging: 1
   RunInBackground: 1
   RpcList:
+  - AttachmentParts
   - Attack
   - BoxOpen
   - CallAttack
@@ -36,7 +37,6 @@ MonoBehaviour:
   - DestroyRpc
   - EffectStart
   - FullTrashs
-  - Hpber
   - InitPosition
   - InstantiateRpc
   - MoveScene
@@ -53,5 +53,4 @@ MonoBehaviour:
   - TakeDamage
   - WasgetItem
   - Wasparryed
-  - AttachmentParts
   DisableAutoOpenWizard: 1

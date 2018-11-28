@@ -91,9 +91,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224178525315881820}
   - component: {fileID: 222386919933904022}
-  - component: {fileID: 114165600208433250}
   - component: {fileID: 114327654394301578}
   - component: {fileID: 114119596667480530}
+  - component: {fileID: 114408279956796668}
   m_Layer: 5
   m_Name: customs_slot2
   m_TagString: Untagged
@@ -143,9 +143,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224774700605685954}
   - component: {fileID: 222970546295168500}
-  - component: {fileID: 114813818703951186}
   - component: {fileID: 114161549288835458}
   - component: {fileID: 114236444334008100}
+  - component: {fileID: 114535802611300998}
   m_Layer: 5
   m_Name: customs_slot3
   m_TagString: Untagged
@@ -459,9 +459,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224828671184301302}
   - component: {fileID: 222369298496642226}
-  - component: {fileID: 114883573973118968}
   - component: {fileID: 114628277229987692}
   - component: {fileID: 114803064538676476}
+  - component: {fileID: 114451486978813076}
   m_Layer: 5
   m_Name: customs_slot1
   m_TagString: Untagged
@@ -839,7 +839,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114165600208433250}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDrop
           m_Mode: 1
           m_Arguments:
@@ -856,7 +856,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114165600208433250}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -873,7 +873,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114165600208433250}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -974,23 +974,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u30DD\u30B1\u30C3\u30C8"
---- !u!114 &114165600208433250
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1172327277830354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a87f364ad2cac24297b08405cf8d599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myItemData: {fileID: 0}
-  instanceDragItemUI: {fileID: 0}
-  dragItemUI: {fileID: 1175872197951444, guid: 61cdf1122cfa51548afc8b9db58b89a5, type: 2}
-  dataName: {fileID: 0}
-  plusPower: 0
-  informationText: {fileID: 114860724088240966}
 --- !u!114 &114172691420727530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1226,7 +1209,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114813818703951186}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDrop
           m_Mode: 1
           m_Arguments:
@@ -1243,7 +1226,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114813818703951186}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -1260,7 +1243,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114813818703951186}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -1285,6 +1268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1911c9ae1943648ab9bbf586198e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items: []
 --- !u!114 &114255106345841628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1474,6 +1458,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114408279956796668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1172327277830354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aa5781d9a16574db8d0d42cd9a9499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragItemUI: {fileID: 0}
+  informationText: {fileID: 0}
 --- !u!114 &114436352364372390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1524,6 +1521,19 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &114451486978813076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586404285740122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aa5781d9a16574db8d0d42cd9a9499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragItemUI: {fileID: 0}
+  informationText: {fileID: 0}
 --- !u!114 &114464452183265780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1678,6 +1688,19 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114535802611300998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1207594471585968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aa5781d9a16574db8d0d42cd9a9499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragItemUI: {fileID: 0}
+  informationText: {fileID: 0}
 --- !u!114 &114550094365707678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1755,7 +1778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e5f34ca2298114ba0343b04c588c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot: {fileID: 1101398163965232, guid: fcbcd2558801ea147b4191c43a0f0d60, type: 2}
+  slot: {fileID: 0}
   myItemStatus: {fileID: 0}
   itemDataBase: {fileID: 0}
 --- !u!114 &114628277229987692
@@ -2083,7 +2106,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114883573973118968}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDrop
           m_Mode: 1
           m_Arguments:
@@ -2100,7 +2123,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114883573973118968}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -2117,7 +2140,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114883573973118968}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -2185,23 +2208,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114813818703951186
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1207594471585968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a87f364ad2cac24297b08405cf8d599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myItemData: {fileID: 0}
-  instanceDragItemUI: {fileID: 0}
-  dragItemUI: {fileID: 1175872197951444, guid: 61cdf1122cfa51548afc8b9db58b89a5, type: 2}
-  dataName: {fileID: 0}
-  plusPower: 0
-  informationText: {fileID: 114275472055055768}
 --- !u!114 &114860724088240966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2237,23 +2243,6 @@ MonoBehaviour:
   m_Text: '
 
 '
---- !u!114 &114883573973118968
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1586404285740122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a87f364ad2cac24297b08405cf8d599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myItemData: {fileID: 0}
-  instanceDragItemUI: {fileID: 0}
-  dragItemUI: {fileID: 1175872197951444, guid: 61cdf1122cfa51548afc8b9db58b89a5, type: 2}
-  dataName: {fileID: 0}
-  plusPower: 0
-  informationText: {fileID: 114715244001134860}
 --- !u!114 &114892913207080468
 MonoBehaviour:
   m_ObjectHideFlags: 1

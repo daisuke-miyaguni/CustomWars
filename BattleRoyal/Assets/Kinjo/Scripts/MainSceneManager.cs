@@ -12,7 +12,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	private bool isDead = false;    //死んだかどうか
 	[SerializeField]private Text elapsedTimeText;    //経過時間を表示するテキストUI
 	[SerializeField]private Text playerNumberText;    //プレイヤー数を表示するテキストUI
-	[SerializeField]private float scaleDownStartTime;    	//縮小開始時の経過時間を指定
+	[SerializeField]private float scaleDownStartTime = 5.0f;    	//縮小開始時の経過時間を指定
 	private PhotonView myPhotonView;    //自身のPhotonView
 	[SerializeField]private GameObject resultPanel;    //リザルトパネルUI
 	[SerializeField]private Text rankText;    //順位を表示するテキストUI
@@ -23,7 +23,6 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	void Start ()
 	{
 		myPhotonView = GetComponent<PhotonView>();
-		stageManager.GetComponent<StageManager>();
 		resultPanel.SetActive(false);
 		activePlayerNumber = PhotonNetwork.playerList.Length;
 		playerNumber = activePlayerNumber;
@@ -60,10 +59,15 @@ public class MainSceneManager : Photon.MonoBehaviour {
 
 		if (elapsedTime >= scaleDownStartTime && !isScaleDownBegan)
 		{
-			stageManager.ReceveReductionEvent();    //ステージ縮小へ
+			stageManager.ReceveReductionEvent(elapsedTime);    //ステージ縮小へ
 			isScaleDownBegan = true;
 			print("ScaleDown");
 		}
+	}
+
+	public float GetElapsedTime()
+	{
+		return elapsedTime;
 	}
 
 	//経過時間を表示する

@@ -8,6 +8,8 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] GameObject safeArea;
 
+    [SerializeField] MainSceneManager msm;
+
     [SerializeField] float safeAreaPosX;
     [SerializeField] float safeAreaPosZ;
 
@@ -89,6 +91,10 @@ public class StageManager : MonoBehaviour
     // 安地範囲のチェック
     void ScaleChecker()
     {
+        if(reductionCount > reductionScales.Length)
+        {
+            return;
+        }
         // 指定より大きいと縮小が始まる
         if (sphereCollider[0].radius > reductionScales[reductionCount])
         {
@@ -107,9 +113,9 @@ public class StageManager : MonoBehaviour
     }
 
     // 安地縮小を呼び出す
-    public void ReceveReductionEvent()
+    public void ReceveReductionEvent(float timer)
     {
-        reductionCount++;
+        reductionCount = (int)timer / 5;
     }
 
     // // 安地外オブジェクト処理
