@@ -53,4 +53,5 @@ MonoBehaviour:
   - TakeDamage
   - WasgetItem
   - Wasparryed
+  - AttachmentParts
   DisableAutoOpenWizard: 1

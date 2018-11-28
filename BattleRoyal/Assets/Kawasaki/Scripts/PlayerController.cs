@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     private GameObject inventory;
     PlayerUIController playerUIController;
 
-
     private const int maxHP = 100;
     [SerializeField] private int currentHP = maxHP;
     [SerializeField] private Slider hpSlider;
@@ -38,9 +37,9 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
-    int damage = 10;
+    // int damage = 10;
     int healing = 2;
-    private float weaponPower = 200;
+
     BoxCollider weaponCollider;
 
     // player parry情報
@@ -225,7 +224,7 @@ public class PlayerController : MonoBehaviour
     // 攻撃入力
     public void OnClickAttack()
     {
-        Vector3 posUp = transform.position + new Vector3(0, 2, 0);
+        // Vector3 posUp = transform.position + new Vector3(0, 2, 0);
         myPV.RPC("CallAttack", PhotonTargets.AllViaServer/*, posUp, weaponPower */);
         // if (myPV.isMine)
         // {
@@ -258,6 +257,7 @@ public class PlayerController : MonoBehaviour
     {
         currentHP -= amount;
         hpSlider.value = currentHP;
+        Debug.Log("引数は" + amount);
 
         if (myPV.isMine)
         {
@@ -303,6 +303,8 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == "weapon"
             && other.gameObject != weapon)
             {
+                WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
+                int damage = wm.GetWeaponPower();
                 myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
             }
             // アイテム取得

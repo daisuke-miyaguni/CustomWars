@@ -7,7 +7,7 @@ public class ItemBoxIcon : MonoBehaviour
 {
 
     string playerTagName = "Player";	  // Playerのタグ名
-    string weaponName = "weapon";
+    // string weaponName = "weapon";
 
     [SerializeField] Image openIcon;    // 開くを伝えるアイコン
 

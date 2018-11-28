@@ -5,7 +5,7 @@ using UnityEngine;
 public class SafeAreaOut : MonoBehaviour
 {
 	[SerializeField] string areaTagName;    // 安地範囲のタグ名
-    string areaCheckTagName = "AreaOut";    // 安地範囲のタグ名
+    string areaCheckTagName = "AreaCheck";    // 安地範囲のタグ名
 
     [SerializeField] float deskMoveSpeed;    // 机が寄っていくスピード
 

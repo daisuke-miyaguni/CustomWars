@@ -15,6 +15,7 @@ TagManager:
   - Parry
   - hoge
   - Fan
+  - AreaCheck
   layers:
   - Default
   - TransparentFX

@@ -23,6 +23,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	void Start ()
 	{
 		myPhotonView = GetComponent<PhotonView>();
+		stageManager.GetComponent<StageManager>();
 		resultPanel.SetActive(false);
 		activePlayerNumber = PhotonNetwork.playerList.Length;
 		playerNumber = activePlayerNumber;
