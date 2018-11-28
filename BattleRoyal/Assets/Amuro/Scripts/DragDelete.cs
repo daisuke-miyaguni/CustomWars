@@ -32,7 +32,9 @@ public class DragDelete : MonoBehaviour
         myItemData = dragSlot.GetItem();
 
         slotName = ProcessingSlot.itemSlot;
-       
+
+        Vector3 p_pos = GameObject.Find("Sphere").transform.position;
+
 
 
         switch (myItemData.GetItemType())
@@ -42,7 +44,6 @@ public class DragDelete : MonoBehaviour
                  MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                  GameObject parts1 = (GameObject)Resources.Load("parts1");                  //捨てたアイテムをプレイヤーポジションに生成する
-                 Vector3 p_pos = GameObject.Find("Sphere").transform.position;
                  Instantiate(parts1, p_pos, Quaternion.identity);
                  
                  Destroy(slotName);
@@ -53,7 +54,6 @@ public class DragDelete : MonoBehaviour
                  MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                 GameObject parts2 = (GameObject)Resources.Load("parts2");
-                p_pos = GameObject.Find("Sphere").transform.position;
                 Instantiate(parts2, p_pos, Quaternion.identity);
                 
                 Destroy(slotName);
@@ -65,7 +65,6 @@ public class DragDelete : MonoBehaviour
                  MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                 GameObject parts3 = (GameObject)Resources.Load("parts3");
-                p_pos = GameObject.Find("Sphere").transform.position;
                 Instantiate(parts3, p_pos, Quaternion.identity);
 
                 Destroy(slotName);
@@ -74,11 +73,32 @@ public class DragDelete : MonoBehaviour
 
             case MyItemStatus.Item.mon:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
 
                 GameObject mon = (GameObject)Resources.Load("mon");
-                p_pos = GameObject.Find("Sphere").transform.position;
                 Instantiate(mon, p_pos, Quaternion.identity);
+
+                Destroy(slotName);
+
+                break;
+
+            case MyItemStatus.Item.ball:
+
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
+
+                GameObject show = (GameObject)Resources.Load("show");
+                Instantiate(show, p_pos, Quaternion.identity);
+
+                Destroy(slotName);
+
+                break;
+
+            case MyItemStatus.Item.riyo:
+
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
+
+                GameObject riyo = (GameObject)Resources.Load("riyo");
+                Instantiate(riyo, p_pos, Quaternion.identity);
 
                 Destroy(slotName);
 
