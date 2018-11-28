@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 222306349307583302}
   - component: {fileID: 114429217487239738}
   - component: {fileID: 114106860251733402}
-  - component: {fileID: 114099097785452524}
+  - component: {fileID: 114259030745406356}
   - component: {fileID: 114543830661860060}
   m_Layer: 5
   m_Name: PropetySlot
@@ -143,21 +143,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114099097785452524
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1101398163965232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0476389dbc566904191c781de71ac8b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  titleUI: {fileID: 1936954791293244, guid: 99145d8e89754e44ab525fd0f074641e, type: 2}
-  myItemStatus: {fileID: 0}
-  myItemData: {fileID: 0}
-  dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
 --- !u!114 &114106860251733402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,7 +159,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114099097785452524}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -191,7 +176,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114099097785452524}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -298,6 +283,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114259030745406356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101398163965232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95a591664952a214f9cbafe41a131b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleUI: {fileID: 1936954791293244, guid: 99145d8e89754e44ab525fd0f074641e, type: 2}
+  myItemStatus: {fileID: 0}
+  myItemData: {fileID: 0}
+  dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
 --- !u!114 &114429217487239738
 MonoBehaviour:
   m_ObjectHideFlags: 1

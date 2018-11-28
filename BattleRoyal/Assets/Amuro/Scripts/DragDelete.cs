@@ -89,6 +89,28 @@ public class DragDelete : MonoBehaviour
 
                 break;
 
+            case MyItemStatus.Item.ball:
+
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
+
+                GameObject show = (GameObject)Resources.Load("show");
+                Instantiate(show, p_pos, Quaternion.identity);
+
+                Destroy(slotName);
+
+                break;
+
+            case MyItemStatus.Item.riyo:
+
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
+
+                GameObject riyo = (GameObject)Resources.Load("riyo");
+                Instantiate(riyo, p_pos, Quaternion.identity);
+
+                Destroy(slotName);
+
+                break;
+
             default:
                 break;
         }
