@@ -13,12 +13,14 @@ public class PlayerSpawner : Photon.MonoBehaviour
 
     [SerializeField] Vector3[] spawnPos = new Vector3[] { };
 
+    PhotonView pv;
+
     void Awake()
     {
         if (PhotonNetwork.isMasterClient)
         {
             Vector3[] initPos = spawnPos.OrderBy(i => Guid.NewGuid()).ToArray();
-            PhotonView pv = GetComponent<PhotonView>();
+            pv = GetComponent<PhotonView>();
             pv.RPC("ShuffleSpawnPos", PhotonTargets.AllViaServer, initPos);
         }
     }
@@ -49,7 +51,6 @@ public class PlayerSpawner : Photon.MonoBehaviour
         //         PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[playerNum], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
         //     }
         // }
-
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }
