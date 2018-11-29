@@ -45,9 +45,6 @@ public class PlayerController : MonoBehaviour
         parry
     }
 
-    // int damage = 10;
-    int healing = 2;
-
     // BoxCollider weaponCollider;
     CapsuleCollider weaponCollider;
 
@@ -132,6 +129,7 @@ public class PlayerController : MonoBehaviour
 
             //hp初期値設定
             currentHP = maxHP;
+            hpSlider = playerUIController.GetHPSlider();
             hpSlider.value = currentHP;
             hpText = GameObject.Find("HPText").GetComponent<Text>();
             hpText.text = "HP: " + currentHP.ToString();
@@ -299,9 +297,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void CallRecover(int heal)
+    {
+        int healing = heal;
+        myPV.RPC("Recover", PhotonTargets.AllViaServer, healing);
+    }
+
     // 回復
     [PunRPC]
-    public void Recover(int amount)
+    private void Recover(int amount)
     {
         if (currentHP >= maxHP)
         {
