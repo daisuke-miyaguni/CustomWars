@@ -50,10 +50,14 @@ public class DustManager : MonoBehaviour
         PhotonNetwork.Instantiate
         (
             itemBox.name,
-            new Vector3(transform.position.x, 2.0f, transform.position.z - 5.0f),
+            new Vector3(transform.position.x, -0.5f, transform.position.z - 5.0f),
             Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 180.0f), 0)),
             0
         );
+        foreach (Transform i in gameObject.transform.Find("Trash"))
+        {
+            i.transform.parent = null;
+        }
         Destroy(this);
     }
 }

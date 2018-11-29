@@ -89,6 +89,10 @@ public class StageManager : MonoBehaviour
     // 安地範囲のチェック
     void ScaleChecker()
     {
+        if(reductionCount > reductionScales.Length)
+        {
+            return;
+        }
         // 指定より大きいと縮小が始まる
         if (sphereCollider[0].radius > reductionScales[reductionCount])
         {

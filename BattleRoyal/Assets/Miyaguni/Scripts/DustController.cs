@@ -4,35 +4,46 @@ using UnityEngine;
 
 public class DustController : MonoBehaviour
 {
-	DustManager dustManager;
+    DustManager dustManager;
 
-    GameObject dust;
+    GameObject[] dust = new GameObject[2];
 
     void Start()
     {
-        dust = GameObject.Find("Dust");
-        dustManager = dust.GetComponent<DustManager>();
+        // dust = GameObject.FindWithTag("Dust");
+        dust = GameObject.FindGameObjectsWithTag("Dust");
+        for (int i = 0; i < dust.Length; i++)
+        {
+            dustManager = dust[i].GetComponent<DustManager>();
+        }
     }
 
 
     void OnTriggerStay(Collider other)
     {
-    	if(other.gameObject == dust)
-    	{
-            gameObject.transform.parent = other.transform;
+        for (int i = 0; i < dust.Length; i++)
+        {
+            if (other.gameObject == dust[i])
+            {
+                gameObject.transform.parent = other.transform;
+            }
         }
 
-        if(dustManager == null)
+        if (dustManager == null)
         {
             Destroy(this);
         }
     }
 
-	void OnTriggerExit(Collider other)
-	{
-        if (other.gameObject == dust)
+    void OnTriggerExit(Collider other)
+    {
+        for (int i = 0; i < dust.Length; i++)
         {
-            gameObject.transform.parent = null;
+            if (other.gameObject == dust[i])
+            {
+                gameObject.transform.parent = null;
+            }
         }
-	}
+
+    }
 }
