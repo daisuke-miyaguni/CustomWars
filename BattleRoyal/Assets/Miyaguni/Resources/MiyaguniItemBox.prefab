@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 1871495111859070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.15, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 2, z: 2}
   m_Children:
   - {fileID: 4113907420004162}
   m_Father: {fileID: 0}
@@ -264,7 +264,7 @@ MonoBehaviour:
   - {fileID: 1756564616796304, guid: 609802216e454a04182624f04e0c81ea, type: 2}
   - {fileID: 1756564616796304, guid: 2c375ccd6bfd18f459d878c2e397b410, type: 2}
   itemCount: 3
-  itemSpawnPower: 3.5
+  itemSpawnPower: 7
   icon: {fileID: 1928096229950174}
 --- !u!114 &114916035158315502
 MonoBehaviour:
