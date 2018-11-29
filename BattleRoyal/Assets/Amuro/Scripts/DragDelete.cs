@@ -42,7 +42,12 @@ public class DragDelete : MonoBehaviour
 
         slotName = ProcessingSlot.itemSlot;
         // Vector3 p_pos = GameObject.Find("Sphere").transform.position;
-        Vector3 p_pos = myPlayer.transform.position;
+        Vector3 p_pos = new Vector3
+        (
+            myPlayer.transform.position.x,
+            myPlayer.transform.position.y + 1.0f,
+            myPlayer.transform.position.z + 0.8f
+        );
 
         switch (myItemData.GetItemType())
         {
@@ -51,7 +56,7 @@ public class DragDelete : MonoBehaviour
                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                 GameObject parts1 = (GameObject)Resources.Load(items[0].name);                  //捨てたアイテムをプレイヤーポジションに生成する
-                Instantiate(parts1, p_pos, Quaternion.identity);
+                PhotonNetwork.Instantiate(parts1.name, p_pos, Quaternion.identity,0);
 
                 Destroy(slotName);
                 break;
@@ -61,7 +66,7 @@ public class DragDelete : MonoBehaviour
                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                 GameObject parts2 = (GameObject)Resources.Load(items[1].name);
-                Instantiate(parts2, p_pos, Quaternion.identity);
+                PhotonNetwork.Instantiate(parts2.name, p_pos, Quaternion.identity,0);
 
                 Destroy(slotName);
 
@@ -72,7 +77,7 @@ public class DragDelete : MonoBehaviour
                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                 GameObject parts3 = (GameObject)Resources.Load(items[2].name);
-                Instantiate(parts3, p_pos, Quaternion.identity);
+                PhotonNetwork.Instantiate(parts3.name, p_pos, Quaternion.identity,0);
 
                 Destroy(slotName);
 
@@ -83,7 +88,7 @@ public class DragDelete : MonoBehaviour
                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
 
                 GameObject mon = (GameObject)Resources.Load(items[3].name);
-                Instantiate(mon, p_pos, Quaternion.identity);
+                PhotonNetwork.Instantiate(mon.name, p_pos, Quaternion.identity,0);
 
                 Destroy(slotName);
 
@@ -94,7 +99,7 @@ public class DragDelete : MonoBehaviour
                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
 
                 GameObject show = (GameObject)Resources.Load("show");
-                Instantiate(show, p_pos, Quaternion.identity);
+                PhotonNetwork.Instantiate(show.name, p_pos, Quaternion.identity,0);
 
                 Destroy(slotName);
 
@@ -105,7 +110,7 @@ public class DragDelete : MonoBehaviour
                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
 
                 GameObject riyo = (GameObject)Resources.Load("riyo");
-                Instantiate(riyo, p_pos, Quaternion.identity);
+                PhotonNetwork.Instantiate(riyo.name, p_pos, Quaternion.identity,0);
 
                 Destroy(slotName);
 

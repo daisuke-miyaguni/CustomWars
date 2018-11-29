@@ -19,6 +19,13 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] public Button getButton;
 
+    [SerializeField] Slider hpSlider;
+
+    public Slider GetHPSlider()
+    {
+        return hpSlider;
+    }
+
     [SerializeField] public GameObject inventory;
 
     [SerializeField] GameObject deletePanel;
