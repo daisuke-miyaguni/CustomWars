@@ -5,6 +5,7 @@ using UnityEngine;
 public class DustManager : MonoBehaviour
 {
     int initChildCount;
+    [SerializeField] float itemBoxInstantePosY = 0.0f;
 
 
     [SerializeField] int maxTrashCounter;
@@ -50,7 +51,7 @@ public class DustManager : MonoBehaviour
         PhotonNetwork.Instantiate
         (
             itemBox.name,
-            new Vector3(transform.position.x, -0.5f, transform.position.z - 5.0f),
+            new Vector3(transform.position.x, itemBoxInstantePosY, transform.position.z - 5.0f),
             Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 180.0f), 0)),
             0
         );
@@ -59,5 +60,13 @@ public class DustManager : MonoBehaviour
             i.transform.parent = null;
         }
         Destroy(this);
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "Desk")
+        {
+            Destroy(gameObject);
+        }
     }
 }
