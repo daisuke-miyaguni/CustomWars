@@ -59,16 +59,19 @@ public class MainSceneManager : Photon.MonoBehaviour {
 
 		if (elapsedTime >= scaleDownStartTime && !isScaleDownBegan)
 		{
-			stageManager.ReceveReductionEvent(elapsedTime);    //ステージ縮小へ
+			stageManager.ReceveReductionEvent();    //ステージ縮小へ
 			isScaleDownBegan = true;
 			print("ScaleDown");
+            StartCoroutine(ScaleUpdate());
 		}
 	}
 
-	public float GetElapsedTime()
+	IEnumerator ScaleUpdate()
 	{
-		return elapsedTime;
-	}
+        yield return new WaitForSeconds(2.0f);
+		scaleDownStartTime = (int)elapsedTime + 5.5f;
+		isScaleDownBegan = false;
+    }
 
 	//経過時間を表示する
 	private void ShowElapsedTime ()

@@ -723,12 +723,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 137927514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78e5f34ca2298114ba0343b04c588c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: b77513e5d58e4164abe856b770b52ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slot: {fileID: 1101398163965232, guid: dce807fa71db659489040c02bca6f036, type: 2}
   myItemStatus: {fileID: 0}
-  itemDataBase: {fileID: 0}
+  itemDataBase: {fileID: 591787816}
 --- !u!114 &137927518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,10 +1063,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 267496778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61644d8d2fd08b24f92525431a592bf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1663afba52dca124f898e5944699c42e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basePanel: {fileID: 286839746}
+  Inv: {fileID: 1427761474}
+  Pocket: {fileID: 1287229487}
 --- !u!114 &267496781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,6 +1214,8 @@ GameObject:
   - component: {fileID: 315784444}
   - component: {fileID: 315784446}
   - component: {fileID: 315784445}
+  - component: {fileID: 315784447}
+  - component: {fileID: 315784448}
   m_Layer: 5
   m_Name: pocket_item1
   m_TagString: Untagged
@@ -1275,6 +1278,85 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 315784443}
+--- !u!114 &315784447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 315784443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91aa4da8e5c1c4e4abccfa97a5757c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pocketStatus: {fileID: 1060552331}
+  dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
+  slotNum: 0
+  informationText: {fileID: 0}
+--- !u!114 &315784448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 315784443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 6
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 315784447}
+          m_MethodName: MouseDrop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 315784447}
+          m_MethodName: MouseBeginDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 315784447}
+          m_MethodName: MouseEndDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &326382539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,12 +1421,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 326382540}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 11
   instantiationId: 11
@@ -1449,7 +1531,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 328596243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67aa5781d9a16574db8d0d42cd9a9499, type: 3}
+  m_Script: {fileID: 11500000, guid: 747adbe130ca07f4cabd865ee6d71876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
@@ -1471,7 +1553,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 328596245}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDrop
           m_Mode: 1
           m_Arguments:
@@ -1488,7 +1570,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 328596245}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -1505,7 +1587,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 328596245}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -1976,7 +2058,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 467816954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67aa5781d9a16574db8d0d42cd9a9499, type: 3}
+  m_Script: {fileID: 11500000, guid: 747adbe130ca07f4cabd865ee6d71876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
@@ -1998,7 +2080,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 467816956}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDrop
           m_Mode: 1
           m_Arguments:
@@ -2015,7 +2097,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 467816956}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -2032,7 +2114,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 467816956}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -2332,7 +2414,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 591787815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3750d1fa33e182b48a651895bbe3d792, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e6944d353f68104987292394187e83f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &591787817
@@ -2357,8 +2439,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 591787818}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 13
-  instantiationId: 13
+  viewIdField: 12
+  instantiationId: 12
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &591787818
@@ -2886,6 +2968,8 @@ GameObject:
   - component: {fileID: 739582206}
   - component: {fileID: 739582208}
   - component: {fileID: 739582207}
+  - component: {fileID: 739582209}
+  - component: {fileID: 739582210}
   m_Layer: 5
   m_Name: pocket_item1 (1)
   m_TagString: Untagged
@@ -2948,6 +3032,85 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 739582205}
+--- !u!114 &739582209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 739582205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91aa4da8e5c1c4e4abccfa97a5757c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pocketStatus: {fileID: 1060552331}
+  dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
+  slotNum: 1
+  informationText: {fileID: 0}
+--- !u!114 &739582210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 739582205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 6
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 739582209}
+          m_MethodName: MouseDrop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 739582209}
+          m_MethodName: MouseBeginDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 739582209}
+          m_MethodName: MouseEndDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &772555659
 GameObject:
   m_ObjectHideFlags: 0
@@ -3105,7 +3268,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 833236263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67aa5781d9a16574db8d0d42cd9a9499, type: 3}
+  m_Script: {fileID: 11500000, guid: 747adbe130ca07f4cabd865ee6d71876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
@@ -3127,7 +3290,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 833236265}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseDrop
           m_Mode: 1
           m_Arguments:
@@ -3144,7 +3307,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 833236265}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -3161,7 +3324,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 833236265}
+        - m_Target: {fileID: 0}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -3994,7 +4157,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 591787818}
         m_MethodName: GoToTitle
         m_Mode: 1
         m_Arguments:
@@ -4250,7 +4413,7 @@ GameObject:
   - component: {fileID: 1031481842}
   - component: {fileID: 1031481841}
   m_Layer: 5
-  m_Name: 2
+  m_Name: itemField2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4520,6 +4683,7 @@ GameObject:
   - component: {fileID: 1060552327}
   - component: {fileID: 1060552326}
   - component: {fileID: 1060552330}
+  - component: {fileID: 1060552331}
   m_Layer: 5
   m_Name: PlayerControllerUI
   m_TagString: Untagged
@@ -4632,6 +4796,23 @@ MonoBehaviour:
   getButton: {fileID: 889022300}
   inventory: {fileID: 286839746}
   deletePanel: {fileID: 1906710113}
+--- !u!114 &1060552331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1060552325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed0849c600e1e74b99f41da5717df09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pocketDatas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pocket_item_panel: {fileID: 1287229488}
 --- !u!1 &1094227876
 GameObject:
   m_ObjectHideFlags: 0
@@ -5332,7 +5513,7 @@ GameObject:
   - component: {fileID: 1287229489}
   - component: {fileID: 1287229491}
   m_Layer: 5
-  m_Name: ItemPanel
+  m_Name: pocket_item_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5350,14 +5531,13 @@ RectTransform:
   m_Children:
   - {fileID: 1965494426}
   - {fileID: 1031481840}
-  - {fileID: 1982436255}
   m_Father: {fileID: 1060552329}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 400, y: 100}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287229489
 MonoBehaviour:
@@ -5404,9 +5584,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 40
+    m_Left: 50
     m_Right: 0
-    m_Top: 10
+    m_Top: 15
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
@@ -6861,7 +7041,6 @@ MonoBehaviour:
   - {fileID: 1825254299}
   - {fileID: 152944854}
   safeArea: {fileID: 152944853}
-  msm: {fileID: 591787818}
   safeAreaPosX: 5
   safeAreaPosZ: 5
   reducingSpeed: 8
@@ -7304,7 +7483,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1906710113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae1911c9ae1943648ab9bbf586198e82, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bf4c020f50473145b963589c2a2dedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   items:
@@ -7509,117 +7688,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1965494425}
---- !u!1 &1982436254
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1982436255}
-  - component: {fileID: 1982436258}
-  - component: {fileID: 1982436257}
-  - component: {fileID: 1982436256}
-  m_Layer: 5
-  m_Name: 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1982436255
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1982436254}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2086782978}
-  m_Father: {fileID: 1287229488}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1982436256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1982436254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1982436257}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &1982436257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1982436254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1982436258
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1982436254}
 --- !u!1 &2036269654
 GameObject:
   m_ObjectHideFlags: 0
@@ -7983,79 +8051,3 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 52042ddea279d5f4eb5eefc883495673, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2086782977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2086782978}
-  - component: {fileID: 2086782980}
-  - component: {fileID: 2086782979}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2086782978
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2086782977}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1982436255}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2086782979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2086782977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 100
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 0
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: '3
-
-'
---- !u!222 &2086782980
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2086782977}

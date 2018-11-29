@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 114652410864760474}
   - component: {fileID: 114526510738795432}
   - component: {fileID: 114059127494885332}
-  - component: {fileID: 114275775879416442}
+  - component: {fileID: 114649892573278710}
   - component: {fileID: 114030389167981176}
   m_Layer: 9
   m_Name: Player0
@@ -2082,17 +2082,6 @@ MonoBehaviour:
   rebelliousTime: 0.3
   angleMax: 30
   angleMin: -15
---- !u!114 &114275775879416442
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1666012714826268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801aa4e82794a1b4aa587338b5c6c256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114410934233838546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2136,6 +2125,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114649892573278710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666012714826268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5437b9b5f6e50743b4ffe28d46e8e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  getButton: {fileID: 0}
 --- !u!114 &114652410864760474
 MonoBehaviour:
   m_ObjectHideFlags: 1

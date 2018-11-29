@@ -8,8 +8,6 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] GameObject safeArea;
 
-    [SerializeField] MainSceneManager msm;
-
     [SerializeField] float safeAreaPosX;
     [SerializeField] float safeAreaPosZ;
 
@@ -113,9 +111,9 @@ public class StageManager : MonoBehaviour
     }
 
     // 安地縮小を呼び出す
-    public void ReceveReductionEvent(float timer)
+    public void ReceveReductionEvent()
     {
-        reductionCount = (int)timer / 5;
+        reductionCount++;
     }
 
     // // 安地外オブジェクト処理
