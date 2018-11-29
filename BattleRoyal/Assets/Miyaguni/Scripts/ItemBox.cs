@@ -88,18 +88,25 @@ public class ItemBox : MonoBehaviour
             this.itemName.Remove(itemName[itemNum]);
 		}
 
-		// 箱の重力を削除
-		// Destroy(this.gameObject.GetComponent<Rigidbody>());
-		// 箱の当たり判定を削除
-        Destroy(bc.GetComponent<CapsuleCollider>());
-        // Iconの表示範囲削除
-        // Destroy(cc.GetComponent<CapsuleCollider>());
-        // Icon削除
-        // Destroy(openIcon);
-        Destroy(icon);
-		// 同期を削除
-        Destroy(this.photonView.GetComponent<PhotonView>());
-		// このプログラムを削除
-		Destroy(this);
+        // // 箱の重力を削除
+        // // Destroy(this.gameObject.GetComponent<Rigidbody>());
+        // // 箱の当たり判定を削除
+        // Destroy(bc.GetComponent<CapsuleCollider>());
+        // // Iconの表示範囲削除
+        // // Destroy(cc.GetComponent<CapsuleCollider>());
+        // // Icon削除
+        // // Destroy(openIcon);
+        // Destroy(icon);
+        // // 同期を削除
+        // Destroy(this.photonView.GetComponent<PhotonView>());
+        // // このプログラムを削除
+        // Destroy(this);
+        photonView.RPC("DeleteItemBox", PhotonTargets.AllViaServer);
+    }
+
+	[PunRPC]
+	void DeleteItemBox()
+	{
+		Destroy(this.gameObject);
 	}
 }
