@@ -54,4 +54,5 @@ MonoBehaviour:
   - WasgetItem
   - Wasparryed
   - DeleteItemBox
+  - DropItem
   DisableAutoOpenWizard: 1

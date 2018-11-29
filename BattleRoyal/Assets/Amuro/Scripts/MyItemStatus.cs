@@ -44,7 +44,7 @@ public class MyItemStatus : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (myItemPV.isMine && other.gameObject.tag == "Item")
+        if (other.gameObject.tag == "Item")
         {
             param = other.gameObject.GetComponent<ItemParam>();
             var type = param.GetItems();
@@ -52,26 +52,33 @@ public class MyItemStatus : MonoBehaviour
             {
                 return;
             }
-            getButton.SetActive(true);
+
+            if (myItemPV.isMine)
+            {
+                getButton.SetActive(true);
+            }
         }
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (myItemPV.isMine && other.gameObject.tag == "Item")
+        if (other.gameObject.tag == "Item")
         {
             param = null;
-            getButton.SetActive(false);
+            if (myItemPV.isMine)
+            {
+                getButton.SetActive(false);
+            }
+
         }
     }
 
     public void OnGetButton()
     {
+        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
         if (myItemPV.isMine)
         {
-            myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
-
             var type = param.GetItems();
 
             itemFlags[(int)type] = true;

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private PhotonView myPV;
+    private PhotonTransformView myPTV;
     private Rigidbody myRB;
     private Camera myCamera;
     // private Button attackButton;
@@ -80,6 +81,8 @@ public class PlayerController : MonoBehaviour
         myPV = GetComponent<PhotonView>();
         // myItemStatus取得
         myItemStatus = GetComponent<MyItemStatus>();
+        // photontransformview取得
+        myPTV = GetComponent<PhotonTransformView>();
     }
 
     void Start()
@@ -149,10 +152,16 @@ public class PlayerController : MonoBehaviour
     //     otherHpBar.SetActive(true);
     // }
 
+
+
     void FixedUpdate()
     {
         if (myPV.isMine)
         {
+            // 位置補完
+            Vector3 velocity = myRB.velocity;
+            myPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
+            // 移動処理の読み込み
             Move();
         }
     }

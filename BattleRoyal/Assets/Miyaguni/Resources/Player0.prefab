@@ -1931,7 +1931,7 @@ Animator:
   m_GameObject: {fileID: 1666012714826268}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d87b3e16358b36b4c84bbfb530dfd7de, type: 3}
-  m_Controller: {fileID: 9100000, guid: 98fa5d2f8ca77c04bb74556e2a10439c, type: 2}
+  m_Controller: {fileID: 9100000, guid: dfeea4d8a65c5784eb9712411a72122d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2072,7 +2072,7 @@ MonoBehaviour:
   hpSlider: {fileID: 114989497536136266}
   weapon: {fileID: 1883603649272386}
   otherHpBar: {fileID: 1235628493087148}
-  moveSpeed: 3
+  moveSpeed: 7
   jumpForce: 5
   attackTime: 0.3
   sphereCollider: {fileID: 0}
@@ -2187,14 +2187,14 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ExtrapolateOption: 3
+    ExtrapolateOption: 0
     ExtrapolateSpeed: 60
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
+    DrawErrorGizmo: 0
   m_RotationModel:
     SynchronizeEnabled: 1
-    InterpolateOption: 2
+    InterpolateOption: 1
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 60
   m_ScaleModel:

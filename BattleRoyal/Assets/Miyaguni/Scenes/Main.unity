@@ -152,6 +152,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
+      propertyPath: m_Name
+      value: Trash5
+      objectReference: {fileID: 0}
     - target: {fileID: 114650730881411570, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
       propertyPath: viewIdField
@@ -161,40 +165,6 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
-      propertyPath: m_Name
-      value: Trash5
-      objectReference: {fileID: 0}
-    - target: {fileID: 54650848137052070, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_Mass
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateOption
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateLerpSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateOption
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateSpeed
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -1823,6 +1793,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
+      propertyPath: m_Name
+      value: Trash2
+      objectReference: {fileID: 0}
     - target: {fileID: 114650730881411570, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
       propertyPath: viewIdField
@@ -1832,40 +1806,6 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
-      propertyPath: m_Name
-      value: Trash2
-      objectReference: {fileID: 0}
-    - target: {fileID: 54650848137052070, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_Mass
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateOption
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateLerpSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateOption
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateSpeed
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -2453,6 +2393,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
+      propertyPath: m_Name
+      value: Trash1
+      objectReference: {fileID: 0}
     - target: {fileID: 114650730881411570, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
       propertyPath: viewIdField
@@ -2462,45 +2406,6 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 54650848137052070, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_Mass
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
-      propertyPath: m_Name
-      value: Trash1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportEnabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateOption
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateLerpSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateOption
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateSpeed
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -2686,6 +2591,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
+      propertyPath: m_Name
+      value: Trash3
+      objectReference: {fileID: 0}
     - target: {fileID: 114650730881411570, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
       propertyPath: viewIdField
@@ -2695,40 +2604,6 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
-      propertyPath: m_Name
-      value: Trash3
-      objectReference: {fileID: 0}
-    - target: {fileID: 54650848137052070, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_Mass
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateOption
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateLerpSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateOption
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateSpeed
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -3408,6 +3283,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 19
       objectReference: {fileID: 0}
+    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
+      propertyPath: m_Name
+      value: Trash4
+      objectReference: {fileID: 0}
     - target: {fileID: 114650730881411570, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
       propertyPath: viewIdField
@@ -3418,39 +3297,10 @@ Prefab:
       propertyPath: instantiationId
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
-      propertyPath: m_Name
-      value: Trash4
-      objectReference: {fileID: 0}
     - target: {fileID: 54650848137052070, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
-      propertyPath: m_Mass
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateOption
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateLerpSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateOption
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateSpeed
-      value: 60
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
@@ -5604,6 +5454,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
+      propertyPath: m_Name
+      value: Trash6
+      objectReference: {fileID: 0}
     - target: {fileID: 114650730881411570, guid: f869e72d39a8f784fab2b2218e1b013f,
         type: 2}
       propertyPath: viewIdField
@@ -5613,40 +5467,6 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915897299330952, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}
-      propertyPath: m_Name
-      value: Trash6
-      objectReference: {fileID: 0}
-    - target: {fileID: 54650848137052070, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_Mass
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.TeleportIfDistanceGreaterThan
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateOption
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.InterpolateLerpSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateOption
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114228858102650008, guid: f869e72d39a8f784fab2b2218e1b013f,
-        type: 2}
-      propertyPath: m_PositionModel.ExtrapolateSpeed
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f869e72d39a8f784fab2b2218e1b013f, type: 2}

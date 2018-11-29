@@ -69,7 +69,7 @@ public class ItemBox : MonoBehaviour
 		for(int i = 0; i < itemCount; i++)
 		{
 			int itemNum = Random.Range(0, itemName.Count);
-            GameObject item = PhotonNetwork.Instantiate
+            GameObject item = PhotonNetwork.InstantiateSceneObject
 			(
 				this.itemName[itemNum].name,
 				this.transform.position,
@@ -80,7 +80,8 @@ public class ItemBox : MonoBehaviour
 				// 	this.transform.position.z * Random.Range( 0.0f, 1.0f)
 				// ),
 				gameObject.transform.rotation,
-				0
+				0,
+				null
 			);
 
             Rigidbody itemRb = item.GetComponent<Rigidbody>();

@@ -158,8 +158,8 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    TeleportIfDistanceGreaterThan: 5
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     InterpolateMoveTowardsAcceleration: 2
@@ -198,7 +198,7 @@ MonoBehaviour:
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
+    DrawErrorGizmo: 0
   m_RotationModel:
     SynchronizeEnabled: 0
     InterpolateOption: 1
