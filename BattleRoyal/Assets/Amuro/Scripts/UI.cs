@@ -7,7 +7,7 @@ public class UI : MonoBehaviour
 {
     private ItemDataBase itemDataBase;
 
-    public GameObject Inv;
+    public GameObject basePanel;
 
     public GameObject Pocket;
 
@@ -25,14 +25,15 @@ public class UI : MonoBehaviour
 
     void Inventory()
     {
-        Inv.SetActive(!Inv.activeSelf);
+        basePanel.SetActive(!basePanel.activeSelf);
         Pocket.SetActive(!Pocket.activeSelf);
     }
 
     public void OnClick()
     {
-        Inv.SetActive(!Inv.activeSelf);
+
         Pocket.SetActive(!Pocket.activeSelf);
+        basePanel.SetActive(!basePanel.activeSelf);
     }
 
 }

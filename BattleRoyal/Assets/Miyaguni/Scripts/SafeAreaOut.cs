@@ -5,12 +5,20 @@ using UnityEngine;
 public class SafeAreaOut : MonoBehaviour
 {
 	[SerializeField] string areaTagName;    // 安地範囲のタグ名
+    string areaCheckTagName = "AreaOut";    // 安地範囲のタグ名
 
-	[SerializeField] float deskMoveSpeed;    // 机が寄っていくスピード
+    [SerializeField] float deskMoveSpeed;    // 机が寄っていくスピード
 
     [SerializeField] float destroyTime = 9.0f;    // 削除カウント時間
 
 	GameObject area;	// 安地のゲームオブジェクト
+
+	Renderer render;
+
+	void Start()
+	{
+		render = GetComponent<Renderer>();
+	}
 
     void Update()
 	{
@@ -33,11 +41,25 @@ public class SafeAreaOut : MonoBehaviour
 		}
 	}
 
+	void OnTriggerExit(Collider other)
+	{
+		if(other.gameObject.tag == areaCheckTagName)
+		{
+			render.material.color = new Color(1f, 1f, 0f, 1f);
+		}
+
+        if (other.gameObject.tag == areaTagName)
+        {
+			SafeAreaExit();
+		}
+	}
+
 	// 安地の外に行った処理
     public void SafeAreaExit()
 	{
-		// 安地を見つける
-		area = GameObject.FindWithTag(areaTagName);
+        render.material.color = new Color(1f, 0f, 0f, 1f);
+        // 安地を見つける
+        area = GameObject.FindWithTag(areaTagName);
 		// 安地を向く
 		gameObject.transform.LookAt(area.transform);
 	}

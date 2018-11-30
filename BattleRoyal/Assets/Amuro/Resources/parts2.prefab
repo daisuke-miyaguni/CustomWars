@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 65859119367679356}
   - component: {fileID: 23668405853353160}
   - component: {fileID: 54980609380959460}
-  - component: {fileID: 114914781542766804}
   - component: {fileID: 114634245743601622}
   m_Layer: 0
   m_Name: parts2
@@ -96,7 +95,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 14
@@ -125,18 +124,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemNum: 1
---- !u!114 &114914781542766804
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1265724291138596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4201143867dd33246ae1253fb94a0d6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 0}
-  itemDataBase: {fileID: 0}
-  itemNum: 1
-  items: 0

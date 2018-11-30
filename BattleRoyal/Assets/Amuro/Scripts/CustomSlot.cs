@@ -21,6 +21,12 @@ public class CustomSlot : MonoBehaviour
 
     // private GameObject myPanel;
 
+    WeaponManager wm;
+
+    public void SetWeaponManager(WeaponManager weaponManager)
+    {
+        this.wm = weaponManager.GetComponent<WeaponManager>();
+    }
 
     [SerializeField]
     private Text informationText;
@@ -84,7 +90,8 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    wm.SetWeaponPower(plusPower);
 
                     panelParam = true;
 
@@ -98,7 +105,8 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    wm.SetWeaponPower(plusPower);
 
                     panelParam = true;
 

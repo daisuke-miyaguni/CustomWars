@@ -29,7 +29,7 @@ public class PlayerTissueState : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.name == "Fan" && transform.Find(tissueName))
+		if(other.gameObject.tag == "Fan" && transform.Find(tissueName))
 		{
 			rb.AddForce(transform.up * fanPower, ForceMode.Impulse);
 			jumpState = true;
