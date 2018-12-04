@@ -33,6 +33,7 @@ public class MyItemStatus : MonoBehaviour
     void Start()
     {
         getButton = GameObject.Find("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
+        // getButton.GetComponent<Button>();
         if (getButton.activeSelf)
         {
             getButton.SetActive(false);

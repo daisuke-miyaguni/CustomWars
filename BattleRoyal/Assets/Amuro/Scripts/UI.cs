@@ -31,6 +31,10 @@ public class UI : MonoBehaviour
 
     public void OnClick()
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> fce8e1650e5b1c2a9406be04f2e403d5cfaa683f
         Pocket.SetActive(!Pocket.activeSelf);
         basePanel.SetActive(!basePanel.activeSelf);
     }
