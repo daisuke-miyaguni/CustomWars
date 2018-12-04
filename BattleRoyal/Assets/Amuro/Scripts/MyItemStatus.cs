@@ -58,7 +58,6 @@ public class MyItemStatus : MonoBehaviour
                 getButton.SetActive(true);
             }
         }
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -99,6 +98,6 @@ public class MyItemStatus : MonoBehaviour
 
     public bool GetItemFlag(Item item)
     {
-        return itemFlags[(int)item];
-    }
+        return itemFlags[(int)item]; 
+    } 
 }

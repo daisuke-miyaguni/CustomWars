@@ -10,14 +10,15 @@ public class PocketStatus : MonoBehaviour
     private Pocket panelData;
     private int itemNum_1;
     private int itemNum_2;
+    private UseItem useItem;
 
     [SerializeField]
     public enum Pocket
     {
-        mon_p,
-        ball_p,
-        riyo_p,
-        none                                                        //セットできないアイテムに当てはめるパラメータ
+        mon_p = 0,
+        ball_p = 1,
+        riyo_p = 2,
+        none = 3                                                    //セットできないアイテムに当てはめるパラメータ
     };
 
     [SerializeField]
@@ -35,6 +36,9 @@ public class PocketStatus : MonoBehaviour
     {
         pocketDatas[slotNum] = itemData;
         pocket_item_panel.GetChild(slotNum).GetChild(0).GetComponent<Image>().sprite = itemData.GetItemSprite();
+        useItem = pocket_item_panel.GetChild(slotNum).GetComponent<UseItem>();
+        useItem.SetItemSwitch(itemData);
+
     }
 
     

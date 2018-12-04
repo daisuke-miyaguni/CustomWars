@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1663afba52dca124f898e5944699c42e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inv: {fileID: 286839746}
+  basePanel: {fileID: 286839746}
   Pocket: {fileID: 1287229487}
 --- !u!114 &267496781
 MonoBehaviour:
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 315784443}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91aa4da8e5c1c4e4abccfa97a5757c45, type: 3}
+  m_Script: {fileID: 11500000, guid: 30546ff8a0d9add4bb80965ef95b8704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pocketStatus: {fileID: 1060552331}
@@ -2691,7 +2691,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 739582205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91aa4da8e5c1c4e4abccfa97a5757c45, type: 3}
+  m_Script: {fileID: 11500000, guid: 30546ff8a0d9add4bb80965ef95b8704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pocketStatus: {fileID: 1060552331}
@@ -4288,7 +4288,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1060552325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ed0849c600e1e74b99f41da5717df09, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b0892b449127b84b819e9a7f6a99291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pocketDatas:
