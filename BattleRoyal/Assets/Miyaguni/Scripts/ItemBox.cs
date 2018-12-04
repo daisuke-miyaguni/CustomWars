@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +13,11 @@ public class ItemBox : MonoBehaviour
     // [SerializeField] Image openIcon;	// 開くを伝えるアイコン
 
     // [SerializeField] string[] itemName;		// Itemの名前
-	[SerializeField] List<GameObject> itemName = new List<GameObject>{};    // Itemの名前
+	// [SerializeField] List<GameObject> itemName = new List<GameObject>{};    // Itemの名前
+    [SerializeField] GameObject[] itemName;    // Itemの名前
 
-	[SerializeField] int itemCount;
+
+    int itemCount = 3;
     [SerializeField] float itemSpawnPower;
     
     [SerializeField] GameObject icon;
@@ -26,6 +30,7 @@ public class ItemBox : MonoBehaviour
 	{
 		photonView = GetComponent<PhotonView>();
 		bc = GetComponent<BoxCollider>();
+		itemCount = 3;
 		// cc = GetComponent<CapsuleCollider>();
 	}
 
@@ -65,29 +70,45 @@ public class ItemBox : MonoBehaviour
     [PunRPC]
 	void BoxOpen()
 	{
-		// ランダムに生成する処理
-		for(int i = 0; i < itemCount; i++)
-		{
-			int itemNum = Random.Range(0, itemName.Count);
+        // ランダムに生成する処理
+        // for(int i = 0; i < itemCount; i++)
+        // {
+        // 	int itemNum = Random.Range(0, itemName.Count);
+        //     GameObject item = PhotonNetwork.InstantiateSceneObject
+        // 	(
+        // 		this.itemName[itemNum].name,
+        // 		this.transform.position,
+        // 		// new Vector3
+        // 		// (
+        // 		// 	this.transform.position.x * Random.Range(-0.3f, 0.3f),
+        // 		// 	this.transform.position.y * Random.Range(-0.1f, 0.5f),
+        // 		// 	this.transform.position.z * Random.Range( 0.0f, 1.0f)
+        // 		// ),
+        // 		gameObject.transform.rotation,
+        // 		0,
+        // 		null
+        // 	);
+
+        //     Rigidbody itemRb = item.GetComponent<Rigidbody>();
+        //     itemRb.AddForce(Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, Random.Range(0.5f, itemSpawnPower), ForceMode.VelocityChange);
+        //     this.itemName.Remove(itemName[itemNum]);
+        // }
+		GameObject[] randItem = itemName.OrderBy(i => Guid.NewGuid()).ToArray();
+
+        for (int i = 0; i < itemCount; i++)
+        {
             GameObject item = PhotonNetwork.InstantiateSceneObject
-			(
-				this.itemName[itemNum].name,
-				this.transform.position,
-				// new Vector3
-				// (
-				// 	this.transform.position.x * Random.Range(-0.3f, 0.3f),
-				// 	this.transform.position.y * Random.Range(-0.1f, 0.5f),
-				// 	this.transform.position.z * Random.Range( 0.0f, 1.0f)
-				// ),
-				gameObject.transform.rotation,
-				0,
-				null
-			);
+            (
+                randItem[i].name,
+                this.transform.position,
+                gameObject.transform.rotation,
+                0,
+                null
+            );
 
             Rigidbody itemRb = item.GetComponent<Rigidbody>();
-            itemRb.AddForce(Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, Random.Range(0.5f, itemSpawnPower), ForceMode.VelocityChange);
-            this.itemName.Remove(itemName[itemNum]);
-		}
+            itemRb.AddForce(UnityEngine.Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, UnityEngine.Random.Range(0.5f, itemSpawnPower), ForceMode.VelocityChange);
+        }
 
         // // 箱の重力を削除
         // // Destroy(this.gameObject.GetComponent<Rigidbody>());
