@@ -3,67 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class CustomSlot : MonoBehaviour
+public class PocketItem : MonoBehaviour
 {
     private ItemData myItemData;
+
+    [SerializeField]
+    private PocketStatus pocketStatus;
 
     private GameObject instanceDragItemUI;
 
     [SerializeField]
     private GameObject dragItemUI;
 
-    private GameObject dataName;
+    [SerializeField]
+    private int slotNum;
 
-    private int plusPower;
+    private int itemNum;
+
+    private GameObject itemSlot;
 
     private bool panelParam;
-
-    // private GameObject myPanel;
-
-    WeaponManager wm;
-
-    public void SetWeaponManager(WeaponManager weaponManager)
-    {
-        this.wm = weaponManager.GetComponent<WeaponManager>();
-    }
 
     [SerializeField]
     private Text informationText;
 
-    public void SetItemData(ItemData itemData)      //アイテムデータの取得と、アイテムイメージの表示
+    private void Start()
     {
-        myItemData = itemData;
+        pocketStatus = FindObjectOfType<PocketStatus>();
     }
-
 
     public void MouseDrop()     //　スロットの上にアイテムがドロップされた時に実行
     {
-
-
-
         if (FindObjectOfType<DragSlot>() == null)
         {
             return;
         }
 
-        if(panelParam != false)
+        if (panelParam != false)
         {
             return;
         }
 
         transform.GetChild(0).GetComponent<Image>().sprite = null;
-        informationText.text = null;
         myItemData = null;
 
         var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
 
-        if (myItemData.GetItemType() == MyItemStatus.Item.parts1 && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.parts2  && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.parts3  && panelParam == false) 
+        if (myItemData.GetItemType() == MyItemStatus.Item.mon && panelParam == false
+        || myItemData.GetItemType() == MyItemStatus.Item.ball && panelParam == false
+        || myItemData.GetItemType() == MyItemStatus.Item.riyo && panelParam == false)
         {
-            dataName = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
+            itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
+            
             ShowInformation();
 
             //  myPanel.GetComponent<CustomSlot>().PanelDelete();
@@ -72,45 +64,40 @@ public class CustomSlot : MonoBehaviour
             {
 
 
-                case MyItemStatus.Item.parts1:
+                case MyItemStatus.Item.mon:
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
-
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
 
                     panelParam = true;
 
-                    Destroy(dataName);                      //持ち物欄からパネルを削除
+                    itemNum = 0;
+
+                    Destroy(itemSlot);                      //持ち物欄からパネルを削除
                     break;
 
 
-                case MyItemStatus.Item.parts2:
+                case MyItemStatus.Item.ball:
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
-
-                    plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-                    wm.SetWeaponPower(plusPower);
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
 
                     panelParam = true;
 
-                    Destroy(dataName);
+                    itemNum = 1;
+
+                    Destroy(itemSlot);
 
                     break;
 
 
-                case MyItemStatus.Item.parts3:
+                case MyItemStatus.Item.riyo:
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
-
-                    plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-                    wm.SetWeaponPower(plusPower);
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
 
                     panelParam = true;
 
-                    Destroy(dataName);
+                    itemNum = 2;
+
+                    Destroy(itemSlot);
 
                     break;
 
@@ -118,27 +105,19 @@ public class CustomSlot : MonoBehaviour
                 default:
                     break;
             }
-            //Debug.Log(myPanel);
-
         }
 
-               
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
-
-               
+        pocketStatus.SetItemData(myItemData, slotNum);
     }
+
 
     void ShowInformation()
     {
         transform.GetChild(0).GetComponent<Image>().sprite = myItemData.GetItemSprite();        //　アイテムイメージを設定
 
-        Text nameUI = GetComponentInChildren<Text>();                                           //　スロットのTextを取得し名前を設定
-        nameUI.text = myItemData.GetItemName();
-
-        var text = "<Color=white>" + myItemData.GetItemName() + "</Color>\n";                   //　アイテム情報を表示する
-                                                                                                
-        informationText.text = text;
     }
+
 
     public void MouseBeginDrag()                                                                //パネルをドラッグした際にアイテム画像を生成
     {
@@ -154,16 +133,17 @@ public class CustomSlot : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        Player.atk -= plusPower;
         panelParam = false;
 
-        
+
     }
+
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
         Destroy(instanceDragItemUI);
     }
+
 
     private void PanelDelete()
     {
@@ -172,4 +152,12 @@ public class CustomSlot : MonoBehaviour
         myItemData = null;
         // myPanel = null;
     }
+
+
+    public int GetItemNum()
+    {
+        return itemNum;
+    }
+
+    
 }
