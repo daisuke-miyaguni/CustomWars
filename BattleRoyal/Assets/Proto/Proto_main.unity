@@ -798,7 +798,8 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114967859322033466, guid: 2b9445300359fdf49bcd4dde5d4a5a79, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2b9445300359fdf49bcd4dde5d4a5a79, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &631905859 stripped
@@ -1694,6 +1695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1451e34cc706be146b68b0c7745d31ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereCollider: []
+  safeArea: {fileID: 0}
+  safeAreaPosX: 0
+  safeAreaPosZ: 0
   reducingSpeed: 10
   collisionOnTime: 0.2
   reductionScales:
@@ -1703,6 +1708,7 @@ MonoBehaviour:
   - 15
   - 5
   deskTag: Desk
+  reductionCount: 0
 --- !u!114 &1322259752
 MonoBehaviour:
   m_ObjectHideFlags: 0
