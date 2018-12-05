@@ -7,7 +7,19 @@ public class DragDelete : MonoBehaviour
 {
     private ItemData myItemData;
 
+    PhotonView playerPV;
+
     private GameObject slotName;
+
+    GameObject myPlayer;
+
+    [SerializeField] GameObject[] items;
+
+    public void SetMyPlayer(GameObject player)
+    {
+        this.myPlayer = player;
+        this.playerPV = player.GetComponent<PhotonView>();
+    }
 
     /* private GameObject panel;
 
@@ -32,82 +44,98 @@ public class DragDelete : MonoBehaviour
         myItemData = dragSlot.GetItem();
 
         slotName = ProcessingSlot.itemSlot;
+        // Vector3 p_pos = GameObject.Find("Sphere").transform.position;
+        Vector3 p_pos = new Vector3
+        (
+            myPlayer.transform.position.x,
+            myPlayer.transform.position.y + 1.0f,
+            myPlayer.transform.position.z + 0.8f
+        );
 
-        Vector3 p_pos = GameObject.Find("Sphere").transform.position;
+        GameObject item = items[(int)myItemData.GetItemType()];
+        MyItemStatus.itemFlags[(int)myItemData.GetItemType()] = false;
+        Destroy(slotName);
+        // item = (GameObject)Resources.Load(myItemData.GetType().ToString());                  //捨てたアイテムをプレイヤーポジションに生成する
 
+        // switch (myItemData.GetItemType())
+        // {
+        //     case MyItemStatus.Item.parts1:
 
+        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
-        switch (myItemData.GetItemType())
-        {
-            case MyItemStatus.Item.parts1:
+        //         item = (GameObject)Resources.Load(items[0].name);                  //捨てたアイテムをプレイヤーポジションに生成する
+        //         // PhotonNetwork.InstantiateSceneObject(parts1.name, p_pos, Quaternion.identity,0,null);
 
-                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
+        //         Destroy(slotName);
+        //         break;
 
-                 GameObject parts1 = (GameObject)Resources.Load("parts1");                  //捨てたアイテムをプレイヤーポジションに生成する
-                 Instantiate(parts1, p_pos, Quaternion.identity);
-                 
-                 Destroy(slotName);
-                 break;
+        //     case MyItemStatus.Item.parts2:
 
-            case MyItemStatus.Item.parts2:
+        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
-                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
+        //         item = (GameObject)Resources.Load(items[1].name);
+        //         // PhotonNetwork.InstantiateSceneObject(parts2.name, p_pos, Quaternion.identity,0,null);
 
-                GameObject parts2 = (GameObject)Resources.Load("parts2");
-                Instantiate(parts2, p_pos, Quaternion.identity);
-                
-                Destroy(slotName);
+        //         Destroy(slotName);
 
-                break;
+        //         break;
 
-            case MyItemStatus.Item.parts3:
+        //     case MyItemStatus.Item.parts3:
 
-                 MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
-                GameObject parts3 = (GameObject)Resources.Load("parts3");
-                Instantiate(parts3, p_pos, Quaternion.identity);
+        //         item = (GameObject)Resources.Load(items[2].name);
+        //         // PhotonNetwork.InstantiateSceneObject(parts3.name, p_pos, Quaternion.identity,0,null);
 
-                Destroy(slotName);
+        //         Destroy(slotName);
 
-                break;
+        //         break;
 
-            case MyItemStatus.Item.mon:
+        //     case MyItemStatus.Item.mon:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
+        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
 
-                GameObject mon = (GameObject)Resources.Load("mon");
-                Instantiate(mon, p_pos, Quaternion.identity);
+        //         item = (GameObject)Resources.Load(items[3].name);
+        //         // PhotonNetwork.InstantiateSceneObject(mon.name, p_pos, Quaternion.identity,0,null);
 
-                Destroy(slotName);
+        //         Destroy(slotName);
 
-                break;
+        //         break;
 
-            case MyItemStatus.Item.ball:
+        //     case MyItemStatus.Item.ball:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
+        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
 
-                GameObject show = (GameObject)Resources.Load("show");
-                Instantiate(show, p_pos, Quaternion.identity);
+        //         item = (GameObject)Resources.Load("show");
+        //         // PhotonNetwork.InstantiateSceneObject(show.name, p_pos, Quaternion.identity,0,null);
 
-                Destroy(slotName);
+        //         Destroy(slotName);
 
-                break;
+        //         break;
 
-            case MyItemStatus.Item.riyo:
+        //     case MyItemStatus.Item.riyo:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
+        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
 
-                GameObject riyo = (GameObject)Resources.Load("riyo");
-                Instantiate(riyo, p_pos, Quaternion.identity);
+        //         item = (GameObject)Resources.Load("riyo");
+        //         // PhotonNetwork.InstantiateSceneObject(riyo.name, p_pos, Quaternion.identity,0,null);
 
-                Destroy(slotName);
+        //         Destroy(slotName);
 
-                break;
+        //         break;
 
-            default:
-                 break;
-        }
+        //     default:
+        //         break;
+        // }
+
+        playerPV.RPC("DropItem", PhotonTargets.MasterClient, item, p_pos);
 
     }
-    
+
+    [PunRPC]
+    void DropItem(GameObject drop, Vector3 spawnPos)
+    {
+        PhotonNetwork.InstantiateSceneObject(drop.name, spawnPos, Quaternion.identity, 0, null);
+    }
+
 }

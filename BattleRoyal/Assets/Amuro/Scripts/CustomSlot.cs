@@ -25,7 +25,8 @@ public class CustomSlot : MonoBehaviour
 
     public void SetWeaponManager(WeaponManager weaponManager)
     {
-        this.wm = weaponManager.GetComponent<WeaponManager>();
+        this.wm = weaponManager;
+        // this.wm = weaponManager.GetComponent<WeaponManager>();
     }
 
     [SerializeField]
@@ -77,7 +78,9 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
+                    // wm.SetWeaponPower(plusPower);
+                    wm.AttachParts(plusPower);
 
                     panelParam = true;
 
@@ -91,7 +94,8 @@ public class CustomSlot : MonoBehaviour
 
                     plusPower = myItemData.GetItemPower();
                     // Player.atk += plusPower;
-                    wm.SetWeaponPower(plusPower);
+                    // wm.SetWeaponPower(plusPower);
+                    wm.AttachParts(plusPower);
 
                     panelParam = true;
 
@@ -106,7 +110,8 @@ public class CustomSlot : MonoBehaviour
 
                     plusPower = myItemData.GetItemPower();
                     // Player.atk += plusPower;
-                    wm.SetWeaponPower(plusPower);
+                    // wm.SetWeaponPower(plusPower);
+                    wm.AttachParts(plusPower);
 
                     panelParam = true;
 
@@ -154,7 +159,8 @@ public class CustomSlot : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        Player.atk -= plusPower;
+        // Player.atk -= plusPower;
+        wm.AttachParts(-plusPower);
         panelParam = false;
 
         

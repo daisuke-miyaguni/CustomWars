@@ -11,8 +11,8 @@ public class StageManager : MonoBehaviour
     [SerializeField] float safeAreaPosX;
     [SerializeField] float safeAreaPosZ;
 
-	float initPosX;
-	float initPosZ;
+    float initPosX;
+    float initPosZ;
 
     [SerializeField] float reducingSpeed;    // 縮小スピード
     [SerializeField] float collisionOnTime;    // 判定スタートまでの時間
@@ -43,9 +43,9 @@ public class StageManager : MonoBehaviour
 
         photonView = GetComponent<PhotonView>();
 
-		initPosX = Random.Range(-safeAreaPosX, safeAreaPosX);
+        initPosX = Random.Range(-safeAreaPosX, safeAreaPosX);
         initPosZ = Random.Range(-safeAreaPosZ, safeAreaPosZ);
-		
+
         if (PhotonNetwork.isMasterClient)
         {
             photonView.RPC("InitPosition", PhotonTargets.AllViaServer, initPosX, initPosZ);
@@ -58,7 +58,7 @@ public class StageManager : MonoBehaviour
         if (stream.isWriting)
         {
             stream.SendNext(initPosX);
-			stream.SendNext(initPosZ);
+            stream.SendNext(initPosZ);
         }
         else
         {
@@ -89,6 +89,10 @@ public class StageManager : MonoBehaviour
     // 安地範囲のチェック
     void ScaleChecker()
     {
+        if (reductionCount > reductionScales.Length)
+        {
+            return;
+        }
         // 指定より大きいと縮小が始まる
         if (sphereCollider[0].radius > reductionScales[reductionCount])
         {
@@ -96,10 +100,14 @@ public class StageManager : MonoBehaviour
         }
         else
         {
+            if (reductionCount + 1 > reductionScales.Length)
+            {
+                return;
+            }
             sphereCollider[1].radius = reductionScales[reductionCount + 1];
         }
     }
-    
+
     // 縮小処理
     void Reduction()
     {

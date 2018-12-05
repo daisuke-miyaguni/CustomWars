@@ -213,13 +213,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponTagName: weapon
   itemName:
-  - MiyaguniItemTest1
-  - MiyaguniItemTest2
-  - MiyaguniItemTest3
-  - MiyaguniItemTest4
-  - MiyaguniItemTest5
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   itemCount: 3
   itemSpawnPower: 0
+  icon: {fileID: 0}
 --- !u!114 &86641780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4116832641518868, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4116832641518868, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -283,7 +284,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4116832641518868, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114750974907175846, guid: 30f499fbd4473c249aa9e849be0022d1,
         type: 2}
@@ -303,6 +304,10 @@ Prefab:
     - target: {fileID: 1928096229950174, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1871495111859070, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
@@ -386,7 +391,7 @@ MonoBehaviour:
   - {x: -10, y: 0.5, z: 10}
   - {x: -10, y: 0.5, z: 50}
   itemSpawnWaitTime: 3
-  itempBoxName: MiyaguniItemBox
+  itempBox: {fileID: 0}
 --- !u!4 &618400535
 Transform:
   m_ObjectHideFlags: 0
@@ -560,7 +565,7 @@ MonoBehaviour:
   - {x: -10, y: 0.5, z: -10}
   - {x: -50, y: 0.5, z: -50}
   itemSpawnWaitTime: 3
-  itempBoxName: MiyaguniItemBox
+  itempBox: {fileID: 0}
 --- !u!4 &811088661
 Transform:
   m_ObjectHideFlags: 0
@@ -678,7 +683,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1564034181626492, guid: 25588fac358bb0d428c9b844eff41166, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 25588fac358bb0d428c9b844eff41166, type: 2}
@@ -906,7 +911,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4116832641518868, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 114750974907175846, guid: 30f499fbd4473c249aa9e849be0022d1,
         type: 2}
@@ -931,74 +936,12 @@ Prefab:
       propertyPath: m_Name
       value: MiyaguniItemBox (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &1142754513
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069891399024060, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 114137144725706064, guid: 8722b49dc4dd34b4990872ce5e95d059,
-        type: 2}
-      propertyPath: viewIdField
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114137144725706064, guid: 8722b49dc4dd34b4990872ce5e95d059,
-        type: 2}
-      propertyPath: instantiationId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114873819532900576, guid: 8722b49dc4dd34b4990872ce5e95d059,
-        type: 2}
-      propertyPath: viewIdField
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114873819532900576, guid: 8722b49dc4dd34b4990872ce5e95d059,
-        type: 2}
-      propertyPath: instantiationId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882955996610140, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
+    - target: {fileID: 1871495111859070, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 8722b49dc4dd34b4990872ce5e95d059, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1390373060
 GameObject:
@@ -1028,12 +971,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itempBoxSpawnPos:
-  - {x: 50, y: 0.5, z: 50}
+  - {x: 0, y: -0.5, z: 0}
   - {x: 50, y: 0.5, z: 10}
   - {x: 10, y: 0.5, z: 50}
   - {x: 10, y: 0.5, z: 10}
   itemSpawnWaitTime: 3
-  itempBoxName: MiyaguniItemBox
+  itempBox: {fileID: 1871495111859070, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
 --- !u!4 &1390373062
 Transform:
   m_ObjectHideFlags: 0
@@ -1220,7 +1163,7 @@ MonoBehaviour:
   - {x: 10, y: 0.5, z: -10}
   - {x: 50, y: 0.5, z: -10}
   itemSpawnWaitTime: 3
-  itempBoxName: MiyaguniItemBox
+  itempBox: {fileID: 0}
 --- !u!4 &2030376374
 Transform:
   m_ObjectHideFlags: 0
@@ -1243,7 +1186,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2070705309}
   - component: {fileID: 2070705310}
-  - component: {fileID: 2070705311}
   m_Layer: 0
   m_Name: ItemSpawnTestManager
   m_TagString: Untagged
@@ -1279,18 +1221,8 @@ MonoBehaviour:
   startButton: {fileID: 854294002}
   playerCountText: {fileID: 854294001}
   playerStateText: {fileID: 854294000}
+  playerIDText: {fileID: 854294000}
   maxPlayerList: 4
   minPlayerList: 2
   gameStartTime: 0.1
   photonSceneTransitioner: {fileID: 0}
---- !u!114 &2070705311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2070705307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff8918c41846f8f468d031a686309298, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

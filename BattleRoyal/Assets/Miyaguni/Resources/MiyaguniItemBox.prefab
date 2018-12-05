@@ -30,7 +30,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1361934130454840
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -59,8 +59,7 @@ GameObject:
   - component: {fileID: 23531050561683554}
   - component: {fileID: 114750974907175846}
   - component: {fileID: 114909043433642580}
-  - component: {fileID: 54873235120762656}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiyaguniItemBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,8 +75,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4113907420004162}
   - component: {fileID: 136845761975624880}
-  - component: {fileID: 114268919263343782}
-  m_Layer: 0
+  - component: {fileID: 114183264006108628}
+  m_Layer: 8
   m_Name: ItemBoxOpenIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +92,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 224956796479048138}
   m_Father: {fileID: 4116832641518868}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,11 +104,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1871495111859070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: -6.15, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 2, z: 2}
   m_Children:
   - {fileID: 4113907420004162}
-  - {fileID: 224956796479048138}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,21 +152,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1871495111859070}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54873235120762656
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1871495111859070}
-  serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 2
-  m_Constraints: 122
-  m_CollisionDetection: 2
 --- !u!65 &65790048234280420
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -180,7 +164,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114268919263343782
+--- !u!114 &114183264006108628
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -191,7 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90131065b7aa4b448a17d85992bbbb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTagName: Player
   openIcon: {fileID: 114857477887190646}
 --- !u!114 &114461946080224746
 MonoBehaviour:
@@ -275,13 +258,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponTagName: weapon
   itemName:
-  - MiyaguniItemTest1
-  - MiyaguniItemTest2
-  - MiyaguniItemTest3
-  - MiyaguniItemTest4
-  - MiyaguniItemTest5
+  - {fileID: 1756564616796304, guid: 7d4e9a4179d87514d8b453181db584ad, type: 2}
+  - {fileID: 1756564616796304, guid: e13b27187eb308240a2defb4983d42bf, type: 2}
+  - {fileID: 1756564616796304, guid: 0d4253955822cf2449860c7458203d34, type: 2}
+  - {fileID: 1756564616796304, guid: 609802216e454a04182624f04e0c81ea, type: 2}
+  - {fileID: 1756564616796304, guid: 2c375ccd6bfd18f459d878c2e397b410, type: 2}
   itemCount: 3
   itemSpawnPower: 7
+  icon: {fileID: 1928096229950174}
 --- !u!114 &114916035158315502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,8 +296,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3
-  m_Height: 1
+  m_Radius: 2
+  m_Height: 2.5
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!222 &222437175817701912
@@ -371,8 +355,8 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_Children:
   - {fileID: 224896579152309222}
-  m_Father: {fileID: 4116832641518868}
-  m_RootOrder: 1
+  m_Father: {fileID: 4113907420004162}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

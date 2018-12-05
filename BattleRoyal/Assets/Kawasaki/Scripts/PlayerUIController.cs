@@ -17,9 +17,18 @@ public class PlayerUIController : MonoBehaviour
     // [SerializeField] public Button avoidButton;
     [SerializeField] public Button parryButton;
 
-    [SerializeField] public GameObject getButton;
+    [SerializeField] public Button getButton;
+
+    [SerializeField] Slider hpSlider;
+
+    public Slider GetHPSlider()
+    {
+        return hpSlider;
+    }
 
     [SerializeField] public GameObject inventory;
+
+    [SerializeField] GameObject deletePanel;
 
     public void SetPlayerController(PlayerController player)
     {
@@ -39,16 +48,17 @@ public class PlayerUIController : MonoBehaviour
         inventoryButton.GetComponent<Button>();
         inventoryButton.onClick.AddListener(this.OpenInventory);
 
-        Button get = getButton.GetComponent<Button>();
-        get.onClick.AddListener(myItemStatus.OnClick);
-        getButton.SetActive(false);
-        
+        getButton.GetComponent<Button>();
+        getButton.onClick.AddListener(myItemStatus.OnGetButton);        
 
         // avoidButton.GetComponent<Button>();
         // avoidButton.onClick.AddListener(playerController.Avoid);
 
         parryButton.GetComponent<Button>();
         parryButton.onClick.AddListener(playerController.ParryClick);
+
+        DragDelete dd = deletePanel.GetComponent<DragDelete>();
+        dd.SetMyPlayer(playerController.gameObject);
 
         createSlot.SetMyItemStatus(playerController.GetMyItemStatus());
 

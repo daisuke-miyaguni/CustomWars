@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 223640215435902836}
   - component: {fileID: 114749574698599368}
   - component: {fileID: 114850180090008720}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4924623597961572}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,6 +468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c3f63ece8f74847935fdc8db542509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemCustomSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114085884628403624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -545,7 +549,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 1
-    InterpolateOption: 3
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 60
     InterpolateMoveTowardsAcceleration: 2
@@ -580,7 +584,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ExtrapolateOption: 1
+    ExtrapolateOption: 3
     ExtrapolateSpeed: 60
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
@@ -591,7 +595,7 @@ MonoBehaviour:
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 60
   m_ScaleModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
@@ -654,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 509bd2e140014394aafd8a78d5d86449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 2.5
+  rotateSpeed: 5
 --- !u!114 &114504541749179026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -676,6 +680,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114341804633077042}
+  - {fileID: 114259340127924366}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -719,7 +724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801aa4e82794a1b4aa587338b5c6c256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getButton: {fileID: 1651695198228466, guid: 40ff768360e79364d99facd731490fa7, type: 2}
 --- !u!114 &114749574698599368
 MonoBehaviour:
   m_ObjectHideFlags: 1
