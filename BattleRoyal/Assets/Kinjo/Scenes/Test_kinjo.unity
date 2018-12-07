@@ -676,6 +676,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1451e34cc706be146b68b0c7745d31ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereCollider: []
+  safeArea: {fileID: 0}
+  safeAreaPosX: 0
+  safeAreaPosZ: 0
   reducingSpeed: 10
   collisionOnTime: 0.2
   reductionScales:
@@ -685,6 +689,7 @@ MonoBehaviour:
   - 15
   - 5
   deskTag: Desk
+  reductionCount: 0
 --- !u!4 &411797055
 Transform:
   m_ObjectHideFlags: 0

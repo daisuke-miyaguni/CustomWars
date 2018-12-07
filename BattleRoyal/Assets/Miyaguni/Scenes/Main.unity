@@ -380,17 +380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e19971a63f1c92499fd4a4860ba3da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemBoxSpawnPos:
-  - {x: -11, y: 0, z: 0}
-  - {x: 11, y: 0, z: 0}
-  - {x: -30, y: 0, z: 0}
-  - {x: 30, y: 0, z: 0}
-  - {x: -27, y: 0, z: -27}
-  - {x: 27, y: 0, z: 27}
-  - {x: -27, y: 0, z: 27}
-  - {x: 27, y: 0, z: -27}
+  itemBoxSpawnPos: []
   itemSpawnWaitTime: 0.15
-  itemBox: {fileID: 1871495111859070, guid: 30f499fbd4473c249aa9e849be0022d1, type: 2}
+  itemBox: {fileID: 0}
 --- !u!4 &79552780
 Transform:
   m_ObjectHideFlags: 0
@@ -1509,7 +1501,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1608441107}
   m_HandleRect: {fileID: 0}
@@ -4872,7 +4864,7 @@ GameObject:
   - component: {fileID: 1253333155}
   m_Layer: 5
   m_Name: LeftJoyStick
-  m_TagString: Untagged
+  m_TagString: hoge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6829,12 +6821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bf4c020f50473145b963589c2a2dedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 1756564616796304, guid: 7d4e9a4179d87514d8b453181db584ad, type: 2}
-  - {fileID: 1756564616796304, guid: e13b27187eb308240a2defb4983d42bf, type: 2}
-  - {fileID: 1756564616796304, guid: 0d4253955822cf2449860c7458203d34, type: 2}
-  - {fileID: 1756564616796304, guid: 609802216e454a04182624f04e0c81ea, type: 2}
-  - {fileID: 1756564616796304, guid: 2c375ccd6bfd18f459d878c2e397b410, type: 2}
+  items: []
 --- !u!222 &1906710120
 CanvasRenderer:
   m_ObjectHideFlags: 0
