@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     private PhotonView myPV;
     private PhotonTransformView myPTV;
-    private Rigidbody myRB;
+    [SerializeField]private Rigidbody myRB;
     private Camera myCamera;
     // private Button attackButton;
     // private Button jumpButton;
@@ -33,11 +33,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float attackTime = 0.5f;
 
-    private MobileInputController controller;
+    [SerializeField]private MobileInputController controller;
 
     private List<string> itemList = new List<string>();
 
     private Animator animator;
+
 
     private enum PlayerAnimatorParameters
     {
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        sphereCollider = gameObject.transform.Find("ParryScale").GetComponent<SphereCollider>();
+        sphereCollider = sphereCollider.GetComponent<SphereCollider>();
         sphereCollider.enabled = false;
         parryState = sphereCollider.enabled;
         // weaponCollider = weapon.GetComponent<BoxCollider>();
@@ -100,9 +101,10 @@ public class PlayerController : MonoBehaviour
             playerUIController = GameObject.Find("PlayerControllerUI").GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
-            myRB = GetComponent<Rigidbody>();
+            // myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
-            controller = GameObject.Find("LeftJoyStick").GetComponent<MobileInputController>();
+            controller = GameObject.FindWithTag("hoge").gameObject.GetComponent<MobileInputController>();
+            print(controller);
             // // 攻撃ボタン取得、設定
             // attackButton = GameObject.Find("AttackButton").GetComponent<Button>();
             // attackButton.onClick.AddListener(this.OnClickAttack);
@@ -153,16 +155,18 @@ public class PlayerController : MonoBehaviour
     // }
 
 
-
     void FixedUpdate()
     {
         if (myPV.isMine)
         {
+            print("fup");
             // 位置補完
             Vector3 velocity = myRB.velocity;
             myPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
             // 移動処理の読み込み
+            print("movebefor");
             Move();
+            print("moveafter");
         }
     }
 
@@ -185,6 +189,8 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
+        print("moveOn");
+        print(controller.Horizontal);
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
 
