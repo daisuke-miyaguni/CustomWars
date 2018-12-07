@@ -101,9 +101,9 @@ public class PlayerController : MonoBehaviour
             playerUIController = GameObject.Find("PlayerControllerUI").GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
-            // myRB = this.gameObject.GetComponent<Rigidbody>();
+            myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
-            controller = GameObject.FindWithTag("hoge").gameObject.GetComponent<MobileInputController>();
+            controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
             print(controller);
             // // 攻撃ボタン取得、設定
             // attackButton = GameObject.Find("AttackButton").GetComponent<Button>();
