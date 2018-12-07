@@ -109,20 +109,6 @@ public class ItemBox : MonoBehaviour
             Rigidbody itemRb = item.GetComponent<Rigidbody>();
             itemRb.AddForce(UnityEngine.Random.Range(-itemSpawnPower, itemSpawnPower), itemSpawnPower, UnityEngine.Random.Range(0.5f, itemSpawnPower), ForceMode.VelocityChange);
         }
-
-        // // 箱の重力を削除
-        // // Destroy(this.gameObject.GetComponent<Rigidbody>());
-        // // 箱の当たり判定を削除
-        // Destroy(bc.GetComponent<CapsuleCollider>());
-        // // Iconの表示範囲削除
-        // // Destroy(cc.GetComponent<CapsuleCollider>());
-        // // Icon削除
-        // // Destroy(openIcon);
-        // Destroy(icon);
-        // // 同期を削除
-        // Destroy(this.photonView.GetComponent<PhotonView>());
-        // // このプログラムを削除
-        // Destroy(this);
         photonView.RPC("DeleteItemBox", PhotonTargets.AllViaServer);
     }
 

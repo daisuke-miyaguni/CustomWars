@@ -16,7 +16,7 @@ public class TissueBoxContoller : MonoBehaviour
                 new Vector3
                 (
                     other.gameObject.transform.position.x,
-                    other.gameObject.transform.position.y + 0.6f,
+                    other.gameObject.transform.position.y + 1.2f,
                     other.gameObject.transform.position.z
                 ),
                 Quaternion.Euler(Vector3.zero)
