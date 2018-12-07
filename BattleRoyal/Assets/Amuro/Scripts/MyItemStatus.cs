@@ -14,7 +14,7 @@ public class MyItemStatus : MonoBehaviour
     {
         myItemPV = pv;
     }
-    
+
     public GameObject getButton;
 
     public enum Item
@@ -27,17 +27,13 @@ public class MyItemStatus : MonoBehaviour
         riyo
     };
 
-
     [SerializeField]
     public static bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
- 
 
-    // Use this for initialization
     void Start()
     {
-        // myItemPV = gameObject.GetComponent<PhotonView>();
-        // getButton.GetComponent<Button>();
         getButton = GameObject.Find("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
+        // getButton.GetComponent<Button>();
         if (getButton.activeSelf)
         {
             getButton.SetActive(false);
@@ -49,38 +45,43 @@ public class MyItemStatus : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (myItemPV)
+        if (other.gameObject.tag == "Item")
         {
             param = other.gameObject.GetComponent<ItemParam>();
+            var type = param.GetItems();
+            if (itemFlags[(int)type])
+            {
+                return;
+            }
 
-            getButton.SetActive(true);
-            
+            if (myItemPV.isMine)
+            {
+                getButton.SetActive(true);
+            }
         }
-
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (myItemPV)
+        if (other.gameObject.tag == "Item")
         {
             param = null;
-            getButton.SetActive(false);
+            if (myItemPV.isMine)
+            {
+                getButton.SetActive(false);
+            }
+
         }
     }
 
     public void OnGetButton()
     {
-        if (myItemPV)
+        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
+        if (myItemPV.isMine)
         {
-            // myItemPV = GetComponent<PhotonView>();
-            myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
-
             var type = param.GetItems();
 
             itemFlags[(int)type] = true;
-
-
-            // Destroy(param.gameObject);
         }
     }
 
@@ -98,6 +99,6 @@ public class MyItemStatus : MonoBehaviour
 
     public bool GetItemFlag(Item item)
     {
-        return itemFlags[(int)item];
-    }
+        return itemFlags[(int)item]; 
+    } 
 }

@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23852485765110396}
   - component: {fileID: 135705199375003424}
   - component: {fileID: 54199249226015190}
-  - component: {fileID: 114826154685857568}
+  - component: {fileID: 114227110078062202}
   - component: {fileID: 114373199796877308}
   - component: {fileID: 114039597255511722}
   m_Layer: 8
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
+    TeleportIfDistanceGreaterThan: 5
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
@@ -186,7 +186,7 @@ MonoBehaviour:
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
+    DrawErrorGizmo: 0
   m_RotationModel:
     SynchronizeEnabled: 0
     InterpolateOption: 1
@@ -197,6 +197,18 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &114227110078062202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756564616796304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de8dd5f10b2f7e458f8cd5cef507e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemNum: 0
 --- !u!114 &114373199796877308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,18 +235,6 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114826154685857568
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1756564616796304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4201143867dd33246ae1253fb94a0d6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemNum: 0
 --- !u!135 &135293092293247312
 SphereCollider:
   m_ObjectHideFlags: 1

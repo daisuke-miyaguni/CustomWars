@@ -53,4 +53,6 @@ MonoBehaviour:
   - TakeDamage
   - WasgetItem
   - Wasparryed
+  - DeleteItemBox
+  - DropItem
   DisableAutoOpenWizard: 1

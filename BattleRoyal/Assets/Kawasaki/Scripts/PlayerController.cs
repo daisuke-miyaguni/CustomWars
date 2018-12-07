@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private PhotonView myPV;
-    private Rigidbody myRB;
+    private PhotonTransformView myPTV;
+    [SerializeField]private Rigidbody myRB;
     private Camera myCamera;
     // private Button attackButton;
     // private Button jumpButton;
@@ -32,11 +33,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float attackTime = 0.5f;
 
-    private MobileInputController controller;
+    [SerializeField]private MobileInputController controller;
 
     private List<string> itemList = new List<string>();
 
     private Animator animator;
+
 
     private enum PlayerAnimatorParameters
     {
@@ -44,9 +46,6 @@ public class PlayerController : MonoBehaviour
         jump,
         parry
     }
-
-    // int damage = 10;
-    int healing = 2;
 
     // BoxCollider weaponCollider;
     CapsuleCollider weaponCollider;
@@ -83,11 +82,13 @@ public class PlayerController : MonoBehaviour
         myPV = GetComponent<PhotonView>();
         // myItemStatus取得
         myItemStatus = GetComponent<MyItemStatus>();
+        // photontransformview取得
+        myPTV = GetComponent<PhotonTransformView>();
     }
 
     void Start()
     {
-        sphereCollider = gameObject.transform.Find("ParryScale").GetComponent<SphereCollider>();
+        sphereCollider = sphereCollider.GetComponent<SphereCollider>();
         sphereCollider.enabled = false;
         parryState = sphereCollider.enabled;
         // weaponCollider = weapon.GetComponent<BoxCollider>();
@@ -100,9 +101,10 @@ public class PlayerController : MonoBehaviour
             playerUIController = GameObject.Find("PlayerControllerUI").GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
-            myRB = GetComponent<Rigidbody>();
+            // myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
-            controller = GameObject.Find("LeftJoyStick").GetComponent<MobileInputController>();
+            controller = GameObject.FindWithTag("hoge").gameObject.GetComponent<MobileInputController>();
+            print(controller);
             // // 攻撃ボタン取得、設定
             // attackButton = GameObject.Find("AttackButton").GetComponent<Button>();
             // attackButton.onClick.AddListener(this.OnClickAttack);
@@ -132,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
             //hp初期値設定
             currentHP = maxHP;
+            hpSlider = playerUIController.GetHPSlider();
             hpSlider.value = currentHP;
             hpText = GameObject.Find("HPText").GetComponent<Text>();
             hpText.text = "HP: " + currentHP.ToString();
@@ -151,11 +154,19 @@ public class PlayerController : MonoBehaviour
     //     otherHpBar.SetActive(true);
     // }
 
+
     void FixedUpdate()
     {
         if (myPV.isMine)
         {
+            print("fup");
+            // 位置補完
+            Vector3 velocity = myRB.velocity;
+            myPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
+            // 移動処理の読み込み
+            print("movebefor");
             Move();
+            print("moveafter");
         }
     }
 
@@ -178,6 +189,8 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
+        print("moveOn");
+        print(controller.Horizontal);
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -299,9 +312,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void CallRecover(int heal)
+    {
+        int healing = heal;
+        myPV.RPC("Recover", PhotonTargets.AllViaServer, healing);
+    }
+
     // 回復
     [PunRPC]
-    public void Recover(int amount)
+    private void Recover(int amount)
     {
         if (currentHP >= maxHP)
         {

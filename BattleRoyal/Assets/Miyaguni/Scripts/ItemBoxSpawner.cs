@@ -25,12 +25,13 @@ public class ItemBoxSpawner : Photon.MonoBehaviour
 
         for (int i = 0; i < itemBoxSpawnPos.Length; i++)
         {
-            PhotonNetwork.Instantiate
+            PhotonNetwork.InstantiateSceneObject
             (
                 itemBox.name,
                 itemBoxSpawnPos[i],
                 Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 180.0f), 0)),
-                0
+                0,
+                null
             );
         }
 

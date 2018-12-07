@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23852485765110396}
   - component: {fileID: 135749314411691758}
   - component: {fileID: 54017107308859578}
-  - component: {fileID: 114094323752870510}
+  - component: {fileID: 114221834916207748}
   - component: {fileID: 114857214273840292}
   - component: {fileID: 114731446961122070}
   m_Layer: 8
@@ -132,7 +132,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 2
---- !u!114 &114094323752870510
+--- !u!114 &114221834916207748
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1756564616796304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4201143867dd33246ae1253fb94a0d6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0de8dd5f10b2f7e458f8cd5cef507e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemNum: 3
@@ -158,8 +158,8 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    TeleportIfDistanceGreaterThan: 5
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     InterpolateMoveTowardsAcceleration: 2
@@ -198,7 +198,7 @@ MonoBehaviour:
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
+    DrawErrorGizmo: 0
   m_RotationModel:
     SynchronizeEnabled: 0
     InterpolateOption: 1
