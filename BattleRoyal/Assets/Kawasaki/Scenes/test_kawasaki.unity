@@ -976,7 +976,7 @@ Prefab:
       objectReference: {fileID: 9100000, guid: dfeea4d8a65c5784eb9712411a72122d, type: 2}
     - target: {fileID: 9500000, guid: fb98f56da2cd90b449503d9082c1ef0d, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: fb98f56da2cd90b449503d9082c1ef0d, type: 3}
       propertyPath: m_CullingMode
