@@ -1930,7 +1930,7 @@ Animator:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666012714826268}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: eb71a8797554d0c469cc4c4d29b7b8c1, type: 3}
+  m_Avatar: {fileID: 9000000, guid: e70b41ae21984d44b8d0e5e64c94c689, type: 3}
   m_Controller: {fileID: 9100000, guid: dfeea4d8a65c5784eb9712411a72122d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -2084,6 +2084,7 @@ MonoBehaviour:
   otherHpBar: {fileID: 1235628493087148}
   moveSpeed: 7
   jumpForce: 5
+  attackStayTime: 0.2
   attackTime: 0.3
   controller: {fileID: 0}
   sphereCollider: {fileID: 135016556967932288}

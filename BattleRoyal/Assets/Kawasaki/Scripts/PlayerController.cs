@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // [SerializeField] private float playerHP;
     // [SerializeField] private float rotateSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float attackStayTime = 0.2f;
     [SerializeField] private float attackTime = 0.5f;
 
     [SerializeField]private MobileInputController controller;
@@ -41,9 +42,9 @@ public class PlayerController : MonoBehaviour
 
     private enum PlayerAnimatorController
     {
-        Pencil,
-        Eraser,
-        Ruler
+        player_pencil,
+        player_eraser,
+        player_ruler
     }
 
 
@@ -289,6 +290,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Attack()
     {
+        yield return new WaitForSeconds(attackStayTime);
         animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
         weaponCollider.enabled = true;
         weapon.transform.localPosition = weaponPos;
