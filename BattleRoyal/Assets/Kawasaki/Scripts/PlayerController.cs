@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     private PhotonView myPV;
     private PhotonTransformView myPTV;
-    [SerializeField]private Rigidbody myRB;
+    [SerializeField] private Rigidbody myRB;
     private Camera myCamera;
     // private Button attackButton;
     // private Button jumpButton;
@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject weapon;
     [SerializeField] private GameObject otherHpBar;
 
+    [SerializeField] private GameObject itemBox;
+
     // playerステータス
     [SerializeField] private float moveSpeed;
     // [SerializeField] private float playerHP;
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackStayTime = 0.2f;
     [SerializeField] private float attackTime = 0.5f;
 
-    [SerializeField]private MobileInputController controller;
+    [SerializeField] private MobileInputController controller;
 
     private List<string> itemList = new List<string>();
 
@@ -55,6 +57,15 @@ public class PlayerController : MonoBehaviour
         parry,
         desprate,
         attack
+    }
+
+    private enum GameObjectTags
+    {
+        weapon,
+        Desk,
+        Item,
+        ItemBox,
+        AreaOut
     }
 
     // BoxCollider weaponCollider;
@@ -114,7 +125,6 @@ public class PlayerController : MonoBehaviour
             myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
             controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
-            print(controller);
             // // 攻撃ボタン取得、設定
             // attackButton = GameObject.Find("AttackButton").GetComponent<Button>();
             // attackButton.onClick.AddListener(this.OnClickAttack);
@@ -343,7 +353,7 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             // 着地
-            if (other.gameObject.tag == "Desk")
+            if (other.gameObject.tag == GameObjectTags.Desk.ToString())
             {
                 isJump = true;
                 weapon.transform.localPosition = weaponPos;
@@ -357,7 +367,7 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             // 被弾
-            if (other.gameObject.tag == "weapon"
+            if (other.gameObject.tag == GameObjectTags.weapon.ToString()
             && other.gameObject != weapon)
             {
                 WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
@@ -365,17 +375,52 @@ public class PlayerController : MonoBehaviour
                 myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
             }
             // アイテム取得
-            if (other.gameObject.tag == "Item")
+            if (other.gameObject.tag == GameObjectTags.Item.ToString())
             {
                 itemList.Add(other.gameObject.name);
                 // Destroy(other.gameObject);
             }
             // ステージ外判定
-            if (other.gameObject.tag == "AreaOut")
+            if (other.gameObject.tag == GameObjectTags.AreaOut.ToString())
             {
                 myPV.RPC("Death", PhotonTargets.AllViaServer);
             }
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (myPV.isMine)
+        {
+            if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
+            {
+                itemBox = other.gameObject;
+                playerUIController.openButton.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (myPV.isMine)
+        {
+            if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
+            {
+                itemBox = null;
+                playerUIController.openButton.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void OnClickOpenButton()
+    {
+        if (myPV.isMine)
+        {
+            playerUIController.openButton.gameObject.SetActive(false);
+
+        }
+        itemBox.transform.root.gameObject.GetComponent<ItemBox>().OpenOnClick();
+        itemBox = null;
     }
 
     // 死亡

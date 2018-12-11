@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 114183264006108628}
   m_Layer: 8
   m_Name: ItemBoxOpenIcon
-  m_TagString: Untagged
+  m_TagString: ItemBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

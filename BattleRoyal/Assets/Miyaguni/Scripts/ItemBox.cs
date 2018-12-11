@@ -30,17 +30,8 @@ public class ItemBox : MonoBehaviour
 		bc = GetComponent<BoxCollider>();
 		itemCount = 3;
 	}
-
-	// 宝箱が殴られて開く処理
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.gameObject.tag == weaponTagName)
-		{
-			photonView.RPC(PunRPCList.BoxOpen.ToString(), PhotonTargets.MasterClient);
-			// BoxOpen();
-		}
-	}
-
+    
+    // ボタンでボックスを開ける
     public void OpenOnClick()
     {
         photonView.RPC(PunRPCList.BoxOpen.ToString(), PhotonTargets.MasterClient);
