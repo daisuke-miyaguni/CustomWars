@@ -22,7 +22,8 @@ public class LobbyManager : Photon.MonoBehaviour
 
     string roomName = "Room";    // ルーム名
 	string playerCount = "PlayerCount: ";    // PlayerCountの文字列
-	string playerStateHost = "Host";    // PlayerがHostのときの文字列
+    string playerID = "PlayerID: ";    // PlayerCountの文字列
+    string playerStateHost = "Host";    // PlayerがHostのときの文字列
 	string playerStateGuest = "Guest";		// PlayerがGuestのときの文字列
 
 	void Start()
@@ -72,7 +73,7 @@ public class LobbyManager : Photon.MonoBehaviour
 		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
         // IDの表示
-        playerIDText.text = PhotonNetwork.player.ID.ToString();
+        playerIDText.text = playerID + PhotonNetwork.player.ID.ToString();
 		// Player状態更新
 		PlayerStateCheck();
 		// 入室ボタンを押せないようにする
@@ -83,7 +84,6 @@ public class LobbyManager : Photon.MonoBehaviour
 		{
 			PhotonNetwork.Disconnect();
 		}
-		Debug.Log("参加した");
 	}
 
 	// 他のPlayerが入室してきた
@@ -92,7 +92,7 @@ public class LobbyManager : Photon.MonoBehaviour
 		// 人数更新
         playerCountText.text = playerCount + PhotonNetwork.playerList.Length.ToString();
         // IDの表示
-        playerIDText.text = PhotonNetwork.player.ID.ToString();
+        playerIDText.text = playerID + PhotonNetwork.player.ID.ToString();
 		// Buttonの操作
         ButtonsControll();
 
@@ -117,7 +117,7 @@ public class LobbyManager : Photon.MonoBehaviour
 		// Player状態の更新
 		PlayerStateCheck();
         // IDの表示
-        playerIDText.text = PhotonNetwork.player.ID.ToString();
+        playerIDText.text = playerID + PhotonNetwork.player.ID.ToString();
 		// Buttonの操作
 		ButtonsControll();
         if (PhotonNetwork.isMasterClient)
