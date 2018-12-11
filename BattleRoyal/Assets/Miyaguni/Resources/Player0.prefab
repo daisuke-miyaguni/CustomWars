@@ -1934,7 +1934,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: dfeea4d8a65c5784eb9712411a72122d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1992,6 +1992,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: attack
+  - Type: 9
+    SynchronizeType: 0
+    Name: parry
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
