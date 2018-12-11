@@ -33,3 +33,5 @@ sysinfo.txt
 .vs/
 x64/
 Debug/
+
+*.code-workspace
