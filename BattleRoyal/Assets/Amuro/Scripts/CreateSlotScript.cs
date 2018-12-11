@@ -6,23 +6,26 @@ using UnityEngine.UI;
 public class CreateSlotScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject slot;                            //インスペクターでPropetySlotをアタッチ
+    private GameObject slot;
 
     private GameObject customObject;
 
     private Sprite itemSprite;
 
     [SerializeField]
-    private MyItemStatus myItemStatus;                  //インスペクターでプレイヤーをアタッチ
+    private MyItemStatus myItemStatus;
 
     [SerializeField]
-    private ItemDataBase itemDataBase;                  //インスペクターでItemDataBaseスクリプトの入っているオブジェクトをアタッチ
+    private ItemDataBase itemDataBase;
 
     private ItemData myItemData;
 
     private int callNum;
 
-
+    public void SetMyItemStatus(MyItemStatus myPlayer)
+    {
+        this.myItemStatus = myPlayer;
+    }
 
     void OnEnable()
     {
@@ -30,7 +33,7 @@ public class CreateSlotScript : MonoBehaviour
         CreateSlot(itemDataBase.GetItemData());
     }
 
-    
+
     public void CreateSlot(ItemData[] itemLists)
     {
         switch (callNum)
@@ -68,15 +71,15 @@ public class CreateSlotScript : MonoBehaviour
                     instanceSlot.GetComponent<ProcessingSlot>().SetItemData(myItemData);
 
                     break;
-                }                
+                }
 
             default:
 
                 break;
 
         }
-       
-        
+
+
     }
 
     public void MouseDrop()                                 //item_panelでアイテムをもったままドラッグ終了したら呼び出す
@@ -89,13 +92,13 @@ public class CreateSlotScript : MonoBehaviour
 
         var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
-        
-        if(CustomSlot.thisCustom != null)                  //どのようなアイテムかを取得しする
+
+        if (CustomSlot.thisCustom != null)                  //どのようなアイテムかを取得しする
         {
             customObject = CustomSlot.thisCustom;
         }
 
-        if(PocketItem.thisPocket != null)
+        if (PocketItem.thisPocket != null)
         {
             customObject = PocketItem.thisPocket;
         }
@@ -104,7 +107,8 @@ public class CreateSlotScript : MonoBehaviour
         {
 
             case MyItemStatus.Item.parts1:
-                if(MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] == false)
+                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] == false)
+
                 {
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = true;
                     callNum = 1;

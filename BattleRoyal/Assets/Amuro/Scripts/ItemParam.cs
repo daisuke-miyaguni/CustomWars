@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemParam : MonoBehaviour                      //アイテムプレファブにつけるやつ
+public class ItemParam : MonoBehaviour
 {
     private ItemData itemData;
 
@@ -12,10 +12,14 @@ public class ItemParam : MonoBehaviour                      //アイテムプレ
 
     private MyItemStatus.Item items;
 
+    Rigidbody rb;
+    PhotonView ipPV;
+    PhotonTransformView ipPTV;
+
 	// Use this for initialization
 	void Start ()
     {
-        switch (itemNum)                                    //インスペクターで数字を入れてアイテムタイプを取得
+        switch (itemNum)
         {
             case 0:
                 items = MyItemStatus.Item.parts1;
@@ -40,14 +44,25 @@ public class ItemParam : MonoBehaviour                      //アイテムプレ
             case 5:
                 items = MyItemStatus.Item.riyo;
                 break;
-
-            default:
-                break;
         }
+
+        rb = GetComponent<Rigidbody>();
+        ipPV = GetComponent<PhotonView>();
+        ipPTV = GetComponent<PhotonTransformView>();
 	}
 
     public MyItemStatus.Item GetItems()
     {
         return items;
     }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+		if(ipPV.isMine)
+        {
+            Vector3 velocity = rb.velocity;
+            ipPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
+        }
+	}
 }

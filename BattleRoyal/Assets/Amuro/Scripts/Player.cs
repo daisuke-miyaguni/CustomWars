@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,10 +13,13 @@ public class Player : MonoBehaviour
 
     public static int atk　= 10;                  //プレイヤーの攻撃力
 
+
 	// Use this for initialization
 	void Start ()
     {
         rb = GetComponent<Rigidbody>();
+        HP = 40;
+        //slider = GameObject.Find("HPBar").GetComponent<Slider>();         //テスト用
 	}
 	
 	// Update is called once per frame
@@ -65,5 +69,6 @@ public class Player : MonoBehaviour
     public void Recovery(int amount)
     {
         hp += amount;
+
     }
 }

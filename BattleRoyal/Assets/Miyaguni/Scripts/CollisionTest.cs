@@ -32,8 +32,9 @@ public class CollisionTest : MonoBehaviour
 		// Z移動
         float moveZ = Input.GetAxis(moveZAxis) * speed;
 		//Player移動
-		rb.AddForce(transform.forward * moveZ, ForceMode.Force);
-        rb.AddForce(transform.right * moveX, ForceMode.Force);
+		// rb.AddForce(transform.forward * moveZ, ForceMode.Force);
+        // rb.AddForce(transform.right * moveX, ForceMode.Force);
+		rb.velocity = new Vector3(moveX, 0, moveZ);
 
         // クリックでターゲットに向かって飛んでいく
         if (Input.GetMouseButtonDown(0))

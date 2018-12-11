@@ -38,8 +38,8 @@ public class DragDelete : MonoBehaviour
 
         Vector3 p_pos = GameObject.Find("Sphere").transform.position;
 
-
-        switch (myItemData.GetItemType())                                               //ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成
+        // ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成
+        switch (myItemData.GetItemType())                                               
         {
             case MyItemStatus.Item.parts1:
 
@@ -120,6 +120,14 @@ public class DragDelete : MonoBehaviour
             itemSlot.GetComponent<ProcessingSlot>().PanelDelete();
         }
 
+        playerPV.RPC("DropItem", PhotonTargets.MasterClient, item, p_pos);
+
     }
-    
+
+    [PunRPC]
+    void DropItem(GameObject drop, Vector3 spawnPos)
+    {
+        PhotonNetwork.InstantiateSceneObject(drop.name, spawnPos, Quaternion.identity, 0, null);
+    }
+
 }

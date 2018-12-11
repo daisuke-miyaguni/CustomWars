@@ -27,12 +27,17 @@ MonoBehaviour:
   NetworkLogging: 1
   RunInBackground: 1
   RpcList:
+  - AttachmentParts
   - Attack
   - BoxOpen
-  - ChangeHP
+  - CallAttack
+  - CallParry
   - Chat
   - Death
-  - BoxOpen
+  - DestroyRpc
+  - EffectStart
+  - FullTrashs
+  - InitPosition
   - InstantiateRpc
   - MoveScene
   - PickupItemInit
@@ -40,11 +45,14 @@ MonoBehaviour:
   - PunPickup
   - PunPickupSimple
   - PunRespawn
+  - Recover
   - RequestForPickupItems
   - RequestForPickupTimes
-  - ShowElapsedTime
-  - Recover
+  - ShowWinnerResult
+  - ShuffleSpawnPos
   - TakeDamage
-  - DestroyRpc
-  - InitPosition
+  - WasgetItem
+  - Wasparryed
+  - DeleteItemBox
+  - DropItem
   DisableAutoOpenWizard: 1

@@ -1,24 +1,38 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerSpawner : Photon.MonoBehaviour
 {
-    [SerializeField] float minStartPos_X;    // Playerの一番小さいX軸初期位置
-    [SerializeField] float minStartPos_Z;    // Playerの一番小さいZ軸初期位置
-    [SerializeField] float maxStartPos_X;    // Playerの一番大きいX軸初期位置
-    [SerializeField] float maxStartPos_Z;    // Playerの一番大きいZ軸初期位置
-
     [SerializeField] float spawnWaitTime;    // スポーンまでのウェイトタイム
 
-    [SerializeField] string spawnPlayerName;    // ResorceからスポーンされるPlayerPrefabの名前 
-    // PhotonView pView;
+    [SerializeField] GameObject spawnPlayer;    // ResorceからスポーンされるPlayerPrefabの名前 
+
+    [SerializeField] Vector3[] spawnPos = new Vector3[] { };
+
+    PhotonView pv;
+
+    void Awake()
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            Vector3[] initPos = spawnPos.OrderBy(i => Guid.NewGuid()).ToArray();
+            pv = GetComponent<PhotonView>();
+            pv.RPC("ShuffleSpawnPos", PhotonTargets.AllViaServer, initPos);
+        }
+    }
+
+    [PunRPC]
+    void ShuffleSpawnPos(Vector3[] initSpawnPos)
+    {
+        spawnPos = initSpawnPos;
+    }
 
     void Start()
     {
-        // pView = GetComponent<PhotonView>();
-        Spawn();
         StartCoroutine(Spawn());
     }
 
@@ -27,13 +41,16 @@ public class PlayerSpawner : Photon.MonoBehaviour
     {
         // スポーンウェイトタイム待ってから処理に入る
         yield return new WaitForSeconds(spawnWaitTime);
-
-        // X初期位置をランダムで決める
-        float spawnX = Random.Range(minStartPos_X, maxStartPos_X);
-        // X初期位置をランダムで決める
-        float spawnZ = Random.Range(minStartPos_Z, maxStartPos_Z);
-
         // Playerをスポーン
-        PhotonNetwork.Instantiate(spawnPlayerName, new Vector3(spawnX, 1.0f, spawnZ), Quaternion.Euler(Vector3.zero), 0);
+        PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[PhotonNetwork.player.ID % 4], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
+        // for (int playerNum = 0; playerNum < PhotonNetwork.playerList.Length; playerNum++)
+        // {
+        //     if (PhotonNetwork.player.ID % 4 == playerNum)
+        //     {
+        //         // Playerをスポーン
+        //         PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[playerNum], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
+        //     }
+        // }
+        Destroy(this.gameObject);
     }
 }

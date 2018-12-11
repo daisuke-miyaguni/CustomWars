@@ -55,7 +55,7 @@ public class PocketStatus : MonoBehaviour
     }
 
 
-
+    
 
     public Pocket GetPocketData()                                 //アイテムスロットのアイテム情報取得
     {

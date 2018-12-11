@@ -9,7 +9,7 @@ public class ItemData : Object
     private MyItemStatus.Item itemType;     //アイテムタイプ
     private string itemInformation;         //アイテム説明
     private int itemPower;                  //アイテム攻撃力
-    private PocketStatus.Pocket pocketItem;
+    private PocketStatus.Pocket pocketItem;   //アイテムセットフラグ
 
     public ItemData(Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power, PocketStatus.Pocket pocketitem)
     {

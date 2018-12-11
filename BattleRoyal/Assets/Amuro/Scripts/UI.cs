@@ -7,14 +7,15 @@ public class UI : MonoBehaviour
 {
     private ItemDataBase itemDataBase;
 
-    public GameObject inv;
+    public GameObject Inv;
 
-    public GameObject pocket;
+    public GameObject Pocket;
 
     private CreateSlotScript createSlotScript;
-	
-	// Update is called once per frame
-	void Update ()                                              //Eキーでインベントリ開閉
+
+
+    // Update is called once per frame
+    void Update ()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -24,13 +25,14 @@ public class UI : MonoBehaviour
 
     void Inventory()
     {
-        inv.SetActive(!inv.activeSelf);
-        pocket.SetActive(!pocket.activeSelf);
+        Inv.SetActive(!Inv.activeSelf);
+        Pocket.SetActive(!Pocket.activeSelf);
     }
 
-    public void OnClick()                                       //インベントリをタッチで閉じるための処理
+    public void OnClick()
     {
-        inv.SetActive(!inv.activeSelf);
-        pocket.SetActive(!pocket.activeSelf);
+        Inv.SetActive(!Inv.activeSelf);
+        Pocket.SetActive(!Pocket.activeSelf);
     }
+
 }

@@ -17,7 +17,7 @@ public class PocketItem : MonoBehaviour
     [SerializeField]
     private GameObject dragItemUI;
 
-    public static GameObject thisPocket;                    //アイテムを別の欄から移動するときに一時的にアイテムデータを格納
+    public static GameObject thisPocket;
 
     [SerializeField]
     private int slotNum;
@@ -41,7 +41,7 @@ public class PocketItem : MonoBehaviour
             return;
         }
 
-
+       
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         myItemData = null;
 
@@ -52,9 +52,9 @@ public class PocketItem : MonoBehaviour
         || myItemData.GetItemType() == MyItemStatus.Item.ball && panelParam == false
         || myItemData.GetItemType() == MyItemStatus.Item.riyo && panelParam == false)
         {
-            itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得
+            itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
             Debug.Log(itemSlot);
-
+            
             ShowInformation();
 
             //  myPanel.GetComponent<CustomSlot>().PanelDelete();
@@ -111,7 +111,7 @@ public class PocketItem : MonoBehaviour
                     break;
             }
 
-            if (thisPocket != null)
+            if(thisPocket != null)
             {
                 thisPocket.GetComponent<PocketItem>().PanelDelete();
             }
@@ -158,7 +158,7 @@ public class PocketItem : MonoBehaviour
     }
 
 
-    public void PanelDelete()                                                                   //パネル内のアイテム表示を消すためのメソッド
+    public void PanelDelete()
     {
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         myItemData = null;
@@ -172,5 +172,5 @@ public class PocketItem : MonoBehaviour
         return itemNum;
     }
 
-
+    
 }
