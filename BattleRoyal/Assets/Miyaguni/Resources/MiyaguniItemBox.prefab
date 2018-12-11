@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 114909043433642580}
   m_Layer: 8
   m_Name: MiyaguniItemBox
-  m_TagString: Untagged
+  m_TagString: ItemBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,12 +258,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponTagName: weapon
   itemName:
-  - {fileID: 1756564616796304, guid: 7d4e9a4179d87514d8b453181db584ad, type: 2}
+  - {fileID: 1951666701963746, guid: 6a790e8b333654c49bcae6aec5cb96d9, type: 2}
   - {fileID: 1756564616796304, guid: e13b27187eb308240a2defb4983d42bf, type: 2}
   - {fileID: 1756564616796304, guid: 0d4253955822cf2449860c7458203d34, type: 2}
   - {fileID: 1756564616796304, guid: 609802216e454a04182624f04e0c81ea, type: 2}
   - {fileID: 1756564616796304, guid: 2c375ccd6bfd18f459d878c2e397b410, type: 2}
-  itemCount: 3
   itemSpawnPower: 7
   icon: {fileID: 1928096229950174}
 --- !u!114 &114916035158315502

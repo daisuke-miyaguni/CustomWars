@@ -17,6 +17,8 @@ TagManager:
   - Fan
   - AreaCheck
   - Dust
+  - PlayerControllerUI
+  - ItemBox
   layers:
   - Default
   - TransparentFX

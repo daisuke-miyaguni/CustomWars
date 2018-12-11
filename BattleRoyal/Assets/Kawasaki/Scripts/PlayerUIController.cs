@@ -7,6 +7,7 @@ public class PlayerUIController : MonoBehaviour
 {
     private PlayerController playerController;
     private MyItemStatus myItemStatus;
+    private ItemBox itemBox;
 
     [SerializeField] private CreateSlotScript createSlot;
 
@@ -18,6 +19,8 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] public Button parryButton;
 
     [SerializeField] public Button getButton;
+
+    [SerializeField] public Button openButton;
 
     [SerializeField] Slider hpSlider;
 
@@ -34,6 +37,7 @@ public class PlayerUIController : MonoBehaviour
     {
         this.playerController = player.GetComponent<PlayerController>();
         this.myItemStatus = player.gameObject.GetComponent<MyItemStatus>();
+        this.itemBox = GameObject.FindWithTag("ItemBox").gameObject.GetComponent<ItemBox>();
         SetButtons();
     }
 
@@ -56,6 +60,10 @@ public class PlayerUIController : MonoBehaviour
 
         parryButton.GetComponent<Button>();
         parryButton.onClick.AddListener(playerController.ParryClick);
+
+        openButton.GetComponent<Button>();
+        openButton.onClick.AddListener(itemBox.OpenOnClick);
+        openButton.gameObject.SetActive(false);
 
         DragDelete dd = deletePanel.GetComponent<DragDelete>();
         dd.SetMyPlayer(playerController.gameObject);

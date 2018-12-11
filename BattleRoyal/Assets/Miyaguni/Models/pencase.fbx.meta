@@ -1,50 +1,14 @@
 fileFormatVersion: 2
-guid: 1ff7f86b80f83524f91c1f79d08c6b86
+guid: 40c532dc633f45140a59400519c85156
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: group3
-    100002: //RootNode
-    100004: pasted__pCube1
-    100006: pasted__pCube2
-    100008: pasted__pCube3
-    100010: pasted__transform1
-    100012: pasted__transform2
-    100014: pCube1
-    100016: pCube2
-    100018: pCube3
-    100020: pCube4
-    100022: pCube5
-    100024: pCube6
-    100026: transform1
-    100028: transform2
-    100030: transform3
-    100032: transform4
-    100034: transform5
-    100036: transform6
-    400000: group3
-    400002: //RootNode
-    400004: pasted__pCube1
-    400006: pasted__pCube2
-    400008: pasted__pCube3
-    400010: pasted__transform1
-    400012: pasted__transform2
-    400014: pCube1
-    400016: pCube2
-    400018: pCube3
-    400020: pCube4
-    400022: pCube5
-    400024: pCube6
-    400026: transform1
-    400028: transform2
-    400030: transform3
-    400032: transform4
-    400034: transform5
-    400036: transform6
+    100000: //RootNode
+    400000: //RootNode
     2100000: lambert1
-    2300000: pCube6
-    3300000: pCube6
-    4300000: pCube6
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: polySurface1
     9500000: //RootNode
   externalObjects: {}
   materials:

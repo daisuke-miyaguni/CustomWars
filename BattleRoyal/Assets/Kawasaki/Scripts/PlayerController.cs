@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // [SerializeField] private float playerHP;
     // [SerializeField] private float rotateSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float attackStayTime = 0.2f;
     [SerializeField] private float attackTime = 0.5f;
 
     [SerializeField]private MobileInputController controller;
@@ -39,12 +40,21 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
+    private enum PlayerAnimatorController
+    {
+        player_pencil,
+        player_eraser,
+        player_ruler
+    }
+
 
     private enum PlayerAnimatorParameters
     {
         run,
         jump,
-        parry
+        parry,
+        desprate,
+        attack
     }
 
     // BoxCollider weaponCollider;
@@ -159,14 +169,11 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            print("fup");
             // 位置補完
             Vector3 velocity = myRB.velocity;
             myPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
             // 移動処理の読み込み
-            print("movebefor");
             Move();
-            print("moveafter");
         }
     }
 
@@ -189,8 +196,6 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
-        print("moveOn");
-        print(controller.Horizontal);
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -253,6 +258,7 @@ public class PlayerController : MonoBehaviour
         // {
         if (isJump)
         {
+            animator.SetTrigger(PlayerAnimatorParameters.jump.ToString());
             myRB.velocity = new Vector3(GetMoveDirection().x, jumpForce, GetMoveDirection().z);
             weapon.transform.localPosition = weaponPos;
             weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
@@ -284,6 +290,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Attack()
     {
+        yield return new WaitForSeconds(attackStayTime);
+        animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
         weaponCollider.enabled = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
@@ -428,6 +436,7 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void Wasparryed()
     {
+        animator.SetTrigger(PlayerAnimatorParameters.desprate.ToString());
         currentHP -= wasparryedDamage;
         hpSlider.value = currentHP;
         if (myPV.isMine)
