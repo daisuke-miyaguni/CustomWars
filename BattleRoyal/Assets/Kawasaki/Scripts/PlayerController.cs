@@ -461,6 +461,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Parrying()
     {
+        animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
         sphereCollider.enabled = true;
         parryState = true;
         weapon.transform.localPosition = weaponPos;
