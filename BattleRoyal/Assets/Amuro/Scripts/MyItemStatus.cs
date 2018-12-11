@@ -30,30 +30,13 @@ public class MyItemStatus : MonoBehaviour
         getButton.SetActive(false);
     }
 
-    /* private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "Item")
-        {
-            param = other.gameObject.GetComponent<ItemParam>();
-            var type = param.GetItems();
-            Debug.Log(type);
-        }
-    } */
-
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Item" /* && Input.GetKeyDown(KeyCode.I) */)
+        if (other.gameObject.tag == "Item")
         {
             param = other.gameObject.GetComponent<ItemParam>();
-            // var type = param.GetItems();
+
             getButton.SetActive(true);
-            
-            /*itemFlags[(int)type] = true;
-
-            print(type); */
-
-            //Parts1TakeUp();
         }
     }
 
@@ -74,8 +57,6 @@ public class MyItemStatus : MonoBehaviour
 
         Destroy(param.gameObject);
     }
-
-
 
     public bool GetItemFlag(Item item)
     {

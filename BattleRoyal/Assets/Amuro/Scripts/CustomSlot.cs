@@ -10,16 +10,20 @@ public class CustomSlot : MonoBehaviour
 
     private GameObject instanceDragItemUI;
 
+    private DragSlot dragSlot;
+
     [SerializeField]
     private GameObject dragItemUI;
 
     private GameObject dataName;
 
+    public static GameObject thisCustom;
+
     private int plusPower;
 
-    private bool panelParam;
+    public int customNum;                            //何番目のパネルかを判別するための数字
 
-    // private GameObject myPanel;
+    private bool panelParam = false;                 //パネル内のアイテム有無判定
 
 
     [SerializeField]
@@ -33,92 +37,84 @@ public class CustomSlot : MonoBehaviour
 
     public void MouseDrop()     //　スロットの上にアイテムがドロップされた時に実行
     {
-
-
-
-        if (FindObjectOfType<DragSlot>() == null)
+        if(FindObjectOfType<DragSlot>() == null || panelParam)
         {
             return;
         }
 
-        if(panelParam != false)
-        {
-            //print("false");
-            return;
-
-        }
-
-        transform.GetChild(0).GetComponent<Image>().sprite = null;
-        informationText.text = null;
-        myItemData = null;
-
-        var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
+        dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
 
-        if (myItemData.GetItemType() == MyItemStatus.Item.parts1 && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.parts2  && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.parts3  && panelParam == false) 
+        dataName = ProcessingSlot.itemSlot;
+
+        switch (customNum)               //カスタムパネルに装備
         {
-            dataName = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
-            ShowInformation();
+            case 0:
+                if(myItemData.GetItemType() != MyItemStatus.Item.parts1 || panelParam)          //取得使用しているアイテムをすでに持っているか、パネル内にすでにアイテムが配置されていたら無効
+                {
+                    return;
+                }
 
-            //  myPanel.GetComponent<CustomSlot>().PanelDelete();
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
-            switch (myItemData.GetItemType())               //カスタムパネルに装備
-            {
+                plusPower = myItemData.GetItemPower();
+                Player.atk += plusPower;
 
+                ShowInformation();
 
-                case MyItemStatus.Item.parts1:
+                panelParam = true;
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
+                Destroy(dataName);
 
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                break;
 
-                    panelParam = true;
+            case 1:
+                if (myItemData.GetItemType() != MyItemStatus.Item.parts2 || panelParam)
+                {
+                    return;
+                }
 
-                    Destroy(dataName);                      //持ち物欄からパネルを削除
-                    break;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
+                plusPower = myItemData.GetItemPower();
+                Player.atk += plusPower;
 
-                case MyItemStatus.Item.parts2:
+                ShowInformation();
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
+                panelParam = true;
 
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                Destroy(dataName);
 
-                    panelParam = true;
+                break;
 
-                    Destroy(dataName);
+            case 2:
+                if (myItemData.GetItemType() != MyItemStatus.Item.parts3 || panelParam)
+                {
+                    return;
+                }
 
-                    break;
+                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
+                plusPower = myItemData.GetItemPower();
+                Player.atk += plusPower;
 
-                case MyItemStatus.Item.parts3:
+                ShowInformation();
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                panelParam = true;
 
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                Destroy(dataName);
 
-                    panelParam = true;
+                break;
 
-                    Destroy(dataName);
+            default:
 
-                    break;
+                dataName = null;
 
-
-                default:
-                    break;
-            }
-            //Debug.Log(myPanel);
+                break;
 
         }
 
-               
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
-
                
     }
 
@@ -136,8 +132,7 @@ public class CustomSlot : MonoBehaviour
 
     public void MouseBeginDrag()                                                                //パネルをドラッグした際にアイテム画像を生成
     {
-        if (transform.GetChild(0).GetComponent<Image>().sprite.name == "Background"             //アイテムが無いパネルをドラッグできないようにした
-         || transform.GetChild(0).GetComponent<Image>().sprite.name == "None")
+        if (!panelParam)
         {
             return;
         }
@@ -148,22 +143,23 @@ public class CustomSlot : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        Player.atk -= plusPower;
-        panelParam = false;
+        thisCustom = gameObject;
 
+        Player.atk -= plusPower;
         
     }
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
+        thisCustom = null;
         Destroy(instanceDragItemUI);
     }
 
-    private void PanelDelete()
+    public void PanelDelete()
     {
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         informationText.text = null;
         myItemData = null;
-        // myPanel = null;
+        panelParam = false;
     }
 }

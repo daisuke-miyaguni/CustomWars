@@ -19,22 +19,26 @@ public class ItemParam : MonoBehaviour                      //アイテムプレ
         {
             case 0:
                 items = MyItemStatus.Item.parts1;
-                // print(items);
                 break;
 
             case 1:
                 items = MyItemStatus.Item.parts2;
-                // print(items);
                 break;
 
             case 2:
                 items = MyItemStatus.Item.parts3;
-                // print(items);
                 break;
 
             case 3:
                 items = MyItemStatus.Item.mon;
-                // print(items);
+                break;
+
+            case 4:
+                items = MyItemStatus.Item.ball;
+                break;
+
+            case 5:
+                items = MyItemStatus.Item.riyo;
                 break;
 
             default:
@@ -46,10 +50,4 @@ public class ItemParam : MonoBehaviour                      //アイテムプレ
     {
         return items;
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 }

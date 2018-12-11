@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
+    private ItemDataBase itemDataBase;
 
-    public GameObject basePanel;
+    public GameObject inv;
 
-	// Use this for initialization
-	void Start ()
-    {
-        // basePanel.SetActive(false);
-	}
+    public GameObject pocket;
+
+    private CreateSlotScript createSlotScript;
 	
 	// Update is called once per frame
-	void Update ()
+	void Update ()                                              //Eキーでインベントリ開閉
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -25,6 +24,13 @@ public class UI : MonoBehaviour
 
     void Inventory()
     {
-        basePanel.SetActive(!basePanel.activeSelf);
+        inv.SetActive(!inv.activeSelf);
+        pocket.SetActive(!pocket.activeSelf);
+    }
+
+    public void OnClick()                                       //インベントリをタッチで閉じるための処理
+    {
+        inv.SetActive(!inv.activeSelf);
+        pocket.SetActive(!pocket.activeSelf);
     }
 }

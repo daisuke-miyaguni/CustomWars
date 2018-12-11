@@ -6,6 +6,10 @@ public class Player : MonoBehaviour
 {
     private Rigidbody rb;
 
+    public readonly int maxHp = 100;              //最大HP
+
+    public static int hp;                         //HP
+
     public static int atk　= 10;                  //プレイヤーの攻撃力
 
 	// Use this for initialization
@@ -16,6 +20,13 @@ public class Player : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update ()
+    {
+        MovePlayer();
+
+        HpCtl();
+	}
+
+    private void MovePlayer()
     {
         if (Input.GetKey(KeyCode.W))
         {
@@ -41,8 +52,18 @@ public class Player : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
+    }
 
-        // Debug.Log(atk);
+    private void HpCtl()
+    {
+        if(hp <= 0)
+        {
+            hp = 0;
+        }
+    }
 
-	}
+    public void Recovery(int amount)
+    {
+        hp += amount;
+    }
 }

@@ -8,6 +8,10 @@ public class CreateSlotScript : MonoBehaviour
     [SerializeField]
     private GameObject slot;                            //インスペクターでPropetySlotをアタッチ
 
+    private GameObject customObject;
+
+    private Sprite itemSprite;
+
     [SerializeField]
     private MyItemStatus myItemStatus;                  //インスペクターでプレイヤーをアタッチ
 
@@ -85,29 +89,79 @@ public class CreateSlotScript : MonoBehaviour
 
         var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
+        
+        if(CustomSlot.thisCustom != null)                  //どのようなアイテムかを取得しする
+        {
+            customObject = CustomSlot.thisCustom;
+        }
 
+        if(PocketItem.thisPocket != null)
+        {
+            customObject = PocketItem.thisPocket;
+        }
 
-        switch (myItemData.GetItemType())
+        switch (myItemData.GetItemType())                   //取得したアイテムのパネルを表示
         {
 
             case MyItemStatus.Item.parts1:
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = true;
-                callNum = 1;
-                CreateSlot(itemDataBase.GetItemData());
+                if(MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] == false)
+                {
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = true;
+                    callNum = 1;
+                    CreateSlot(itemDataBase.GetItemData());
+
+                    customObject.GetComponent<CustomSlot>().PanelDelete();
+                }
 
                 break;
+
 
             case MyItemStatus.Item.parts2:
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = true;
-                callNum = 1;
-                CreateSlot(itemDataBase.GetItemData());
+                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] == false)
+                {
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = true;
+                    callNum = 1;
+                    CreateSlot(itemDataBase.GetItemData());
+
+                    customObject.GetComponent<CustomSlot>().PanelDelete();
+                }
 
                 break;
 
-            case MyItemStatus.Item.parts3:            
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = true;
-                callNum = 1;
-                CreateSlot(itemDataBase.GetItemData());
+
+            case MyItemStatus.Item.parts3:
+                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] == false)
+                {
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = true;
+                    callNum = 1;
+                    CreateSlot(itemDataBase.GetItemData());
+
+                    customObject.GetComponent<CustomSlot>().PanelDelete();
+                }
+
+                break;
+
+            case MyItemStatus.Item.ball:
+                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] == false)
+                {
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = true;
+                    callNum = 1;
+                    CreateSlot(itemDataBase.GetItemData());
+
+                    customObject.GetComponent<PocketItem>().PanelDelete();
+                }
+
+                break;
+
+            case MyItemStatus.Item.riyo:
+                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] == false)
+                {
+                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = true;
+                    callNum = 1;
+                    CreateSlot(itemDataBase.GetItemData());
+
+                    customObject.GetComponent<PocketItem>().PanelDelete();
+                }
 
                 break;
 
@@ -115,45 +169,4 @@ public class CreateSlotScript : MonoBehaviour
                 break;
         }
     }
-
-    
-
-
-    /* public void DestroySlot()
-     {
-         System.Diagnostics.StackFrame caller = new System.Diagnostics.StackFrame(1);
-
-         if(caller.GetMethod().Name == "DropItem_1")
-         {
-             var slot0 = transform.Find("ItemSlot0");
-
-
-             foreach (Transform item in slot0)
-             {
-                 item.gameObject.SetActive(false);                
-             }
-
-         }
-
-         else if (caller.GetMethod().Name == "DropItem_2")
-         {
-             var slot1 = transform.Find("ItemSlot1");
-
-             foreach (Transform item in slot1)
-             {
-                 item.gameObject.SetActive(false);
-             }
-         }
-
-         else if (caller.GetMethod().Name == "DropItem_3")
-         {
-             var slot2 = transform.Find("ItemSlot2");
-
-             foreach (Transform item in slot2)
-             {
-                 item.gameObject.SetActive(false);
-             }
-         }
-
-     } */
 }

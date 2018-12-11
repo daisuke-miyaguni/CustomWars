@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DragSlot : MonoBehaviour
 {
-
     private ItemData dragItemData;
+
 
     public void OnEnable()
     {
@@ -32,6 +32,6 @@ public class DragSlot : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position = Input.mousePosition;           //アイテム画像をうごかす
+        transform.position = Input.mousePosition;               //アイテム画像をうごかす
 	}
 }

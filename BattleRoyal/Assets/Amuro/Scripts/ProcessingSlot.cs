@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class ProcessingSlot  : MonoBehaviour
 {
-    private Text informationText;       //アイテム情報を表示するテキストUI
-
     [SerializeField]
-    private GameObject titleUI;         //アイテム名を表示するテキストUIプレハブ
-
-    private Text nameText;
+    public ItemData myItemData;             //自身のアイテムデータ
 
     [SerializeField]
     private MyItemStatus myItemStatus;
 
     [SerializeField]
-    public ItemData myItemData;             //自身のアイテムデータ
+    private GameObject titleUI;         //アイテム名を表示するテキストUIプレハブ
 
     [SerializeField]
     private GameObject dragItemUI;
@@ -25,6 +20,10 @@ public class ProcessingSlot  : MonoBehaviour
     private GameObject instanceDragItemUI;  //アイテムをドラッグしたときに生成する画像
 
     public static GameObject itemSlot;      //アイテムスロット格納用
+
+    private Text informationText;       //アイテム情報を表示するテキストUI    
+
+    private Text nameText;
 
 
     void OnDisable()                        //スロットが非アクティブになったら削除
@@ -56,7 +55,7 @@ public class ProcessingSlot  : MonoBehaviour
         itemSlot = null;
 
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
-        instanceDragItemUI.transform.SetParent(transform/*.parent.parent*/);
+        instanceDragItemUI.transform.SetParent(transform);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
         itemSlot = gameObject;       
@@ -66,6 +65,11 @@ public class ProcessingSlot  : MonoBehaviour
     public void MouseEndDrag()          //ドラッグ終了時にアイテム画像を削除
     {
         Destroy(instanceDragItemUI);
+    }
+
+    public void PanelDelete()
+    {
+        Destroy(gameObject);
     }
 
 }
