@@ -12,17 +12,19 @@ public class PocketItem : MonoBehaviour
 
     private GameObject instanceDragItemUI;
 
+    private GameObject itemSlot;
+
     [SerializeField]
     private GameObject dragItemUI;
+
+    public static GameObject thisPocket;
 
     [SerializeField]
     private int slotNum;
 
     private int itemNum;
 
-    private GameObject itemSlot;
-
-    private bool panelParam;
+    private bool panelParam;                                //パネルにアイテムが入っているかどうか
 
     [SerializeField]
     private Text informationText;
@@ -32,18 +34,14 @@ public class PocketItem : MonoBehaviour
         pocketStatus = FindObjectOfType<PocketStatus>();
     }
 
-    public void MouseDrop()     //　スロットの上にアイテムがドロップされた時に実行
+    public void MouseDrop()                                 //　スロットの上にアイテムがドロップされた時に実行
     {
-        if (FindObjectOfType<DragSlot>() == null)
+        if (FindObjectOfType<DragSlot>() == null || panelParam)
         {
             return;
         }
 
-        if (panelParam != false)
-        {
-            return;
-        }
-
+       
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         myItemData = null;
 
@@ -55,6 +53,7 @@ public class PocketItem : MonoBehaviour
         || myItemData.GetItemType() == MyItemStatus.Item.riyo && panelParam == false)
         {
             itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
+            Debug.Log(itemSlot);
             
             ShowInformation();
 
@@ -72,6 +71,8 @@ public class PocketItem : MonoBehaviour
 
                     itemNum = 0;
 
+                    pocketStatus.SetItemData(myItemData, slotNum);
+
                     Destroy(itemSlot);                      //持ち物欄からパネルを削除
                     break;
 
@@ -83,6 +84,8 @@ public class PocketItem : MonoBehaviour
                     panelParam = true;
 
                     itemNum = 1;
+
+                    pocketStatus.SetItemData(myItemData, slotNum);
 
                     Destroy(itemSlot);
 
@@ -97,6 +100,8 @@ public class PocketItem : MonoBehaviour
 
                     itemNum = 2;
 
+                    pocketStatus.SetItemData(myItemData, slotNum);
+
                     Destroy(itemSlot);
 
                     break;
@@ -105,10 +110,16 @@ public class PocketItem : MonoBehaviour
                 default:
                     break;
             }
+
+            if(thisPocket != null)
+            {
+                thisPocket.GetComponent<PocketItem>().PanelDelete();
+            }
+
         }
 
-        dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
-        pocketStatus.SetItemData(myItemData, slotNum);
+        //dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
+        //pocketStatus.SetItemData(myItemData, slotNum);
     }
 
 
@@ -121,8 +132,7 @@ public class PocketItem : MonoBehaviour
 
     public void MouseBeginDrag()                                                                //パネルをドラッグした際にアイテム画像を生成
     {
-        if (transform.GetChild(0).GetComponent<Image>().sprite.name == "Background"             //アイテムが無いパネルをドラッグできないようにした
-         || transform.GetChild(0).GetComponent<Image>().sprite.name == "None")
+        if (!panelParam)
         {
             return;
         }
@@ -133,6 +143,8 @@ public class PocketItem : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
+        thisPocket = gameObject;
+
         panelParam = false;
 
 
@@ -141,16 +153,17 @@ public class PocketItem : MonoBehaviour
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
+        thisPocket = null;
         Destroy(instanceDragItemUI);
     }
 
 
-    private void PanelDelete()
+    public void PanelDelete()
     {
         transform.GetChild(0).GetComponent<Image>().sprite = null;
-        informationText.text = null;
         myItemData = null;
-        // myPanel = null;
+        panelParam = false;
+        pocketStatus.SetItemDelete(slotNum);
     }
 
 

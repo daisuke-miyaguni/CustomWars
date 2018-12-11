@@ -8,8 +8,6 @@ public class PocketStatus : MonoBehaviour
 
     private ItemData itemData;
     private Pocket panelData;
-    private int itemNum_1;
-    private int itemNum_2;
     private UseItem useItem;
 
     [SerializeField]
@@ -27,9 +25,13 @@ public class PocketStatus : MonoBehaviour
     [SerializeField]
     private Transform pocket_item_panel;                            //アイテムを表示させるパネルの親要素のパネルを入れる
 
+    [SerializeField]
+    private Transform pocket_panel;                                 //インベントリ内のアイテムスロットを取得
+
     private void Start()
     {
         pocket_item_panel = transform.Find("pocket_item_panel");
+        pocket_panel = transform.Find("base_panel").transform.Find("pocket_panel");
     }
 
     public void SetItemData(ItemData itemData, int slotNum)         //アイテムスロットにアイテムデータをセット
@@ -40,6 +42,18 @@ public class PocketStatus : MonoBehaviour
         useItem.SetItemSwitch(itemData);
 
     }
+
+    public void usePocketItem(int panelNum)
+    {
+        pocket_panel.GetChild(panelNum).GetComponent<PocketItem>().PanelDelete();       //アイテムが使われたら、インベントリ内のアイテム表示を消す
+    }
+
+
+    public void SetItemDelete(int slotNum)
+    {
+        pocket_item_panel.GetChild(slotNum).GetComponent<UseItem>().PanelDelete();
+    }
+
 
     
 

@@ -95,8 +95,6 @@ public class MyItemStatus : MonoBehaviour
         }
     }
 
-
-
     public bool GetItemFlag(Item item)
     {
         return itemFlags[(int)item]; 

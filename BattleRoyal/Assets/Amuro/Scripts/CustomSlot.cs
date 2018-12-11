@@ -10,24 +10,25 @@ public class CustomSlot : MonoBehaviour
 
     private GameObject instanceDragItemUI;
 
+    private DragSlot dragSlot;
+
     [SerializeField]
     private GameObject dragItemUI;
 
     private GameObject dataName;
 
+    public static GameObject thisCustom;
+
     private int plusPower;
 
-    private bool panelParam;
+    public int customNum;
+
+    private bool panelParam = false;
+
+
 
     // private GameObject myPanel;
 
-    WeaponManager wm;
-
-    public void SetWeaponManager(WeaponManager weaponManager)
-    {
-        this.wm = weaponManager;
-        // this.wm = weaponManager.GetComponent<WeaponManager>();
-    }
 
     [SerializeField]
     private Text informationText;
@@ -40,97 +41,85 @@ public class CustomSlot : MonoBehaviour
 
     public void MouseDrop()     //　スロットの上にアイテムがドロップされた時に実行
     {
-
-
-
-        if (FindObjectOfType<DragSlot>() == null)
+        if (FindObjectOfType<DragSlot>() == null || panelParam)
         {
             return;
         }
 
-        if(panelParam != false)
-        {
-            return;
-        }
-
-        transform.GetChild(0).GetComponent<Image>().sprite = null;
-        informationText.text = null;
-        myItemData = null;
-
-        var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
+        dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
 
-        if (myItemData.GetItemType() == MyItemStatus.Item.parts1 && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.parts2  && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.parts3  && panelParam == false) 
+        dataName = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得
+
+        switch (customNum)
         {
-            dataName = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
-            ShowInformation();
-
-            //  myPanel.GetComponent<CustomSlot>().PanelDelete();
-
-            switch (myItemData.GetItemType())               //カスタムパネルに装備
-            {
-
-
-                case MyItemStatus.Item.parts1:
+            case 0:
+                if (myItemData.GetItemType() != MyItemStatus.Item.parts1 || panelParam)
+                {
+                    return;
+                }
 
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-                    // wm.SetWeaponPower(plusPower);
-                    wm.AttachParts(plusPower);
+                    Player.atk += plusPower;
+
+                    ShowInformation();
 
                     panelParam = true;
 
-                    Destroy(dataName);                      //持ち物欄からパネルを削除
-                    break;
+                    Destroy(dataName);
+                   
+                break;
 
-
-                case MyItemStatus.Item.parts2:
+            case 1:
+                if (myItemData.GetItemType() != MyItemStatus.Item.parts2 || panelParam)
+                {
+                    return;
+                }
 
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-                    // wm.SetWeaponPower(plusPower);
-                    wm.AttachParts(plusPower);
+                    Player.atk += plusPower;
+
+                    ShowInformation();
 
                     panelParam = true;
 
                     Destroy(dataName);
+                    
+                break;
 
-                    break;
-
-
-                case MyItemStatus.Item.parts3:
+            case 2:
+                if (myItemData.GetItemType() != MyItemStatus.Item.parts3 || panelParam)
+                {
+                    return;
+                }
 
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-                    // wm.SetWeaponPower(plusPower);
-                    wm.AttachParts(plusPower);
+                    Player.atk += plusPower;
+
+                    ShowInformation();
 
                     panelParam = true;
 
                     Destroy(dataName);
+                    
+                break;
 
-                    break;
+            default:
 
+                Debug.Log("default");
 
-                default:
-                    break;
-            }
-            //Debug.Log(myPanel);
+                dataName = null;
 
-        }
+                break;
+        } 
 
-               
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
-
-               
     }
 
     void ShowInformation()
@@ -147,8 +136,7 @@ public class CustomSlot : MonoBehaviour
 
     public void MouseBeginDrag()                                                                //パネルをドラッグした際にアイテム画像を生成
     {
-        if (transform.GetChild(0).GetComponent<Image>().sprite.name == "Background"             //アイテムが無いパネルをドラッグできないようにした
-         || transform.GetChild(0).GetComponent<Image>().sprite.name == "None")
+        if (!panelParam)
         {
             return;
         }
@@ -159,23 +147,24 @@ public class CustomSlot : MonoBehaviour
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
 
-        // Player.atk -= plusPower;
-        wm.AttachParts(-plusPower);
-        panelParam = false;
+        thisCustom = gameObject;
 
-        
+        Player.atk -= plusPower;        
     }
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
+        thisCustom = null;
         Destroy(instanceDragItemUI);
     }
 
-    private void PanelDelete()
+    public void PanelDelete()
     {
+        Debug.Log(gameObject);
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         informationText.text = null;
         myItemData = null;
+        panelParam = false;
         // myPanel = null;
     }
 }

@@ -7,13 +7,12 @@ public class Player : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public readonly int maxHP = 100;                  //最大HP
+    public readonly int maxHp = 100;              //最大HP
 
-    public static int HP;                              //HP  
+    public static int hp;                         //HP
 
-    public static int atk　= 10;                      //プレイヤーの攻撃力
+    public static int atk　= 10;                  //プレイヤーの攻撃力
 
-    private Slider slider;
 
 	// Use this for initialization
 	void Start ()
@@ -29,7 +28,6 @@ public class Player : MonoBehaviour
         MovePlayer();
 
         HpCtl();
-
 	}
 
     private void MovePlayer()
@@ -62,21 +60,15 @@ public class Player : MonoBehaviour
 
     private void HpCtl()
     {
-        //slider.value = HP;
-
-        if(HP >= 100)
+        if(hp <= 0)
         {
-            HP = maxHP;
-        }
-
-        if(HP <= 0)
-        {
-            HP = 0;
+            hp = 0;
         }
     }
 
     public void Recovery(int amount)
     {
-        HP += amount;
+        hp += amount;
+
     }
 }
