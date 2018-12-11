@@ -2082,6 +2082,7 @@ MonoBehaviour:
   hpSlider: {fileID: 114989497536136266}
   weapon: {fileID: 1883603649272386}
   otherHpBar: {fileID: 1235628493087148}
+  itemBox: {fileID: 0}
   moveSpeed: 7
   jumpForce: 5
   attackStayTime: 0.2
