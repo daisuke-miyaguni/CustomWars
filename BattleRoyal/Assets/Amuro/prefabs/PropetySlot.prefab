@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114211825018848992}
   - component: {fileID: 114653572900805214}
   - component: {fileID: 114016512650892508}
+  - component: {fileID: 114270708565909560}
   m_Layer: 5
   m_Name: PropetySlot
   m_TagString: Untagged
@@ -126,10 +127,22 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleUI: {fileID: 1936954791293244, guid: ead1a7ec87939634e98437bba7bb110c, type: 2}
-  myItemStatus: {fileID: 0}
-  myItemData: {fileID: 0}
-  dragItemUI: {fileID: 1175872197951444, guid: 61cdf1122cfa51548afc8b9db58b89a5, type: 2}
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114135296716344684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,6 +230,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &114270708565909560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1290668243754268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95a591664952a214f9cbafe41a131b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myItemData: {fileID: 0}
+  myItemStatus: {fileID: 0}
+  titleUI: {fileID: 1936954791293244, guid: 99145d8e89754e44ab525fd0f074641e, type: 2}
+  dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
 --- !u!114 &114498307961471462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,7 +288,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114016512650892508}
+        - m_Target: {fileID: 114270708565909560}
           m_MethodName: MouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -277,7 +305,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114016512650892508}
+        - m_Target: {fileID: 114270708565909560}
           m_MethodName: MouseEndDrag
           m_Mode: 1
           m_Arguments:
