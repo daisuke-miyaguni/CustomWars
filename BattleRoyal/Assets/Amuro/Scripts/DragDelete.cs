@@ -120,7 +120,7 @@ public class DragDelete : MonoBehaviour
                 break;
         }
 
-        var item = myItemData;
+        var itemData = myItemData;
 
         switch (dragSlot.GetDeleteNum())
         {
