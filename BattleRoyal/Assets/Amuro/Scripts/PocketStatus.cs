@@ -40,7 +40,6 @@ public class PocketStatus : MonoBehaviour
         pocket_item_panel.GetChild(slotNum).GetChild(0).GetComponent<Image>().sprite = itemData.GetItemSprite();
         useItem = pocket_item_panel.GetChild(slotNum).GetComponent<UseItem>();
         useItem.SetItemSwitch(itemData);
-
     }
 
     public void usePocketItem(int panelNum)
@@ -53,9 +52,6 @@ public class PocketStatus : MonoBehaviour
     {
         pocket_item_panel.GetChild(slotNum).GetComponent<UseItem>().PanelDelete();
     }
-
-
-    
 
     public Pocket GetPocketData()                                 //アイテムスロットのアイテム情報取得
     {

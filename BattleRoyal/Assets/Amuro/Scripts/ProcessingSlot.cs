@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProcessingSlot  : MonoBehaviour
+public class ProcessingSlot : MonoBehaviour
 {
     [SerializeField]
     public ItemData myItemData;             //自身のアイテムデータ
@@ -52,13 +52,9 @@ public class ProcessingSlot  : MonoBehaviour
 
     public void MouseBeginDrag()        //アイテムをドラッグしたときの挙動
     {
-        itemSlot = null;
-
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform);
-        instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
-
-        itemSlot = gameObject;       
+        instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData, gameObject, 1);
     }
 
 

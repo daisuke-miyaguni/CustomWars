@@ -7,6 +7,12 @@ public class PocketItem : MonoBehaviour
 {
     private ItemData myItemData;
 
+    private MyItemStatus myItemStatus;
+
+    private ProcessingSlot processingSlot;
+
+    private DragSlot dragSlot;
+
     [SerializeField]
     private PocketStatus pocketStatus;
 
@@ -32,8 +38,13 @@ public class PocketItem : MonoBehaviour
     private void Start()
     {
         pocketStatus = FindObjectOfType<PocketStatus>();
+        myItemStatus = FindObjectOfType<MyItemStatus>();
     }
 
+    public GameObject GetPocketData()
+    {
+        return thisPocket;
+    }
     public void MouseDrop()                                 //　スロットの上にアイテムがドロップされた時に実行
     {
         if (FindObjectOfType<DragSlot>() == null || panelParam)
@@ -41,12 +52,13 @@ public class PocketItem : MonoBehaviour
             return;
         }
 
-       
+
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         myItemData = null;
 
-        var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
+        dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
+        var id = myItemData.GetItemId();
 
         if (myItemData.GetItemType() == MyItemStatus.Item.mon && panelParam == false
         || myItemData.GetItemType() == MyItemStatus.Item.ball && panelParam == false
@@ -54,18 +66,16 @@ public class PocketItem : MonoBehaviour
         {
             itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
             Debug.Log(itemSlot);
-            
+
             ShowInformation();
 
             //  myPanel.GetComponent<CustomSlot>().PanelDelete();
 
             switch (myItemData.GetItemType())               //カスタムパネルに装備
             {
-
-
                 case MyItemStatus.Item.mon:
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
+                    myItemStatus.SetItemFlag(id, false);
 
                     panelParam = true;
 
@@ -73,13 +83,11 @@ public class PocketItem : MonoBehaviour
 
                     pocketStatus.SetItemData(myItemData, slotNum);
 
-                    Destroy(itemSlot);                      //持ち物欄からパネルを削除
                     break;
-
 
                 case MyItemStatus.Item.ball:
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
+                    myItemStatus.SetItemFlag(id, false);
 
                     panelParam = true;
 
@@ -87,14 +95,12 @@ public class PocketItem : MonoBehaviour
 
                     pocketStatus.SetItemData(myItemData, slotNum);
 
-                    Destroy(itemSlot);
-
                     break;
 
 
                 case MyItemStatus.Item.riyo:
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
+                    myItemStatus.SetItemFlag(id, false);
 
                     panelParam = true;
 
@@ -102,22 +108,32 @@ public class PocketItem : MonoBehaviour
 
                     pocketStatus.SetItemData(myItemData, slotNum);
 
-                    Destroy(itemSlot);
-
                     break;
-
 
                 default:
                     break;
             }
 
-            if(thisPocket != null)
+            switch (dragSlot.GetDeleteNum())
             {
-                thisPocket.GetComponent<PocketItem>().PanelDelete();
+                case 1:
+
+                    itemSlot.GetComponent<ProcessingSlot>().PanelDelete();
+
+                    break;
+
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    itemSlot.GetComponent<PocketItem>().PanelDelete();
+
+                    break;
             }
 
         }
-
         //dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
         //pocketStatus.SetItemData(myItemData, slotNum);
     }
@@ -137,23 +153,14 @@ public class PocketItem : MonoBehaviour
             return;
         }
 
-        // myPanel = gameObject;
-
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
-        instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
-
-        thisPocket = gameObject;
-
-        panelParam = false;
-
-
+        instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData, gameObject, 3);
     }
 
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
-        thisPocket = null;
         Destroy(instanceDragItemUI);
     }
 
@@ -172,5 +179,5 @@ public class PocketItem : MonoBehaviour
         return itemNum;
     }
 
-    
+
 }

@@ -39,12 +39,12 @@ public class UseItem : MonoBehaviour
 
     public void OnPush()                                            //アイテム使用処理
     {
-        if(!itemCheck)
+        if (!itemCheck)
         {
             return;
-        } 
+        }
 
-        switch (itemData.GetItemSet())                              
+        switch (itemData.GetItemSet())
         {
             case PocketStatus.Pocket.ball_p:
 

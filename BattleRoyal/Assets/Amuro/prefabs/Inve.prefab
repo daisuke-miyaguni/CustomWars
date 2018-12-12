@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 223655552740409342}
   - component: {fileID: 114735417192447736}
   - component: {fileID: 114981962840562404}
-  - component: {fileID: 114502002521633942}
+  - component: {fileID: 114972603286679920}
   m_Layer: 5
   m_Name: Inve
   m_TagString: Untagged
@@ -3040,6 +3040,23 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114972603286679920
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363047428756060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb2cb789c611684a94f38b4bf7d8c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pocketDatas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pocket_item_panel: {fileID: 0}
 --- !u!114 &114976901923685256
 MonoBehaviour:
   m_ObjectHideFlags: 1
