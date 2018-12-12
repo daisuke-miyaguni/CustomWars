@@ -33,7 +33,8 @@ public class ItemBox : MonoBehaviour
     // ボタンでボックスを開ける
     public void OpenOnClick()
     {
-        itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position);
+        Vector3 objectPos = this.gameObject.transform.position;
+        itemSpawner.CallItemSpawn(this.gameObject, objectPos);
         photonView.RPC(PunRPCList.DeleteItemBox.ToString(), PhotonTargets.AllViaServer);
     }
 

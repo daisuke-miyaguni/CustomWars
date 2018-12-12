@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 114715705302160286}
   - component: {fileID: 114652410864760474}
   - component: {fileID: 114526510738795432}
-  - component: {fileID: 114059127494885332}
+  - component: {fileID: 114188180514543500}
   - component: {fileID: 114030389167981176}
   - component: {fileID: 114734786793707850}
   m_Layer: 9
@@ -1998,18 +1998,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
---- !u!114 &114059127494885332
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1666012714826268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86813ab6e0a95f842af946a94d48ee8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fanPower: 10
 --- !u!114 &114105788972128584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2048,6 +2036,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9feab9a42cde36c4e802b6253b71098f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114188180514543500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666012714826268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b907e42f5de20f84b8278f572e6e901a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fanPower: 10
 --- !u!114 &114240405176507270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2272,6 +2272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getButton: {fileID: 0}
+  itemFlags: 000000000000
 --- !u!114 &114906695193628374
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ public class ItemSpawner : MonoBehaviour
     PhotonView itemSpawnPV;
     [SerializeField] GameObject[] items;
 
-    [SerializeField] float itemSpawnPower;
+    [SerializeField] float itemSpawnPower = 5.0f;
 
     private const int itemCount = 3;
 
@@ -25,7 +25,7 @@ public class ItemSpawner : MonoBehaviour
     {
         if (callObject.tag == "ItemBox")
         {
-            itemSpawnPV.RPC("BoxOpen", PhotonTargets.MasterClient, itemCount, spawnPos);
+            itemSpawnPV.RPC("BoxOpen", PhotonTargets.MasterClient, spawnPos);
         }
         else
         {
@@ -34,11 +34,11 @@ public class ItemSpawner : MonoBehaviour
     }
 
     [PunRPC]
-    void BoxOpen(int maxItemSpawnCount, Vector3 boxPos)
+    void BoxOpen(Vector3 boxPos)
     {
         GameObject[] randItem = items.OrderBy(i => Guid.NewGuid()).ToArray();
 
-        for (int i = 0; i < maxItemSpawnCount; i++)
+        for (int i = 0; i < itemCount; i++)
         {
             GameObject item = PhotonNetwork.InstantiateSceneObject
             (
