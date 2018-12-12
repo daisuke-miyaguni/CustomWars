@@ -25,7 +25,12 @@ public class CustomSlot : MonoBehaviour
 
     private bool panelParam = false;
 
+    WeaponManager wm;
 
+    public void SetWeaponManager(WeaponManager weaponManager)
+    {
+        this.wm = weaponManager;
+    }
 
     // private GameObject myPanel;
 
@@ -62,7 +67,7 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
 
                     ShowInformation();
 
@@ -81,7 +86,7 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
 
                     ShowInformation();
 
@@ -100,7 +105,7 @@ public class CustomSlot : MonoBehaviour
                     MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
 
                     plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                    // Player.atk += plusPower;
 
                     ShowInformation();
 
@@ -117,7 +122,8 @@ public class CustomSlot : MonoBehaviour
                 dataName = null;
 
                 break;
-        } 
+        }
+        wm.AttachParts(plusPower);
 
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
     }
@@ -149,7 +155,8 @@ public class CustomSlot : MonoBehaviour
 
         thisCustom = gameObject;
 
-        Player.atk -= plusPower;        
+        // Player.atk -= plusPower;
+        wm.AttachParts(-plusPower);
     }
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除

@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 	void Start ()
     {
         rb = GetComponent<Rigidbody>();
-        HP = 40;
+        hp = 40;
         //slider = GameObject.Find("HPBar").GetComponent<Slider>();         //テスト用
 	}
 	

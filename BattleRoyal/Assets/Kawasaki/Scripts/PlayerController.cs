@@ -268,8 +268,9 @@ public class PlayerController : MonoBehaviour
         // {
         if (isJump)
         {
+            playerUIController.jumpButton.interactable = false;
             animator.SetTrigger(PlayerAnimatorParameters.jump.ToString());
-            myRB.velocity = new Vector3(GetMoveDirection().x, jumpForce, GetMoveDirection().z);
+            // myRB.velocity = new Vector3(GetMoveDirection().x, jumpForce, GetMoveDirection().z);
             weapon.transform.localPosition = weaponPos;
             weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             isJump = false;
@@ -280,21 +281,13 @@ public class PlayerController : MonoBehaviour
     // 攻撃入力
     public void OnClickAttack()
     {
-        // Vector3 posUp = transform.position + new Vector3(0, 2, 0);
-        myPV.RPC("CallAttack", PhotonTargets.AllViaServer/*, posUp, weaponPower */);
-        // if (myPV.isMine)
-        // {
-        //     Vector3 posUp = transform.position + new Vector3(0, 2, 0);
-        //     myPV.RPC("Attack", PhotonTargets.All, posUp, weaponPower);
-        // }
+        myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
     }
 
     // 攻撃
     [PunRPC]
     private void CallAttack(/*Vector3 pos, float power */)
     {
-        // GameObject weapon = Instantiate(weaponPrefab, pos, Quaternion.identity);
-        // weapon.GetComponent<Rigidbody>().AddForce(Vector3.up * power);
         StartCoroutine(Attack());
     }
 
@@ -303,10 +296,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(attackStayTime);
         animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
         weaponCollider.enabled = true;
+        playerUIController.attackButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(attackTime);
         weaponCollider.enabled = false;
+        playerUIController.attackButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
@@ -356,6 +351,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.Desk.ToString())
             {
                 isJump = true;
+                playerUIController.jumpButton.interactable = true;
                 weapon.transform.localPosition = weaponPos;
                 weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             }
@@ -464,6 +460,7 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
         sphereCollider.enabled = true;
         parryState = true;
+        playerUIController.parryButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(parryTime);
@@ -502,14 +499,12 @@ public class PlayerController : MonoBehaviour
     {
         // Parryの操作制御
         playerUIController.attackButton.interactable = false;
-        // playerUIController.avoidButton.interactable = false;
         playerUIController.jumpButton.interactable = false;
         playerUIController.parryButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(rebelliousTime);
         playerUIController.attackButton.interactable = true;
-        // playerUIController.avoidButton.interactable = true;
         playerUIController.jumpButton.interactable = true;
         playerUIController.parryButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
