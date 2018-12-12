@@ -11,24 +11,23 @@ public class Player : MonoBehaviour
 
     public static int hp;                         //HP
 
-    public static int atk　= 10;                  //プレイヤーの攻撃力
+    public static int atk = 10;                  //プレイヤーの攻撃力
 
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
-        HP = 40;
         //slider = GameObject.Find("HPBar").GetComponent<Slider>();         //テスト用
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         MovePlayer();
 
         HpCtl();
-	}
+    }
 
     private void MovePlayer()
     {
@@ -60,7 +59,7 @@ public class Player : MonoBehaviour
 
     private void HpCtl()
     {
-        if(hp <= 0)
+        if (hp <= 0)
         {
             hp = 0;
         }

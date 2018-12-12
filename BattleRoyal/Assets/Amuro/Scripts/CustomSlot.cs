@@ -8,9 +8,13 @@ public class CustomSlot : MonoBehaviour
 {
     private ItemData myItemData;
 
+    private MyItemStatus myItemStatus;
+
     private GameObject instanceDragItemUI;
 
     private DragSlot dragSlot;
+
+    private WeaponManager wm;
 
     [SerializeField]
     private GameObject dragItemUI;
@@ -25,19 +29,28 @@ public class CustomSlot : MonoBehaviour
 
     private bool panelParam = false;
 
-
-
-    // private GameObject myPanel;
-
-
     [SerializeField]
     private Text informationText;
+
+    private void Start()
+    {
+        myItemStatus = FindObjectOfType<MyItemStatus>();
+    }
+
+    public GameObject GetCustomData()
+    {
+        return thisCustom;
+    }
 
     public void SetItemData(ItemData itemData)      //アイテムデータの取得と、アイテムイメージの表示
     {
         myItemData = itemData;
     }
 
+    public void SetWeaponManager(WeaponManager wm)
+    {
+        this.wm = wm;
+    }
 
     public void MouseDrop()     //　スロットの上にアイテムがドロップされた時に実行
     {
@@ -48,8 +61,9 @@ public class CustomSlot : MonoBehaviour
 
         dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
+        var id = myItemData.GetItemId();
 
-        dataName = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得
+        dataName = dragSlot.GetSlotData();             //ドラッグしてきた持ち物パネルを取得
 
         switch (customNum)
         {
@@ -59,17 +73,17 @@ public class CustomSlot : MonoBehaviour
                     return;
                 }
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
+                myItemStatus.SetItemFlag(id, false);
 
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                plusPower = myItemData.GetItemPower();
+                wm.SetWeaponPower(plusPower);
 
-                    ShowInformation();
+                ShowInformation();
 
-                    panelParam = true;
+                panelParam = true;
 
-                    Destroy(dataName);
-                   
+                Destroy(dataName);
+
                 break;
 
             case 1:
@@ -78,17 +92,17 @@ public class CustomSlot : MonoBehaviour
                     return;
                 }
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
+                myItemStatus.SetItemFlag(id, false);
 
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                plusPower = myItemData.GetItemPower();
+                wm.SetWeaponPower(plusPower);
 
-                    ShowInformation();
+                ShowInformation();
 
-                    panelParam = true;
+                panelParam = true;
 
-                    Destroy(dataName);
-                    
+                Destroy(dataName);
+
                 break;
 
             case 2:
@@ -97,27 +111,25 @@ public class CustomSlot : MonoBehaviour
                     return;
                 }
 
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                myItemStatus.SetItemFlag(id, false);
 
-                    plusPower = myItemData.GetItemPower();
-                    Player.atk += plusPower;
+                plusPower = myItemData.GetItemPower();
+                wm.SetWeaponPower(plusPower);
 
-                    ShowInformation();
+                ShowInformation();
 
-                    panelParam = true;
+                panelParam = true;
 
-                    Destroy(dataName);
-                    
+                Destroy(dataName);
+
                 break;
 
             default:
 
-                Debug.Log("default");
-
                 dataName = null;
 
                 break;
-        } 
+        }
 
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
     }
@@ -130,7 +142,7 @@ public class CustomSlot : MonoBehaviour
         nameUI.text = myItemData.GetItemName();
 
         var text = "<Color=white>" + myItemData.GetItemName() + "</Color>\n";                   //　アイテム情報を表示する
-                                                                                                
+
         informationText.text = text;
     }
 
@@ -141,15 +153,12 @@ public class CustomSlot : MonoBehaviour
             return;
         }
 
-        // myPanel = gameObject;
 
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
-        instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData);
+        instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData, gameObject, 2);
 
         thisCustom = gameObject;
-
-        Player.atk -= plusPower;        
     }
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
@@ -165,6 +174,6 @@ public class CustomSlot : MonoBehaviour
         informationText.text = null;
         myItemData = null;
         panelParam = false;
-        // myPanel = null;
+        wm.SetWeaponPower(-plusPower);
     }
 }

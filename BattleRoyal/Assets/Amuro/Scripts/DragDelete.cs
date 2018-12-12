@@ -7,9 +7,25 @@ public class DragDelete : MonoBehaviour
 {
     private ItemData myItemData;
 
+    private MyItemStatus myItemStatus;
+
     private GameObject itemSlot;
 
     private GameObject deleteSlot;
+
+    private GameObject myPlayer;
+
+    private PhotonView playerPV;
+
+    private void Start()
+    {
+        myItemStatus = FindObjectOfType<MyItemStatus>();
+    }
+    public void SetMyPlayer(GameObject myPlayer)
+    {
+        this.myPlayer = myPlayer;
+        playerPV = myPlayer.GetComponent<PhotonView>();
+    }
 
     public void DropDragItem()                                                          //捨てるアイテムのアイテムデータ取得
     {
@@ -20,86 +36,66 @@ public class DragDelete : MonoBehaviour
 
         var dragSlot = FindObjectOfType<DragSlot>();                                    //アイテムがドロップされた時に、どのようなアイテムかを取得
         myItemData = dragSlot.GetItem();
-        
-        if(ProcessingSlot.itemSlot != null)
-        {
-            itemSlot = ProcessingSlot.itemSlot;
-        }
+        var id = myItemData.GetItemId();
 
-        if(CustomSlot.thisCustom != null)
+        if (dragSlot.GetSlotData() != null)
         {
-            deleteSlot = CustomSlot.thisCustom;
-        }
-
-        if(PocketItem.thisPocket != null)
-        {
-            deleteSlot = PocketItem.thisPocket;
+            deleteSlot = dragSlot.GetSlotData();
         }
 
         Vector3 p_pos = GameObject.Find("Sphere").transform.position;
 
         // ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成
-        switch (myItemData.GetItemType())                                               
+        switch (myItemData.GetItemType())
         {
             case MyItemStatus.Item.parts1:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
+                myItemStatus.SetItemFlag(id, false);
 
                 GameObject parts1 = (GameObject)Resources.Load("parts1");
                 Instantiate(parts1, p_pos, Quaternion.identity);
-
-                if(deleteSlot != null)
-                {
-                    deleteSlot.GetComponent<CustomSlot>().PanelDelete();
-                }
 
                 break;
 
             case MyItemStatus.Item.parts2:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
+                myItemStatus.SetItemFlag(id, false);
 
                 GameObject parts2 = (GameObject)Resources.Load("parts2");
                 Instantiate(parts2, p_pos, Quaternion.identity);
-
-                if (deleteSlot != null)
-                {
-                    deleteSlot.GetComponent<CustomSlot>().PanelDelete();
-                }
 
                 break;
 
             case MyItemStatus.Item.parts3:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                myItemStatus.SetItemFlag(id, false);
 
                 GameObject parts3 = (GameObject)Resources.Load("parts3");
                 Instantiate(parts3, p_pos, Quaternion.identity);
 
-                if (deleteSlot != null)
-                {
-                    deleteSlot.GetComponent<CustomSlot>().PanelDelete();
-                }
+                break;
+
+            case MyItemStatus.Item.mon:
+
+                myItemStatus.SetItemFlag(id, false);
+
+                GameObject mon = (GameObject)Resources.Load("mon");
+                Instantiate(mon, p_pos, Quaternion.identity);
 
                 break;
 
             case MyItemStatus.Item.ball:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
+                myItemStatus.SetItemFlag(id, false);
 
                 GameObject show = (GameObject)Resources.Load("show");
                 Instantiate(show, p_pos, Quaternion.identity);
-
-                if (deleteSlot != null)
-                {
-                    deleteSlot.GetComponent<PocketItem>().PanelDelete();
-                }
 
                 break;
 
             case MyItemStatus.Item.riyo:
 
-                MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
+                myItemStatus.SetItemFlag(id, false);
 
                 GameObject riyo = (GameObject)Resources.Load("riyo");
                 Instantiate(riyo, p_pos, Quaternion.identity);
@@ -114,10 +110,32 @@ public class DragDelete : MonoBehaviour
             default:
                 break;
         }
-        
-        if(itemSlot != null)                                                            //持ち物欄からアイテムパネルを消去
+
+        var item = myItemData;
+
+        switch (dragSlot.GetDeleteNum())
         {
-            itemSlot.GetComponent<ProcessingSlot>().PanelDelete();
+            case 1:
+
+                deleteSlot.GetComponent<ProcessingSlot>().PanelDelete();
+
+                break;
+
+            case 2:
+
+                deleteSlot.GetComponent<CustomSlot>().PanelDelete();
+
+                break;
+
+            case 3:
+
+                deleteSlot.GetComponent<PocketItem>().PanelDelete();
+
+                break;
+
+            default:
+
+                break;
         }
 
         playerPV.RPC("DropItem", PhotonTargets.MasterClient, item, p_pos);

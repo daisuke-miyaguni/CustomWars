@@ -92,25 +92,20 @@ public class CreateSlotScript : MonoBehaviour
 
         var dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
+        var id = myItemData.GetItemId();
 
-        if (CustomSlot.thisCustom != null)                  //どのようなアイテムかを取得しする
+        if (dragSlot.GetSlotData() != null)
         {
-            customObject = CustomSlot.thisCustom;
-        }
-
-        if (PocketItem.thisPocket != null)
-        {
-            customObject = PocketItem.thisPocket;
+            customObject = dragSlot.GetSlotData();
         }
 
         switch (myItemData.GetItemType())                   //取得したアイテムのパネルを表示
         {
 
             case MyItemStatus.Item.parts1:
-                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] == false)
-
+                if (myItemStatus.GetItemFlag(MyItemStatus.Item.parts1) == false)
                 {
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = true;
+                    myItemStatus.SetItemFlag(id, true);
                     callNum = 1;
                     CreateSlot(itemDataBase.GetItemData());
 
@@ -121,9 +116,9 @@ public class CreateSlotScript : MonoBehaviour
 
 
             case MyItemStatus.Item.parts2:
-                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] == false)
+                if (myItemStatus.GetItemFlag(MyItemStatus.Item.parts2) == false)
                 {
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = true;
+                    myItemStatus.SetItemFlag(id, true);
                     callNum = 1;
                     CreateSlot(itemDataBase.GetItemData());
 
@@ -134,9 +129,9 @@ public class CreateSlotScript : MonoBehaviour
 
 
             case MyItemStatus.Item.parts3:
-                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] == false)
+                if (myItemStatus.GetItemFlag(MyItemStatus.Item.parts3) == false)
                 {
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = true;
+                    myItemStatus.SetItemFlag(id, true);
                     callNum = 1;
                     CreateSlot(itemDataBase.GetItemData());
 
@@ -145,10 +140,22 @@ public class CreateSlotScript : MonoBehaviour
 
                 break;
 
-            case MyItemStatus.Item.ball:
-                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] == false)
+            case MyItemStatus.Item.mon:
+                if (myItemStatus.GetItemFlag(MyItemStatus.Item.mon) == false)
                 {
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = true;
+                    myItemStatus.SetItemFlag(id, true);
+                    callNum = 1;
+                    CreateSlot(itemDataBase.GetItemData());
+
+                    customObject.GetComponent<PocketItem>().PanelDelete();
+                }
+
+                break;
+
+            case MyItemStatus.Item.ball:
+                if (myItemStatus.GetItemFlag(MyItemStatus.Item.ball) == false)
+                {
+                    myItemStatus.SetItemFlag(id, true);
                     callNum = 1;
                     CreateSlot(itemDataBase.GetItemData());
 
@@ -158,9 +165,9 @@ public class CreateSlotScript : MonoBehaviour
                 break;
 
             case MyItemStatus.Item.riyo:
-                if (MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] == false)
+                if (myItemStatus.GetItemFlag(MyItemStatus.Item.riyo) == false)
                 {
-                    MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = true;
+                    myItemStatus.SetItemFlag(id, true);
                     callNum = 1;
                     CreateSlot(itemDataBase.GetItemData());
 

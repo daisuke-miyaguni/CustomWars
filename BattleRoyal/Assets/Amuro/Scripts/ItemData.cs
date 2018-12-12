@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemData : Object
 {
+    private int itemId;                     //アイテムID
     private Sprite itemSprite;              //アイテム画像
     private string itemName;                //アイテム名 
     private MyItemStatus.Item itemType;     //アイテムタイプ
@@ -11,8 +12,9 @@ public class ItemData : Object
     private int itemPower;                  //アイテム攻撃力
     private PocketStatus.Pocket pocketItem;   //アイテムセットフラグ
 
-    public ItemData(Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power, PocketStatus.Pocket pocketitem)
+    public ItemData(int id, Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power, PocketStatus.Pocket pocketitem)
     {
+        itemId = id;
         itemSprite = image;
         itemName = Name;
         itemType = itemtype;
@@ -21,6 +23,10 @@ public class ItemData : Object
         pocketItem = pocketitem;
     }
 
+    public int GetItemId()
+    {
+        return itemId;
+    }
     public Sprite GetItemSprite()
     {
         return itemSprite;
@@ -50,5 +56,5 @@ public class ItemData : Object
     {
         return pocketItem;
     }
-	
+
 }
