@@ -7,6 +7,8 @@ public class DragDelete : MonoBehaviour
 {
     private ItemData myItemData;
 
+    private ItemSpawner itemSpawner;
+
     private MyItemStatus myItemStatus;
 
     private GameObject itemSlot;
@@ -20,6 +22,7 @@ public class DragDelete : MonoBehaviour
     private void Start()
     {
         myItemStatus = FindObjectOfType<MyItemStatus>();
+        itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
     }
     public void SetMyPlayer(GameObject myPlayer)
     {
@@ -147,14 +150,7 @@ public class DragDelete : MonoBehaviour
                 break;
         }
 
-        playerPV.RPC("DropItem", PhotonTargets.MasterClient, item, p_pos);
+        itemSpawner.CallItemSpawn(item, transform.position);
 
     }
-
-    [PunRPC]
-    void DropItem(GameObject drop, Vector3 spawnPos)
-    {
-        PhotonNetwork.InstantiateSceneObject(drop.name, spawnPos, Quaternion.identity, 0, null);
-    }
-
 }
