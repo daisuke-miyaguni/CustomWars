@@ -31,7 +31,7 @@ public class PocketStatus : MonoBehaviour
     private void Start()
     {
         pocket_item_panel = transform.Find("pocket_item_panel");
-        pocket_panel = transform.Find("base_panel").transform.Find("pocket_panel");
+        pocket_panel = transform.Find("Inventory").transform.Find("base_panel").transform.Find("pocket_panel");
     }
 
     public void SetItemData(ItemData itemData, int slotNum)         //アイテムスロットにアイテムデータをセット
