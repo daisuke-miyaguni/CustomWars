@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135160543041364776}
   - component: {fileID: 23041965340635514}
   - component: {fileID: 54878115457117248}
-  - component: {fileID: 114503838033551234}
+  - component: {fileID: 114947913569900938}
   m_Layer: 0
   m_Name: Globe
   m_TagString: Untagged
@@ -100,7 +100,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 94
   m_CollisionDetection: 2
---- !u!114 &114503838033551234
+--- !u!114 &114947913569900938
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -108,10 +108,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1385149422477356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b07deb1221ce924e98c27c007a903a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d2e5c5c83d09154a93441fe22f05d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 5000
+  rotateSpeed: 0
 --- !u!135 &135160543041364776
 SphereCollider:
   m_ObjectHideFlags: 1

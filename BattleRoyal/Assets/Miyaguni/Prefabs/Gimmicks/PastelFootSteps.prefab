@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33642959701296334}
   - component: {fileID: 64885107000870584}
   - component: {fileID: 23378107870228306}
-  - component: {fileID: 114907706447401544}
+  - component: {fileID: 114754481413747878}
   m_Layer: 0
   m_Name: PastelFootSteps
   m_TagString: Untagged
@@ -98,7 +98,7 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114907706447401544
+--- !u!114 &114754481413747878
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1339235101701674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d5f14c62e46ef45832eb190df17963, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b93ee1146baf594089bd935bc0e8e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepTime: 1000
+  stepTime: 5

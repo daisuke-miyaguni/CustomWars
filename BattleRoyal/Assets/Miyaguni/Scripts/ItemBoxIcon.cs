@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class ItemBoxIcon : MonoBehaviour
 {
-
-    string playerTagName = "Player";	  // Playerのタグ名
-    // string weaponName = "weapon";
+    private enum TagNames
+    {
+        PlayerControllerUI,
+        Player,
+    }
 
     [SerializeField] Image openIcon;    // 開くを伝えるアイコン
-
 
     BoxCollider bc;     // 宝箱のオープン範囲
     CapsuleCollider cc;     // Icon表示範囲
@@ -18,7 +19,7 @@ public class ItemBoxIcon : MonoBehaviour
     // 開くIconの表示処理
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == playerTagName)
+        if (other.gameObject.tag == TagNames.Player.ToString())
         {
             // 表示する
             openIcon.enabled = true;
@@ -30,7 +31,7 @@ public class ItemBoxIcon : MonoBehaviour
     // Iconの非表示処理
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == playerTagName)
+        if (other.gameObject.tag == TagNames.Player.ToString())
         {
             // 非表示にする
             openIcon.enabled = false;

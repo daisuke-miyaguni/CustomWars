@@ -7,31 +7,28 @@ public class DragDelete : MonoBehaviour
 {
     private ItemData myItemData;
 
-    PhotonView playerPV;
+    private ItemSpawner itemSpawner;
 
-    private GameObject slotName;
+    private MyItemStatus myItemStatus;
 
-    GameObject myPlayer;
+    private GameObject itemSlot;
 
-    [SerializeField] GameObject[] items;
+    private GameObject deleteSlot;
 
-    public void SetMyPlayer(GameObject player)
+    private GameObject myPlayer;
+
+    private PhotonView playerPV;
+
+    private void Start()
     {
-        this.myPlayer = player;
-        this.playerPV = player.GetComponent<PhotonView>();
+        myItemStatus = FindObjectOfType<MyItemStatus>();
+        itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
     }
-
-    /* private GameObject panel;
-
-    CreateSlotScript create;
-
-    public void OnEnable()
+    public void SetMyPlayer(GameObject myPlayer)
     {
-        panel = GameObject.Find("item_panel");
-
-        create = panel.GetComponent<CreateSlotScript>();
-    } */
-
+        this.myPlayer = myPlayer;
+        playerPV = myPlayer.GetComponent<PhotonView>();
+    }
 
     public void DropDragItem()                                                          //捨てるアイテムのアイテムデータ取得
     {
@@ -40,11 +37,17 @@ public class DragDelete : MonoBehaviour
             return;
         }
 
-        var dragSlot = FindObjectOfType<DragSlot>();
+        var dragSlot = FindObjectOfType<DragSlot>();                                    //アイテムがドロップされた時に、どのようなアイテムかを取得
         myItemData = dragSlot.GetItem();
+        var id = myItemData.GetItemId();
 
-        slotName = ProcessingSlot.itemSlot;
+        if (dragSlot.GetSlotData() != null)
+        {
+            deleteSlot = dragSlot.GetSlotData();
+        }
+
         // Vector3 p_pos = GameObject.Find("Sphere").transform.position;
+
         Vector3 p_pos = new Vector3
         (
             myPlayer.transform.position.x,
@@ -52,90 +55,102 @@ public class DragDelete : MonoBehaviour
             myPlayer.transform.position.z + 0.8f
         );
 
-        GameObject item = items[(int)myItemData.GetItemType()];
-        MyItemStatus.itemFlags[(int)myItemData.GetItemType()] = false;
-        Destroy(slotName);
-        // item = (GameObject)Resources.Load(myItemData.GetType().ToString());                  //捨てたアイテムをプレイヤーポジションに生成する
+        GameObject item = null;
 
-        // switch (myItemData.GetItemType())
-        // {
-        //     case MyItemStatus.Item.parts1:
+        // ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成
+        switch (myItemData.GetItemType())
+        {
+            case MyItemStatus.Item.parts1:
 
-        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts1] = false;
+                myItemStatus.SetItemFlag(id, false);
 
-        //         item = (GameObject)Resources.Load(items[0].name);                  //捨てたアイテムをプレイヤーポジションに生成する
-        //         // PhotonNetwork.InstantiateSceneObject(parts1.name, p_pos, Quaternion.identity,0,null);
+                item = (GameObject)Resources.Load("parts1");
+                // Instantiate(parts1, p_pos, Quaternion.identity);
 
-        //         Destroy(slotName);
-        //         break;
+                break;
 
-        //     case MyItemStatus.Item.parts2:
+            case MyItemStatus.Item.parts2:
 
-        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts2] = false;
+                myItemStatus.SetItemFlag(id, false);
 
-        //         item = (GameObject)Resources.Load(items[1].name);
-        //         // PhotonNetwork.InstantiateSceneObject(parts2.name, p_pos, Quaternion.identity,0,null);
+                item = (GameObject)Resources.Load("parts2");
+                // Instantiate(parts2, p_pos, Quaternion.identity);
 
-        //         Destroy(slotName);
+                break;
 
-        //         break;
+            case MyItemStatus.Item.parts3:
 
-        //     case MyItemStatus.Item.parts3:
+                myItemStatus.SetItemFlag(id, false);
 
-        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.parts3] = false;
+                item = (GameObject)Resources.Load("parts3");
+                // Instantiate(parts3, p_pos, Quaternion.identity);
 
-        //         item = (GameObject)Resources.Load(items[2].name);
-        //         // PhotonNetwork.InstantiateSceneObject(parts3.name, p_pos, Quaternion.identity,0,null);
+                break;
 
-        //         Destroy(slotName);
+            case MyItemStatus.Item.mon:
 
-        //         break;
+                myItemStatus.SetItemFlag(id, false);
 
-        //     case MyItemStatus.Item.mon:
+                GameObject mon = (GameObject)Resources.Load("mon");
+                Instantiate(mon, p_pos, Quaternion.identity);
 
-        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.mon] = false;
+                break;
 
-        //         item = (GameObject)Resources.Load(items[3].name);
-        //         // PhotonNetwork.InstantiateSceneObject(mon.name, p_pos, Quaternion.identity,0,null);
+            case MyItemStatus.Item.ball:
 
-        //         Destroy(slotName);
+                myItemStatus.SetItemFlag(id, false);
 
-        //         break;
+                item = (GameObject)Resources.Load("show");
+                // Instantiate(show, p_pos, Quaternion.identity);
 
-        //     case MyItemStatus.Item.ball:
+                break;
 
-        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.ball] = false;
+            case MyItemStatus.Item.riyo:
 
-        //         item = (GameObject)Resources.Load("show");
-        //         // PhotonNetwork.InstantiateSceneObject(show.name, p_pos, Quaternion.identity,0,null);
+                myItemStatus.SetItemFlag(id, false);
 
-        //         Destroy(slotName);
+                item = (GameObject)Resources.Load("riyo");
+                // Instantiate(riyo, p_pos, Quaternion.identity);
 
-        //         break;
+                if (deleteSlot != null)
+                {
+                    deleteSlot.GetComponent<PocketItem>().PanelDelete();
+                }
 
-        //     case MyItemStatus.Item.riyo:
+                break;
 
-        //         MyItemStatus.itemFlags[(int)MyItemStatus.Item.riyo] = false;
+            default:
+                break;
+        }
 
-        //         item = (GameObject)Resources.Load("riyo");
-        //         // PhotonNetwork.InstantiateSceneObject(riyo.name, p_pos, Quaternion.identity,0,null);
+        var itemData = myItemData;
 
-        //         Destroy(slotName);
+        switch (dragSlot.GetDeleteNum())
+        {
+            case 1:
 
-        //         break;
+                deleteSlot.GetComponent<ProcessingSlot>().PanelDelete();
 
-        //     default:
-        //         break;
-        // }
+                break;
 
-        playerPV.RPC("DropItem", PhotonTargets.MasterClient, item, p_pos);
+            case 2:
+
+                deleteSlot.GetComponent<CustomSlot>().PanelDelete();
+
+                break;
+
+            case 3:
+
+                deleteSlot.GetComponent<PocketItem>().PanelDelete();
+
+                break;
+
+            default:
+
+                break;
+        }
+
+        itemSpawner.CallItemSpawn(item, transform.position);
 
     }
-
-    [PunRPC]
-    void DropItem(GameObject drop, Vector3 spawnPos)
-    {
-        PhotonNetwork.InstantiateSceneObject(drop.name, spawnPos, Quaternion.identity, 0, null);
-    }
-
 }

@@ -7,7 +7,7 @@ public class UI : MonoBehaviour
 {
     private ItemDataBase itemDataBase;
 
-    public GameObject basePanel;
+    public GameObject Inv;
 
     public GameObject Pocket;
 
@@ -15,24 +15,24 @@ public class UI : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             Inventory();
         }
-	}
+    }
 
     void Inventory()
     {
-        basePanel.SetActive(!basePanel.activeSelf);
+        Inv.SetActive(!Inv.activeSelf);
         Pocket.SetActive(!Pocket.activeSelf);
     }
 
     public void OnClick()
     {
+        Inv.SetActive(!Inv.activeSelf);
         Pocket.SetActive(!Pocket.activeSelf);
-        basePanel.SetActive(!basePanel.activeSelf);
     }
 
 }

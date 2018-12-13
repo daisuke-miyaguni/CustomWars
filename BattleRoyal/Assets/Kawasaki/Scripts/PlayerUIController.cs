@@ -19,6 +19,8 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] public Button getButton;
 
+    [SerializeField] public Button openButton;
+
     [SerializeField] Slider hpSlider;
 
     public Slider GetHPSlider()
@@ -56,6 +58,10 @@ public class PlayerUIController : MonoBehaviour
 
         parryButton.GetComponent<Button>();
         parryButton.onClick.AddListener(playerController.ParryClick);
+
+        openButton.GetComponent<Button>();
+        openButton.onClick.AddListener(playerController.OnClickOpenButton);
+        openButton.gameObject.SetActive(false);
 
         DragDelete dd = deletePanel.GetComponent<DragDelete>();
         dd.SetMyPlayer(playerController.gameObject);

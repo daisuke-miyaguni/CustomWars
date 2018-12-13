@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33871731317247340}
   - component: {fileID: 65795416439085180}
   - component: {fileID: 23959439281810852}
-  - component: {fileID: 114061112051696168}
+  - component: {fileID: 114986977397668288}
   m_Layer: 0
   m_Name: Suzuri
   m_TagString: Untagged
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114061112051696168
+--- !u!114 &114986977397668288
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1237632212340156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7452b2f5b07434899489e5763f8f8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 46a384e06db527d409c9a88a473457b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   footSteps: {fileID: 1339235101701674, guid: fe37cb306abca114a85be7adb1e57d49, type: 2}

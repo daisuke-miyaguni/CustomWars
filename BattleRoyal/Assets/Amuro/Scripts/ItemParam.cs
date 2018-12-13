@@ -16,8 +16,8 @@ public class ItemParam : MonoBehaviour
     PhotonView ipPV;
     PhotonTransformView ipPTV;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         switch (itemNum)
         {
@@ -49,20 +49,20 @@ public class ItemParam : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         ipPV = GetComponent<PhotonView>();
         ipPTV = GetComponent<PhotonTransformView>();
-	}
+    }
 
     public MyItemStatus.Item GetItems()
     {
         return items;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-		if(ipPV.isMine)
+        if (ipPV.isMine)
         {
             Vector3 velocity = rb.velocity;
             ipPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
         }
-	}
+    }
 }
