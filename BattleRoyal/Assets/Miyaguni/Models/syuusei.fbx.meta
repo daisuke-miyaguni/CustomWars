@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: c0ede3dd02ff51049861499ee263b15b
+guid: 82c63ed595f32e54490c89948c7b23a0
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: lambert1
+    2100000: syusei_blinn2
+    2100002: syusei_lambert2
+    2100004: syusei_blinn1
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pCylinder5
+    4300000: syusei:polySurface7
     9500000: //RootNode
   externalObjects: {}
   materials:
