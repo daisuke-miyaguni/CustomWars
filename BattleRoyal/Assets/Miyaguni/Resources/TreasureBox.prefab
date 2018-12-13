@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4645057946176150}
   - component: {fileID: 33521044164453000}
   - component: {fileID: 23142575558777180}
-  - component: {fileID: 95725010685901680}
   m_Layer: 0
   m_Name: pencase
   m_TagString: Untagged
@@ -194,23 +193,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &95725010685901680
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1104716173705600}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 40c532dc633f45140a59400519c85156, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114183264006108628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -303,13 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7c0c55e06b3cc44b194388fd293c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponTagName: weapon
-  itemName:
-  - {fileID: 1951666701963746, guid: 6a790e8b333654c49bcae6aec5cb96d9, type: 2}
-  - {fileID: 1756564616796304, guid: e13b27187eb308240a2defb4983d42bf, type: 2}
-  - {fileID: 1756564616796304, guid: 0d4253955822cf2449860c7458203d34, type: 2}
-  - {fileID: 1756564616796304, guid: 609802216e454a04182624f04e0c81ea, type: 2}
-  - {fileID: 1756564616796304, guid: 2c375ccd6bfd18f459d878c2e397b410, type: 2}
   itemSpawnPower: 7
   icon: {fileID: 1928096229950174}
 --- !u!114 &114916035158315502
