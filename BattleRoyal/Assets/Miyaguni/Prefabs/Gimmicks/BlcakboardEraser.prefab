@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 65442713443437978}
   - component: {fileID: 23456093418857068}
   - component: {fileID: 65298096697351344}
-  - component: {fileID: 114669984964404702}
+  - component: {fileID: 114457330225973382}
   m_Layer: 0
   m_Name: BlcakboardEraser
   m_TagString: hoge
@@ -140,7 +140,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114669984964404702
+--- !u!114 &114457330225973382
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1706966005020914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40eed6a12bbf1774895ea69025d989e7, type: 3}
+  m_Script: {fileID: 11500000, guid: d99e2ff543e66eb4f8d563f8021a68f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eraserEffect: {fileID: 1701027506235550}

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33690362647789818}
   - component: {fileID: 65701044577652958}
   - component: {fileID: 23557831305556928}
-  - component: {fileID: 114934819124769794}
+  - component: {fileID: 114798140621931964}
   - component: {fileID: 54564312008679696}
   m_Layer: 0
   m_Name: TissueBox
@@ -112,7 +112,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114934819124769794
+--- !u!114 &114798140621931964
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1587503226875076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c788819a17d4864d976abded1ac72d6, type: 3}
+  m_Script: {fileID: 11500000, guid: d56966da08aa1244f86164751761ba54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tissue: {fileID: 1453831832801650, guid: b1f0a03914f77434e9c610d020815c48, type: 2}

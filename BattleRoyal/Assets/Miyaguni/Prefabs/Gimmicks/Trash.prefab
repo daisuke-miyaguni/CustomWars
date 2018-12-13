@@ -111,11 +111,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915897299330952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ae788ad70f80540b3717e8984ba970, type: 3}
+  m_Script: {fileID: 11500000, guid: c013c9c9a0a2b6d428c9d89250c9148b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deskTag: Desk
-  dustTag: Desk
+  dustTag: Dust
   weaponTag: weapon
   power: 1
   weaponPower: 4
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915897299330952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f821234594dfdc848ba77b235d64452d, type: 3}
+  m_Script: {fileID: 11500000, guid: b5cfe89359f073642abac34c6564cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &135640434195771410
@@ -227,7 +227,7 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915897299330952}
-  m_Material: {fileID: 13400000, guid: 17e54382bf19d2544bbc0918b6013c86, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

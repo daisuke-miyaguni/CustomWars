@@ -28,7 +28,7 @@ public class MyItemStatus : MonoBehaviour
     };
 
     [SerializeField]
-    public static bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
+    private bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
 
     void Start()
     {
@@ -85,6 +85,15 @@ public class MyItemStatus : MonoBehaviour
         }
     }
 
+    public bool GetItemFlag(Item item)
+    {
+        return itemFlags[(int)item];
+    }
+
+    public void SetItemFlag(int id, bool hoge)
+    {
+        itemFlags[id] = hoge;
+    }
     [PunRPC]
     void WasgetItem()
     {
@@ -95,10 +104,4 @@ public class MyItemStatus : MonoBehaviour
         }
     }
 
-
-
-    public bool GetItemFlag(Item item)
-    {
-        return itemFlags[(int)item]; 
-    } 
 }

@@ -34,7 +34,9 @@ MonoBehaviour:
   - CallParry
   - Chat
   - Death
+  - DeleteItemBox
   - DestroyRpc
+  - DropItem
   - EffectStart
   - FullTrashs
   - InitPosition
@@ -53,6 +55,4 @@ MonoBehaviour:
   - TakeDamage
   - WasgetItem
   - Wasparryed
-  - DeleteItemBox
-  - DropItem
   DisableAutoOpenWizard: 1
