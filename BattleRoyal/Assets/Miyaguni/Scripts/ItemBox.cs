@@ -12,12 +12,10 @@ public class ItemBox : MonoBehaviour
         DeleteItemBox
     }
 
-    int itemCount = 3;
     [SerializeField] float itemSpawnPower;
     
     [SerializeField] GameObject icon;
 
-    BoxCollider bc;		// 宝箱のオープン範囲
 	PhotonView photonView;
 
     ItemSpawner itemSpawner;
@@ -25,8 +23,6 @@ public class ItemBox : MonoBehaviour
 	void Start()
 	{
 		photonView = GetComponent<PhotonView>();
-		bc = GetComponent<BoxCollider>();
-		itemCount = 3;
         itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
 	}
     

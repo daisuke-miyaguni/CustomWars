@@ -43,14 +43,6 @@ public class PlayerSpawner : Photon.MonoBehaviour
         yield return new WaitForSeconds(spawnWaitTime);
         // Playerをスポーン
         PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[PhotonNetwork.player.ID % 4], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
-        // for (int playerNum = 0; playerNum < PhotonNetwork.playerList.Length; playerNum++)
-        // {
-        //     if (PhotonNetwork.player.ID % 4 == playerNum)
-        //     {
-        //         // Playerをスポーン
-        //         PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[playerNum], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
-        //     }
-        // }
         Destroy(this.gameObject);
     }
 }
