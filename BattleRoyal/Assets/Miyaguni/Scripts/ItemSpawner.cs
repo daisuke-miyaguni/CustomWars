@@ -70,7 +70,7 @@ public class ItemSpawner : MonoBehaviour
             0,
             null
         );
-        Rigidbody itemRb = dropItem.GetComponent<Rigidbody>();
+        Rigidbody itemRb = item.GetComponent<Rigidbody>();
         itemRb.AddForce
         (
             UnityEngine.Random.Range(-itemSpawnPower, itemSpawnPower),

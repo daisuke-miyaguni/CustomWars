@@ -48,23 +48,9 @@ public class StageManager : MonoBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
-            photonView.RPC("InitPosition", PhotonTargets.AllViaServer, initPosX, initPosZ);
+            photonView.RPC("InitPosition", PhotonTargets.MasterClient, initPosX, initPosZ);
         }
         Invoke("TriggerOn", collisionOnTime);
-    }
-
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.isWriting)
-        {
-            stream.SendNext(initPosX);
-            stream.SendNext(initPosZ);
-        }
-        else
-        {
-            initPosX = (float)stream.ReceiveNext();
-            initPosZ = (float)stream.ReceiveNext();
-        }
     }
 
     [PunRPC]
@@ -72,7 +58,7 @@ public class StageManager : MonoBehaviour
     {
         // 安地の位置をランダムで決める
         gameObject.transform.position = new Vector3(x, 0.0f, z);
-        safeArea.transform.root.position = gameObject.transform.position;
+        safeArea.transform.position = gameObject.transform.position;
     }
 
     // 判定の初期化(指定秒後に安地判定)
@@ -119,14 +105,4 @@ public class StageManager : MonoBehaviour
     {
         reductionCount++;
     }
-
-    // // 安地外オブジェクト処理
-    // void OnTriggerExit(Collider other)
-    // {
-    //     // 机が安地から出たら机の安地外処理を呼び出す
-    //     if (other.gameObject.tag == deskTag)
-    //     {
-    //         other.gameObject.GetComponent<SafeAreaOut>().SafeAreaExit();
-    //     }
-    // }
 }
