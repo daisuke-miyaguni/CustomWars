@@ -10,9 +10,10 @@ public class ItemData : Object
     private MyItemStatus.Item itemType;     //アイテムタイプ
     private string itemInformation;         //アイテム説明
     private int itemPower;                  //アイテム攻撃力
+    private int itemDef;                    //アイテム防御力
     private PocketStatus.Pocket pocketItem;   //アイテムセットフラグ
 
-    public ItemData(int id, Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power, PocketStatus.Pocket pocketitem)
+    public ItemData(int id, Sprite image, string Name, MyItemStatus.Item itemtype, string Information, int Power, int Defence, PocketStatus.Pocket pocketitem)
     {
         itemId = id;
         itemSprite = image;
@@ -20,6 +21,7 @@ public class ItemData : Object
         itemType = itemtype;
         itemInformation = Information;
         itemPower = Power;
+        itemDef = Defence;
         pocketItem = pocketitem;
     }
 
@@ -50,6 +52,11 @@ public class ItemData : Object
     public int GetItemPower()
     {
         return itemPower;
+    }
+
+    public int GetItemDefence()
+    {
+        return itemDef;
     }
 
     public PocketStatus.Pocket GetItemSet()

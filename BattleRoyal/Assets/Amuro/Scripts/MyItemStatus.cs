@@ -8,6 +8,8 @@ public class MyItemStatus : MonoBehaviour
     private ItemData itemData;
     private ItemParam param;
 
+    private CreateSlotScript createSlot;
+
     PhotonView myItemPV;
 
     public void SetMyItemPV(PhotonView pv)
@@ -30,6 +32,7 @@ public class MyItemStatus : MonoBehaviour
     [SerializeField]
     private bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
 
+    private int[] itemCount = new int[6];
     void Start()
     {
         getButton = GameObject.Find("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
@@ -80,8 +83,10 @@ public class MyItemStatus : MonoBehaviour
         if (myItemPV.isMine)
         {
             var type = param.GetItems();
+            var id = param.GetItemId();
 
             itemFlags[(int)type] = true;
+            itemCount[id] += 1;
         }
     }
 
@@ -90,10 +95,21 @@ public class MyItemStatus : MonoBehaviour
         return itemFlags[(int)item];
     }
 
+    public int GetItemCount(int count)
+    {
+        return itemCount[(int)count];
+    }
+
     public void SetItemFlag(int id, bool hoge)
     {
         itemFlags[id] = hoge;
     }
+
+    public void SetItemCount(int id, int amount)
+    {
+        itemCount[id] += amount;
+    }
+
     [PunRPC]
     void WasgetItem()
     {
