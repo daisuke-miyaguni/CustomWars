@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7249366, g: 0.6782246, b: 0.6152398, a: 1}
+  m_IndirectSpecularColor: {r: 0.6427757, g: 0.60506344, b: 0.54660547, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3754,6 +3754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 608850003}
   - component: {fileID: 608850004}
+  - component: {fileID: 608850005}
   m_Layer: 0
   m_Name: ItemSpawner
   m_TagString: ItemSpawner
@@ -3786,12 +3787,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 1951666701963746, guid: 6a790e8b333654c49bcae6aec5cb96d9, type: 2}
-  - {fileID: 1756564616796304, guid: e13b27187eb308240a2defb4983d42bf, type: 2}
-  - {fileID: 1756564616796304, guid: 0d4253955822cf2449860c7458203d34, type: 2}
-  - {fileID: 1756564616796304, guid: 609802216e454a04182624f04e0c81ea, type: 2}
+  - {fileID: 1036641161166902, guid: 6a790e8b333654c49bcae6aec5cb96d9, type: 2}
+  - {fileID: 1123238809589100, guid: 9f71df7f28abebb43ba5424ccdb179c0, type: 2}
+  - {fileID: 1938104711037134, guid: b821a3b172de0eb42b4941e1b4fb0f7d, type: 2}
+  - {fileID: 1956163489386006, guid: 1f0255c990caa374e9b4d14e03ce605f, type: 2}
   - {fileID: 1756564616796304, guid: 2c375ccd6bfd18f459d878c2e397b410, type: 2}
-  itemSpawnPower: 10
+  itemSpawnPower: 5
+--- !u!114 &608850005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 608850002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 15
+  instantiationId: 15
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &663977206
 GameObject:
   m_ObjectHideFlags: 0
@@ -4928,7 +4955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnWaitTime: 0.2
-  spawnPlayer: {fileID: 1666012714826268, guid: 43b847ddbc1e6b84db80f87377ec84f6,
+  spawnPlayer: {fileID: 1827299230965776, guid: f35c4856e12251f46a4cdbbc913fbdbd,
     type: 2}
   spawnPos:
   - {x: -35, y: 0.8, z: -35}
@@ -7850,7 +7877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11074,7 +11101,7 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
+    TeleportIfDistanceGreaterThan: 0.1
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
@@ -11110,11 +11137,11 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ExtrapolateOption: 1
+    ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
+    DrawErrorGizmo: 0
   m_RotationModel:
     SynchronizeEnabled: 0
     InterpolateOption: 1
