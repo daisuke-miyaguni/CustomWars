@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float attackStayTime = 0.2f;
-    [SerializeField] private float attackTime = 0.5f;
+    [SerializeField] private float attackTime = 0.1f;
 
-    [SerializeField] private MobileInputController controller;
+    private MobileInputController controller;
 
     private List<string> itemList = new List<string>();
 
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     // player parry情報
     [SerializeField] private SphereCollider sphereCollider;
     [SerializeField] private bool parryState;
+    [SerializeField] private float parryStayTime = 0.3f;
     [SerializeField] private float parryTime = 0.5f;
     [SerializeField] private int wasparryedDamage = 15;
     [SerializeField] private float rebelliousTime = 0.3f;
@@ -91,10 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         // photonview取得
         myPV = GetComponent<PhotonView>();
-        // myItemStatus取得
-        myItemStatus = GetComponent<MyItemStatus>();
-        // photontransformview取得
-        myPTV = GetComponent<PhotonTransformView>();
+
     }
 
     void Start()
@@ -108,15 +106,17 @@ public class PlayerController : MonoBehaviour
         weaponCollider.enabled = false;
 
         if (myPV.isMine)
-        {
+        {   
+            // myItemStatus取得
+            myItemStatus = GetComponent<MyItemStatus>();
+            // photontransformview取得
+            myPTV = GetComponent<PhotonTransformView>();
             playerUIController = GameObject.Find("PlayerControllerUI").GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
             myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
             controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
-
-            myItemStatus.SetMyItemPV(myPV);
 
             //hp初期値設定
             currentHP = maxHP;
@@ -254,18 +254,19 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(int amount)
     {
         currentHP -= amount;
-        hpSlider.value = currentHP;
+        
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            myPV.RPC("Death", PhotonTargets.AllViaServer);
+        }
 
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
         }
 
-        if (currentHP <= 0)
-        {
-            currentHP = 0;
-            myPV.RPC("Death", PhotonTargets.AllViaServer);
-        }
+        hpSlider.value = currentHP;
     }
 
     public void CallRecover(int heal)
@@ -355,7 +356,6 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             playerUIController.openButton.gameObject.SetActive(false);
-
         }
         itemBox.transform.root.gameObject.GetComponent<ItemBox>().OpenOnClick();
         itemBox = null;
@@ -368,6 +368,8 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
         if (myPV.isMine)
         {
+            hpText.text = "HP: " + currentHP.ToString();
+            hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.Find("MainManager").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(1);
         }
@@ -391,6 +393,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Parrying()
     {
         animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
+        yield return new WaitForSeconds(parryStayTime);
         sphereCollider.enabled = true;
         parryState = true;
         playerUIController.parryButton.interactable = false;
