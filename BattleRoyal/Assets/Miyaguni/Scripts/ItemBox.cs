@@ -40,5 +40,7 @@ public class ItemBox : MonoBehaviour
 	void DeleteItemBox()
 	{
 		Destroy(this.gameObject);
+        PlayerUIController playerUIs = GameObject.FindWithTag("PlayerControllerUI").GetComponent<PlayerUIController>();
+        playerUIs.openButton.gameObject.SetActive(false);
 	}
 }

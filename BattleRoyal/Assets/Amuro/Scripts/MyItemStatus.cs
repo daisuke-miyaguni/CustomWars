@@ -12,11 +12,6 @@ public class MyItemStatus : MonoBehaviour
 
     PhotonView myItemPV;
 
-    public void SetMyItemPV(PhotonView pv)
-    {
-        myItemPV = pv;
-    }
-
     public GameObject getButton;
 
     public enum Item
@@ -33,9 +28,15 @@ public class MyItemStatus : MonoBehaviour
     private bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
 
     private int[] itemCount = new int[6];
+
+    void Awake()
+    {
+        myItemPV = GetComponent<PhotonView>();
+
+    }
     void Start()
     {
-        getButton = GameObject.Find("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
+        getButton = GameObject.FindWithTag("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
         // getButton.GetComponent<Button>();
         if (getButton.activeSelf)
         {
@@ -79,7 +80,6 @@ public class MyItemStatus : MonoBehaviour
 
     public void OnGetButton()
     {
-        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
         if (myItemPV.isMine)
         {
             var type = param.GetItems();
@@ -88,6 +88,7 @@ public class MyItemStatus : MonoBehaviour
             itemFlags[(int)type] = true;
             itemCount[id] += 1;
         }
+        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
     }
 
     public bool GetItemFlag(Item item)
