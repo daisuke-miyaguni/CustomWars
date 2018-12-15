@@ -10,11 +10,10 @@ public class CustomSlot : MonoBehaviour
 
     private MyItemStatus myItemStatus;
 
-    private GameObject instanceDragItemUI;
-
     private DragSlot dragSlot;
 
     private WeaponManager wm;
+    private GameObject instanceDragItemUI;
 
     [SerializeField]
     private GameObject dragItemUI;
@@ -23,9 +22,10 @@ public class CustomSlot : MonoBehaviour
 
     public static GameObject thisCustom;
 
-    private int plusPower;
+    [SerializeField]
+    private Text informationText;
 
-    public int customNum;
+    private int plusPower;
 
     private bool panelParam = false;
 
@@ -33,12 +33,6 @@ public class CustomSlot : MonoBehaviour
     {
         this.wm = weaponManager;
     }
-
-    // private GameObject myPanel;
-
-
-    [SerializeField]
-    private Text informationText;
 
     private void Start()
     {
@@ -68,63 +62,19 @@ public class CustomSlot : MonoBehaviour
 
         dataName = dragSlot.GetSlotData();             //ドラッグしてきた持ち物パネルを取得
 
-        switch (customNum)
+        switch (panelParam)
         {
-            case 0:
-                if (myItemData.GetItemType() != MyItemStatus.Item.parts1 || panelParam)
+            case false:
+                if (myItemData.GetItemSet() == PocketStatus.Pocket.none)
                 {
-                    return;
-                }
-
-                myItemStatus.SetItemFlag(id, false);
-
                     plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
 
-                ShowInformation();
+                    wm.AttachParts(plusPower);
 
-                panelParam = true;
+                    ShowInformation();
 
-                Destroy(dataName);
-
-                break;
-
-            case 1:
-                if (myItemData.GetItemType() != MyItemStatus.Item.parts2 || panelParam)
-                {
-                    return;
+                    panelParam = true;
                 }
-
-                myItemStatus.SetItemFlag(id, false);
-
-                plusPower = myItemData.GetItemPower();
-                wm.SetWeaponPower(plusPower);
-
-                    plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-
-                panelParam = true;
-
-                Destroy(dataName);
-
-                break;
-
-            case 2:
-                if (myItemData.GetItemType() != MyItemStatus.Item.parts3 || panelParam)
-                {
-                    return;
-                }
-
-                myItemStatus.SetItemFlag(id, false);
-
-                    plusPower = myItemData.GetItemPower();
-                    // Player.atk += plusPower;
-
-                ShowInformation();
-
-                panelParam = true;
-
-                Destroy(dataName);
 
                 break;
 
@@ -134,8 +84,37 @@ public class CustomSlot : MonoBehaviour
 
                 break;
         }
-        wm.AttachParts(plusPower);
 
+        if (myItemData.GetItemSet() != PocketStatus.Pocket.none)
+        {
+            return;
+        }
+
+        switch (dragSlot.GetDeleteNum())
+        {
+            case 1:
+                myItemStatus.SetItemCount(id, -1);
+                var processingSlot = dataName.GetComponent<ProcessingSlot>();
+                processingSlot.StartCoroutine("displayCount");
+
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                    processingSlot.PanelDelete();
+                }
+
+                break;
+
+            case 2:
+                dataName.GetComponent<CustomSlot>().PanelDelete();
+                break;
+
+            case 3:
+                break;
+
+            default:
+                break;
+        }
         dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
     }
 

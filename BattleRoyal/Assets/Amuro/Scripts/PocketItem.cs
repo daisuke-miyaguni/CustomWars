@@ -65,17 +65,13 @@ public class PocketItem : MonoBehaviour
         || myItemData.GetItemType() == MyItemStatus.Item.riyo && panelParam == false)
         {
             itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
-            Debug.Log(itemSlot);
+            //Debug.Log(itemSlot);
 
             ShowInformation();
-
-            //  myPanel.GetComponent<CustomSlot>().PanelDelete();
 
             switch (myItemData.GetItemType())               //カスタムパネルに装備
             {
                 case MyItemStatus.Item.mon:
-
-                    myItemStatus.SetItemFlag(id, false);
 
                     panelParam = true;
 
@@ -87,8 +83,6 @@ public class PocketItem : MonoBehaviour
 
                 case MyItemStatus.Item.ball:
 
-                    myItemStatus.SetItemFlag(id, false);
-
                     panelParam = true;
 
                     itemNum = 1;
@@ -99,8 +93,6 @@ public class PocketItem : MonoBehaviour
 
 
                 case MyItemStatus.Item.riyo:
-
-                    myItemStatus.SetItemFlag(id, false);
 
                     panelParam = true;
 
@@ -117,8 +109,15 @@ public class PocketItem : MonoBehaviour
             switch (dragSlot.GetDeleteNum())
             {
                 case 1:
+                    myItemStatus.SetItemCount(id, 1);
+                    var processingSlot = itemSlot.GetComponent<ProcessingSlot>();
+                    processingSlot.StartCoroutine("displayCount");
 
-                    itemSlot.GetComponent<ProcessingSlot>().PanelDelete();
+                    if (myItemStatus.GetItemCount(id) <= 0)
+                    {
+                        myItemStatus.SetItemFlag(id, false);
+                        itemSlot.GetComponent<ProcessingSlot>().PanelDelete();
+                    }
 
                     break;
 
@@ -129,7 +128,6 @@ public class PocketItem : MonoBehaviour
                 case 3:
 
                     itemSlot.GetComponent<PocketItem>().PanelDelete();
-
                     break;
             }
 

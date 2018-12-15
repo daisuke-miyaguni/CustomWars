@@ -25,6 +25,10 @@ public class ProcessingSlot : MonoBehaviour
 
     private Text nameText;
 
+    private Text countText;             //所持数を表示
+
+    private bool countdisplay;
+
 
     void OnDisable()                        //スロットが非アクティブになったら削除
     {
@@ -47,6 +51,25 @@ public class ProcessingSlot : MonoBehaviour
         nameText.text = myItemData.GetItemName();
         informationText.text = myItemData.GetItemInformation();
 
+        StartCoroutine("displayCount");
+    }
+
+    IEnumerator displayCount()
+    {
+        myItemStatus =FindObjectOfType<MyItemStatus>();
+        countText = transform.Find("Count").GetChild(0).GetComponent<Text>();
+
+        if (myItemStatus.GetItemCount(myItemData.GetItemId()) > 1)
+        {
+            transform.Find("Count").gameObject.SetActive(true);
+            countText.text = "×" + myItemStatus.GetItemCount(myItemData.GetItemId()).ToString();
+        }
+        else if (myItemStatus.GetItemCount(myItemData.GetItemId()) <= 1)
+        {
+            transform.Find("Count").gameObject.SetActive(false);
+        }
+
+        yield break;
     }
 
 

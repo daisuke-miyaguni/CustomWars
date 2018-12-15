@@ -10,6 +10,9 @@ public class ItemParam : MonoBehaviour
 
     public int itemNum;
 
+    [SerializeField]
+    private int itemId;
+
     private MyItemStatus.Item items;
 
     Rigidbody rb;
@@ -23,26 +26,32 @@ public class ItemParam : MonoBehaviour
         {
             case 0:
                 items = MyItemStatus.Item.parts1;
+                itemId = 0;
                 break;
 
             case 1:
                 items = MyItemStatus.Item.parts2;
+                itemId = 1;
                 break;
 
             case 2:
                 items = MyItemStatus.Item.parts3;
+                itemId = 2;
                 break;
 
             case 3:
                 items = MyItemStatus.Item.mon;
+                itemId = 3;
                 break;
 
             case 4:
                 items = MyItemStatus.Item.ball;
+                itemId = 4;
                 break;
 
             case 5:
                 items = MyItemStatus.Item.riyo;
+                itemId = 5;
                 break;
         }
 
@@ -54,6 +63,11 @@ public class ItemParam : MonoBehaviour
     public MyItemStatus.Item GetItems()
     {
         return items;
+    }
+
+    public int GetItemId()
+    {
+        return itemId;
     }
 
     // Update is called once per frame

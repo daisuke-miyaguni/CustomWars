@@ -61,61 +61,63 @@ public class DragDelete : MonoBehaviour
         switch (myItemData.GetItemType())
         {
             case MyItemStatus.Item.parts1:
-
-                myItemStatus.SetItemFlag(id, false);
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                }
 
                 item = (GameObject)Resources.Load("parts1");
-                // Instantiate(parts1, p_pos, Quaternion.identity);
 
                 break;
 
             case MyItemStatus.Item.parts2:
-
-                myItemStatus.SetItemFlag(id, false);
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                }
 
                 item = (GameObject)Resources.Load("parts2");
-                // Instantiate(parts2, p_pos, Quaternion.identity);
 
                 break;
 
             case MyItemStatus.Item.parts3:
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
 
-                myItemStatus.SetItemFlag(id, false);
+                }
 
                 item = (GameObject)Resources.Load("parts3");
-                // Instantiate(parts3, p_pos, Quaternion.identity);
 
                 break;
 
             case MyItemStatus.Item.mon:
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                }
 
-                myItemStatus.SetItemFlag(id, false);
-
-                GameObject mon = (GameObject)Resources.Load("mon");
-                Instantiate(mon, p_pos, Quaternion.identity);
+                item = (GameObject)Resources.Load("mon");
 
                 break;
 
             case MyItemStatus.Item.ball:
-
-                myItemStatus.SetItemFlag(id, false);
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                }
 
                 item = (GameObject)Resources.Load("show");
-                // Instantiate(show, p_pos, Quaternion.identity);
 
                 break;
 
             case MyItemStatus.Item.riyo:
-
-                myItemStatus.SetItemFlag(id, false);
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                }
 
                 item = (GameObject)Resources.Load("riyo");
-                // Instantiate(riyo, p_pos, Quaternion.identity);
-
-                if (deleteSlot != null)
-                {
-                    deleteSlot.GetComponent<PocketItem>().PanelDelete();
-                }
 
                 break;
 
@@ -128,25 +130,29 @@ public class DragDelete : MonoBehaviour
         switch (dragSlot.GetDeleteNum())
         {
             case 1:
+                myItemStatus.SetItemCount(id, -1);
 
-                deleteSlot.GetComponent<ProcessingSlot>().PanelDelete();
+                if (myItemStatus.GetItemCount(id) <= 0)
+                {
+                    myItemStatus.SetItemFlag(id, false);
+                    deleteSlot.GetComponent<ProcessingSlot>().PanelDelete();
+                }
 
                 break;
 
             case 2:
-
+                myItemStatus.SetItemCount(id, 0);
                 deleteSlot.GetComponent<CustomSlot>().PanelDelete();
 
                 break;
 
             case 3:
-
+                myItemStatus.SetItemCount(id, 0);
                 deleteSlot.GetComponent<PocketItem>().PanelDelete();
 
                 break;
 
             default:
-
                 break;
         }
 
