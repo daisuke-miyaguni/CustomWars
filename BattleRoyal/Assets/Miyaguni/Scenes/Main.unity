@@ -2156,7 +2156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
-  customNum: 2
   informationText: {fileID: 1608678053}
 --- !u!114 &328596246
 MonoBehaviour:
@@ -2856,7 +2855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
-  customNum: 1
   informationText: {fileID: 2058088089}
 --- !u!114 &467816957
 MonoBehaviour:
@@ -4518,7 +4516,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragItemUI: {fileID: 1175872197951444, guid: 1c20e1ce11bdb564986a50a9459fe031, type: 2}
-  customNum: 0
   informationText: {fileID: 663977208}
 --- !u!114 &833236266
 MonoBehaviour:

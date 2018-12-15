@@ -7,13 +7,11 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
     PhotonView itemSpawnPV;
+
+    GameObject itemBox;
     [SerializeField] GameObject[] items;
 
     [SerializeField] float itemSpawnPower = 5.0f;
-
-    private const int itemCount = 3;
-
-    GameObject itemBox;
 
 
     void Awake()
@@ -21,24 +19,30 @@ public class ItemSpawner : MonoBehaviour
         itemSpawnPV = GetComponent<PhotonView>();
     }
 
-    public void CallItemSpawn(GameObject callObject, Vector3 spawnPos)
+    public void CallItemSpawn(GameObject callObject, Vector3 spawnPos, int itemNumber)
     {
-        if (callObject.tag == "ItemBox")
+        switch(callObject.tag)
         {
-            itemSpawnPV.RPC("BoxOpen", PhotonTargets.MasterClient, spawnPos);
-        }
-        else
-        {
-            itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, callObject, spawnPos);
+            case "ItemBox":
+                itemSpawnPV.RPC("BoxOpen", PhotonTargets.MasterClient, spawnPos, itemNumber);
+                break;
+
+            case "PlayerControllerUI":
+                itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, callObject, spawnPos);
+                break;
+                
+            default:
+                break;
         }
     }
 
     [PunRPC]
-    void BoxOpen(Vector3 boxPos)
+    void BoxOpen(Vector3 boxPos, int count)
     {
+        int spawnCount = count;
         GameObject[] randItem = items.OrderBy(i => Guid.NewGuid()).ToArray();
 
-        for (int i = 0; i < itemCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             GameObject item = PhotonNetwork.InstantiateSceneObject
             (
@@ -60,11 +64,13 @@ public class ItemSpawner : MonoBehaviour
     }
 
     [PunRPC]
-    void DropItem(GameObject dropItem, Vector3 playerPos)
+    void DropItem(GameObject dropItem, Vector3 playerPos, int spawnItemNum)
     {
-        GameObject item = PhotonNetwork.InstantiateSceneObject
+        GameObject item = items[spawnItemNum];
+
+        item = PhotonNetwork.InstantiateSceneObject
         (
-            dropItem.name,
+            item.name,
             playerPos,
             Quaternion.Euler(new Vector3(0, 1, 0) * UnityEngine.Random.Range(0f, 180f)),
             0,

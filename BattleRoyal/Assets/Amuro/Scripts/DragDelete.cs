@@ -55,7 +55,7 @@ public class DragDelete : MonoBehaviour
             myPlayer.transform.position.z + 0.8f
         );
 
-        GameObject item = null;
+        int itemNum = 0;
 
         // ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成
         switch (myItemData.GetItemType())
@@ -66,7 +66,8 @@ public class DragDelete : MonoBehaviour
                     myItemStatus.SetItemFlag(id, false);
                 }
 
-                item = (GameObject)Resources.Load("parts1");
+                // item = (GameObject)Resources.Load("parts1");
+                itemNum = 0;
 
                 break;
 
@@ -76,7 +77,8 @@ public class DragDelete : MonoBehaviour
                     myItemStatus.SetItemFlag(id, false);
                 }
 
-                item = (GameObject)Resources.Load("parts2");
+                // item = (GameObject)Resources.Load("parts2");
+                itemNum = 1;
 
                 break;
 
@@ -87,7 +89,8 @@ public class DragDelete : MonoBehaviour
 
                 }
 
-                item = (GameObject)Resources.Load("parts3");
+                // item = (GameObject)Resources.Load("parts3");
+                itemNum = 2;
 
                 break;
 
@@ -97,7 +100,8 @@ public class DragDelete : MonoBehaviour
                     myItemStatus.SetItemFlag(id, false);
                 }
 
-                item = (GameObject)Resources.Load("mon");
+                // item = (GameObject)Resources.Load("mon");
+                itemNum = 3;
 
                 break;
 
@@ -107,7 +111,8 @@ public class DragDelete : MonoBehaviour
                     myItemStatus.SetItemFlag(id, false);
                 }
 
-                item = (GameObject)Resources.Load("show");
+                // item = (GameObject)Resources.Load("show");
+                itemNum = 4;
 
                 break;
 
@@ -117,13 +122,16 @@ public class DragDelete : MonoBehaviour
                     myItemStatus.SetItemFlag(id, false);
                 }
 
-                item = (GameObject)Resources.Load("riyo");
+                // item = (GameObject)Resources.Load("riyo");
+                itemNum = 5;
 
                 break;
 
             default:
                 break;
         }
+        
+        itemSpawner.CallItemSpawn(this.gameObject, myPlayer.gameObject.transform.position, itemNum);
 
         var itemData = myItemData;
 
@@ -155,8 +163,5 @@ public class DragDelete : MonoBehaviour
             default:
                 break;
         }
-
-        itemSpawner.CallItemSpawn(item, transform.position);
-
     }
 }

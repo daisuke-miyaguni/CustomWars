@@ -20,6 +20,8 @@ public class ItemBox : MonoBehaviour
 
     ItemSpawner itemSpawner;
 
+    [SerializeField] int itemSpawnCount = 3;
+
 	void Start()
 	{
 		photonView = GetComponent<PhotonView>();
@@ -30,7 +32,7 @@ public class ItemBox : MonoBehaviour
     public void OpenOnClick()
     {
         Vector3 objectPos = this.gameObject.transform.position;
-        itemSpawner.CallItemSpawn(this.gameObject, objectPos);
+        itemSpawner.CallItemSpawn(this.gameObject, objectPos, itemSpawnCount);
         photonView.RPC(PunRPCList.DeleteItemBox.ToString(), PhotonTargets.AllViaServer);
     }
 
