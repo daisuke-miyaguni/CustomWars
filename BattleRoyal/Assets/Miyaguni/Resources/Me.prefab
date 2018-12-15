@@ -3991,10 +3991,10 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 5
   attackStayTime: 0.2
-  attackTime: 0.3
-  controller: {fileID: 0}
+  attackTime: 0.1
   sphereCollider: {fileID: 135120115179249662}
   parryState: 0
+  parryStayTime: 0.3
   parryTime: 0.2
   wasparryedDamage: 15
   rebelliousTime: 0.3

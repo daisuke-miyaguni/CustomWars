@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77513e5d58e4164abe856b770b52ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot: {fileID: 1290668243754268, guid: dce807fa71db659489040c02bca6f036, type: 2}
+  slot: {fileID: 1366732540981594, guid: dce807fa71db659489040c02bca6f036, type: 2}
   myItemStatus: {fileID: 0}
   itemDataBase: {fileID: 591787816}
 --- !u!114 &137927518
@@ -2973,7 +2973,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4953411409131526, guid: c61cdade09b47b644a46ed11a7499203, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -45
+      value: -45.3
       objectReference: {fileID: 0}
     - target: {fileID: 4953411409131526, guid: c61cdade09b47b644a46ed11a7499203, type: 2}
       propertyPath: m_LocalRotation.x
@@ -3725,7 +3725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elapsedTimeText: {fileID: 1095715753}
   playerNumberText: {fileID: 849951538}
-  scaleDownStartTime: 7
+  scaleDownStartTime: 12
   resultPanel: {fileID: 885586865}
   rankText: {fileID: 907730613}
   stageManager: {fileID: 1825254300}
