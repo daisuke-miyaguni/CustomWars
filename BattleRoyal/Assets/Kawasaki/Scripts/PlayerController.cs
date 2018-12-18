@@ -260,8 +260,7 @@ public class PlayerController : MonoBehaviour
 
     public void CallRecover(int heal)
     {
-        int healing = heal;
-        myPV.RPC("Recover", PhotonTargets.AllViaServer, healing);
+        myPV.RPC("Recover", PhotonTargets.AllViaServer, heal);
     }
 
     // 回復
@@ -274,6 +273,10 @@ public class PlayerController : MonoBehaviour
         }
         currentHP += amount;
         hpSlider.value = currentHP;
+        if (myPV.isMine)
+        {
+            hpText.text = "HP: " + currentHP.ToString();
+        }
     }
 
     private void OnCollisionEnter(Collision other)
