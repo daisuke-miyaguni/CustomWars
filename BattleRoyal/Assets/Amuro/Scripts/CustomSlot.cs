@@ -25,7 +25,9 @@ public class CustomSlot : MonoBehaviour
     [SerializeField]
     private Text informationText;
 
-    private int plusPower;
+    private float plusPower;
+
+    private int id;
 
     private bool panelParam = false;
 
@@ -36,7 +38,12 @@ public class CustomSlot : MonoBehaviour
 
     private void Start()
     {
-        myItemStatus = FindObjectOfType<MyItemStatus>();
+        // myItemStatus = FindObjectOfType<MyItemStatus>();
+    }
+
+    public void InitMyItemStatus(PlayerController myPlayer)
+    {
+        this.myItemStatus = myPlayer.GetComponent<PlayerController>().GetMyItemStatus();
     }
 
     public GameObject GetCustomData()
@@ -58,7 +65,7 @@ public class CustomSlot : MonoBehaviour
 
         dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
-        var id = myItemData.GetItemId();
+        id = myItemData.GetItemId();
 
         dataName = dragSlot.GetSlotData();             //ドラッグしてきた持ち物パネルを取得
 
@@ -67,9 +74,21 @@ public class CustomSlot : MonoBehaviour
             case false:
                 if (myItemData.GetItemSet() == PocketStatus.Pocket.none)
                 {
-                    plusPower = myItemData.GetItemPower();
+                    switch(id)
+                    {
+                        default:
+                        case 0:
+                            plusPower = myItemData.GetItemPower();
+                            break;
+                        case 1:
+                            plusPower = myItemData.GetItemSpeed();
+                            break;
+                        case 2:
+                            plusPower = myItemData.GetItemDefence();
+                            break;
+                    }
 
-                    wm.AttachParts(plusPower);
+                    wm.AttachParts(plusPower, id);
 
                     ShowInformation();
 
@@ -145,7 +164,7 @@ public class CustomSlot : MonoBehaviour
         thisCustom = gameObject;
 
         // Player.atk -= plusPower;
-        wm.AttachParts(-plusPower);
+        // wm.AttachParts(-plusPower, id);
     }
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
@@ -161,6 +180,6 @@ public class CustomSlot : MonoBehaviour
         informationText.text = null;
         myItemData = null;
         panelParam = false;
-        wm.SetWeaponPower(-plusPower);
+        wm.AttachParts(-plusPower, id);
     }
 }

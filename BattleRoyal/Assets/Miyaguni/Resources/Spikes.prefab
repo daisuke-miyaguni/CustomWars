@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114812954712592012}
   - component: {fileID: 114395817721764046}
   m_Layer: 8
-  m_Name: MiyaguniItemTest5
+  m_Name: Spikes
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,8 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de8dd5f10b2f7e458f8cd5cef507e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNum: 3
-  itemId: 0
+  item: 4
 --- !u!114 &114395817721764046
 MonoBehaviour:
   m_ObjectHideFlags: 1

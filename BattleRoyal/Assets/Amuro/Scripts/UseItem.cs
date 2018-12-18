@@ -12,6 +12,8 @@ public class UseItem : MonoBehaviour
 
     private Player player;
 
+    private PlayerController myPlayer;
+
     private GameObject Inve;
 
     private Image panelImage;
@@ -28,6 +30,11 @@ public class UseItem : MonoBehaviour
         pocketStatus = FindObjectOfType<PocketStatus>();
         panelImage = transform.GetChild(0).GetComponent<Image>();
         itemCheck = false;
+    }
+
+    public void SetMyPlayer(PlayerController Player)
+    {
+        this.myPlayer = Player;
     }
 
     public void SetItemSwitch(ItemData itemData)                    //pocketpanelにドラッグされたアイテムデータを取得する
@@ -74,7 +81,7 @@ public class UseItem : MonoBehaviour
 
                 var recover = itemData.GetItemPower();
 
-                player.Recovery(recover);
+                myPlayer.CallRecover(Mathf.CeilToInt(recover));
 
                 panelImage.sprite = null;
 

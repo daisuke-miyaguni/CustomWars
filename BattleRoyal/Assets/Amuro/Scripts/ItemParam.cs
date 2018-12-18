@@ -8,12 +8,21 @@ public class ItemParam : MonoBehaviour
 
     private ItemDataBase itemDataBase;
 
-    public int itemNum;
+    public enum items
+    {
+        Cap,
+        Correction,
+        Ruler,
+        Glue,
+        Spikes,
+        Recovery1,
+    }
 
-    [SerializeField]
+    public items item = items.Cap;
+
     private int itemId;
 
-    private MyItemStatus.Item items;
+    // rivate MyItemStatus.Item items;
 
     Rigidbody rb;
     PhotonView ipPV;
@@ -22,48 +31,19 @@ public class ItemParam : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        switch (itemNum)
-        {
-            case 0:
-                items = MyItemStatus.Item.parts1;
-                itemId = 0;
-                break;
+        int itemNum = (int)item;
 
-            case 1:
-                items = MyItemStatus.Item.parts2;
-                itemId = 1;
-                break;
-
-            case 2:
-                items = MyItemStatus.Item.parts3;
-                itemId = 2;
-                break;
-
-            case 3:
-                items = MyItemStatus.Item.mon;
-                itemId = 3;
-                break;
-
-            case 4:
-                items = MyItemStatus.Item.ball;
-                itemId = 4;
-                break;
-
-            case 5:
-                items = MyItemStatus.Item.riyo;
-                itemId = 5;
-                break;
-        }
+        itemId = itemNum;
 
         rb = GetComponent<Rigidbody>();
         ipPV = GetComponent<PhotonView>();
         ipPTV = GetComponent<PhotonTransformView>();
     }
 
-    public MyItemStatus.Item GetItems()
-    {
-        return items;
-    }
+    // public MyItemStatus.Item GetItems()
+    // {
+    //     return items;
+    // }
 
     public int GetItemId()
     {

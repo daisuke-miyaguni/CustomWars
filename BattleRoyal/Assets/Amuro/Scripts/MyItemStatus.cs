@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MyItemStatus : MonoBehaviour
 {
     private ItemData itemData;
-    private ItemParam param;
+    private GameObject itemObject;
 
     private CreateSlotScript createSlot;
 
@@ -27,13 +27,14 @@ public class MyItemStatus : MonoBehaviour
     [SerializeField]
     private bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
 
+    [SerializeField]
     private int[] itemCount = new int[6];
 
     void Awake()
     {
         myItemPV = GetComponent<PhotonView>();
-
     }
+    
     void Start()
     {
         getButton = GameObject.FindWithTag("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
@@ -51,12 +52,7 @@ public class MyItemStatus : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
         {
-            param = other.gameObject.GetComponent<ItemParam>();
-            var type = param.GetItems();
-            if (itemFlags[(int)type])
-            {
-                return;
-            }
+            itemObject = other.gameObject;
 
             if (myItemPV.isMine)
             {
@@ -69,7 +65,7 @@ public class MyItemStatus : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
         {
-            param = null;
+            itemObject = null;
             if (myItemPV.isMine)
             {
                 getButton.SetActive(false);
@@ -82,10 +78,10 @@ public class MyItemStatus : MonoBehaviour
     {
         if (myItemPV.isMine)
         {
-            var type = param.GetItems();
+            ItemParam param = itemObject.GetComponent<ItemParam>();
             var id = param.GetItemId();
 
-            itemFlags[(int)type] = true;
+            itemFlags[id] = true;
             itemCount[id] += 1;
         }
         myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
@@ -98,7 +94,7 @@ public class MyItemStatus : MonoBehaviour
 
     public int GetItemCount(int count)
     {
-        return itemCount[(int)count];
+        return itemCount[count];
     }
 
     public void SetItemFlag(int id, bool hoge)
@@ -114,7 +110,7 @@ public class MyItemStatus : MonoBehaviour
     [PunRPC]
     void WasgetItem()
     {
-        Destroy(param.gameObject);
+        Destroy(itemObject);
         if (myItemPV.isMine)
         {
             getButton.SetActive(false);
