@@ -38,7 +38,12 @@ public class PocketItem : MonoBehaviour
     private void Start()
     {
         pocketStatus = FindObjectOfType<PocketStatus>();
-        myItemStatus = FindObjectOfType<MyItemStatus>();
+        // myItemStatus = FindObjectOfType<MyItemStatus>();
+    }
+
+    public void InitMyItemStatus(PlayerController myPlayer)
+    {
+        this.myItemStatus = myPlayer.GetComponent<PlayerController>().GetMyItemStatus();
     }
 
     public GameObject GetPocketData()
@@ -111,7 +116,7 @@ public class PocketItem : MonoBehaviour
                 case 1:
                     myItemStatus.SetItemCount(id, 1);
                     var processingSlot = itemSlot.GetComponent<ProcessingSlot>();
-                    processingSlot.StartCoroutine("displayCount");
+                    StartCoroutine(processingSlot.displayCount());
 
                     if (myItemStatus.GetItemCount(id) <= 0)
                     {

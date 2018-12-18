@@ -46,7 +46,7 @@ public class CreateSlotScript : MonoBehaviour
                     {
                         var instanceSlot = Instantiate(slot) as GameObject;
 
-                        instanceSlot.name = "ItemSlot";
+                        instanceSlot.name = item.GetItemName();
 
                         instanceSlot.transform.SetParent(transform);
 
@@ -59,29 +59,27 @@ public class CreateSlotScript : MonoBehaviour
                 break;
 
             case 1:
+                if (myItemStatus.GetItemCount(myItemData.GetItemId()) <= 1)
                 {
-                    if (myItemStatus.GetItemCount(myItemData.GetItemId()) <= 1)
-                    {
-                        var instanceSlot = Instantiate(slot) as GameObject;
+                    var instanceSlot = Instantiate(slot) as GameObject;
 
-                        instanceSlot.name = myItemData.GetItemName();
+                    instanceSlot.name = myItemData.GetItemName();
 
-                        instanceSlot.transform.SetParent(transform);
+                    instanceSlot.transform.SetParent(transform);
 
-                        instanceSlot.transform.localScale = new Vector3(1f, 1f, 1f);
+                    instanceSlot.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                        var display = instanceSlot.GetComponent<ProcessingSlot>();
+                    var display = instanceSlot.GetComponent<ProcessingSlot>();
 
-                        display.SetItemData(myItemData);
+                    display.SetItemData(myItemData);
 
-                    }
-
-                    var itemSlot = transform.Find(myItemData.GetItemName()).GetComponent<ProcessingSlot>();
-
-                    itemSlot.StartCoroutine("displayCount");
-
-                    break;
                 }
+
+                var itemSlot = transform.Find(myItemData.GetItemName()).GetComponent<ProcessingSlot>();
+
+                StartCoroutine(itemSlot.displayCount());
+
+                break;
 
             default:
 

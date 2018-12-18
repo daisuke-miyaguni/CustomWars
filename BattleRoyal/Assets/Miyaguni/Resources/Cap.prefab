@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemNum: 0
+  itemId: 0
 --- !u!135 &135391554042005964
 SphereCollider:
   m_ObjectHideFlags: 1

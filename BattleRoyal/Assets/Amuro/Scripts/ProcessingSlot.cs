@@ -51,10 +51,10 @@ public class ProcessingSlot : MonoBehaviour
         nameText.text = myItemData.GetItemName();
         informationText.text = myItemData.GetItemInformation();
 
-        StartCoroutine("displayCount");
+        StartCoroutine(displayCount());
     }
 
-    IEnumerator displayCount()
+    public IEnumerator displayCount()
     {
         myItemStatus =FindObjectOfType<MyItemStatus>();
         countText = transform.Find("Count").GetChild(0).GetComponent<Text>();

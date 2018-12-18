@@ -7,7 +7,6 @@ public class PocketStatus : MonoBehaviour
 {
 
     private ItemData itemData;
-    private Pocket panelData;
     private UseItem useItem;
 
     [SerializeField]
@@ -51,10 +50,5 @@ public class PocketStatus : MonoBehaviour
     public void SetItemDelete(int slotNum)
     {
         pocket_item_panel.GetChild(slotNum).GetComponent<UseItem>().PanelDelete();
-    }
-
-    public Pocket GetPocketData()                                 //アイテムスロットのアイテム情報取得
-    {
-        return panelData;
     }
 }
