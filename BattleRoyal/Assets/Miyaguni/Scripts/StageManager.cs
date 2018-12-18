@@ -43,12 +43,12 @@ public class StageManager : MonoBehaviour
 
         photonView = GetComponent<PhotonView>();
 
-        initPosX = Random.Range(-safeAreaPosX, safeAreaPosX);
-        initPosZ = Random.Range(-safeAreaPosZ, safeAreaPosZ);
-
         if (PhotonNetwork.isMasterClient)
         {
-            photonView.RPC("InitPosition", PhotonTargets.MasterClient, initPosX, initPosZ);
+            initPosX = Random.Range(-safeAreaPosX, safeAreaPosX);
+            initPosZ = Random.Range(-safeAreaPosZ, safeAreaPosZ);
+
+            photonView.RPC("InitPosition", PhotonTargets.AllViaServer, initPosX, initPosZ);
         }
         Invoke("TriggerOn", collisionOnTime);
     }
@@ -104,5 +104,13 @@ public class StageManager : MonoBehaviour
     public void ReceveReductionEvent()
     {
         reductionCount++;
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if(other.gameObject.tag != "Player" || other.gameObject.layer != 15)
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

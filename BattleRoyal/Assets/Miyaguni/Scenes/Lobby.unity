@@ -398,9 +398,11 @@ MonoBehaviour:
   playerStateText: {fileID: 234731539}
   playerIDText: {fileID: 1071871840}
   maxPlayerList: 4
-  minPlayerList: 2
+  minPlayerList: 1
   gameStartTime: 1
   photonSceneTransitioner: {fileID: 1328181894}
+  sendRateSetting: 30
+  sendRateOnSerializeSetting: 30
 --- !u!4 &1328181896
 Transform:
   m_ObjectHideFlags: 0

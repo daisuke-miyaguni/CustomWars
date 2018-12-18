@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     private PhotonView myPV;
     private PhotonTransformView myPTV;
-    [SerializeField] private Rigidbody myRB;
+    private Rigidbody myRB;
     private Camera myCamera;
     private Text hpText;
     private GameObject inventory;
@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject otherHpBar;
 
     [SerializeField] private GameObject itemBox;
+
+    WeaponManager myWM;
 
     // playerステータス
     [SerializeField] private float moveSpeed;
@@ -64,10 +66,9 @@ public class PlayerController : MonoBehaviour
 
     // player parry情報
     [SerializeField] private SphereCollider sphereCollider;
-    [SerializeField] private bool parryState;
     [SerializeField] private float parryStayTime = 0.3f;
     [SerializeField] private float parryTime = 0.5f;
-    [SerializeField] private int wasparryedDamage = 15;
+    [SerializeField] private float wasparryedDamage = 15;
     [SerializeField] private float rebelliousTime = 0.3f;
 
     [SerializeField] private float angleMax;
@@ -99,7 +100,6 @@ public class PlayerController : MonoBehaviour
     {
         sphereCollider = sphereCollider.GetComponent<SphereCollider>();
         sphereCollider.enabled = false;
-        parryState = sphereCollider.enabled;
         // weaponCollider = weapon.GetComponent<BoxCollider>();
         animator = GetComponent<Animator>();
         weaponCollider = weapon.GetComponent<CapsuleCollider>();
@@ -130,6 +130,10 @@ public class PlayerController : MonoBehaviour
             isJump = true;
 
             weaponPos = weapon.transform.localPosition;
+
+            transform.LookAt(Vector3.zero);
+
+            myWM = weapon.GetComponent<WeaponManager>();
         }
     }
 
@@ -151,22 +155,6 @@ public class PlayerController : MonoBehaviour
             Move();
         }
     }
-
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        sphereCollider.enabled = parryState;
-
-        if (stream.isWriting)
-        {
-            stream.SendNext(parryState);
-        }
-        else
-        {
-            parryState = (bool)stream.ReceiveNext();
-        }
-
-    }
-
 
     // 移動処理
     private void Move()
@@ -224,6 +212,7 @@ public class PlayerController : MonoBehaviour
     // 攻撃入力
     public void OnClickAttack()
     {
+        animator.SetFloat("Speed", myWM.GetWeaponSpeed());
         myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
     }
 
@@ -292,7 +281,7 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             // 着地
-            if (other.gameObject.tag == GameObjectTags.Desk.ToString())
+            if (other.gameObject.layer == 14 || other.gameObject.layer == 15)
             {
                 isJump = true;
                 playerUIController.jumpButton.interactable = true;
@@ -311,7 +300,7 @@ public class PlayerController : MonoBehaviour
             && other.gameObject != weapon)
             {
                 WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
-                int damage = wm.GetWeaponPower();
+                int damage = Mathf.CeilToInt(wm.GetWeaponPower() * myWM.GetWeaponDefense());
                 myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
             }
             // アイテム取得
@@ -395,13 +384,11 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
         yield return new WaitForSeconds(parryStayTime);
         sphereCollider.enabled = true;
-        parryState = true;
         playerUIController.parryButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(parryTime);
         sphereCollider.enabled = false;
-        parryState = false;
         playerUIController.parryButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
@@ -416,7 +403,7 @@ public class PlayerController : MonoBehaviour
     void Wasparryed()
     {
         animator.SetTrigger(PlayerAnimatorParameters.desprate.ToString());
-        currentHP -= wasparryedDamage;
+        currentHP -= Mathf.CeilToInt(wasparryedDamage);
         hpSlider.value = currentHP;
         if (myPV.isMine)
         {

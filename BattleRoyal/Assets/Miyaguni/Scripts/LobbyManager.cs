@@ -26,16 +26,20 @@ public class LobbyManager : Photon.MonoBehaviour
     string playerStateHost = "Host";    // PlayerがHostのときの文字列
     string playerStateGuest = "Guest";      // PlayerがGuestのときの文字列
 
+    [SerializeField] int sendRateSetting = 30;
+    [SerializeField] int sendRateOnSerializeSetting = 30;
+
+    void Awake()
+    {
+        // Photonに接続
+        PhotonNetwork.ConnectUsingSettings("v0.10");
+    }
+
     void Start()
     {
         photonSceneTransitioner = GetComponent<PhotonSceneTransitioner>();
-        Connect();
-    }
-
-    // Photonに接続
-    void Connect()
-    {
-        PhotonNetwork.ConnectUsingSettings(null);
+        PhotonNetwork.sendRate = sendRateSetting;
+        PhotonNetwork.sendRateOnSerialize = sendRateOnSerializeSetting;
     }
 
     //ルーム一覧が取れると
@@ -54,9 +58,10 @@ public class LobbyManager : Photon.MonoBehaviour
                     // Roomのリストを取得可能にする
                     IsVisible = true,
                     // 最大人数を決める
-					MaxPlayers = 4,
+                    MaxPlayers = 4,
                 },
-                null
+                TypedLobby.Default
+
             );
         }
         else

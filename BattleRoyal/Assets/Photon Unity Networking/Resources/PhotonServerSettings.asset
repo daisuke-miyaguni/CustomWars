@@ -28,7 +28,6 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - AttachmentParts
-  - Attack
   - BoxOpen
   - CallAttack
   - CallParry

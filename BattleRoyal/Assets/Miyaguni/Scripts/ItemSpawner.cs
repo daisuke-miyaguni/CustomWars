@@ -28,7 +28,7 @@ public class ItemSpawner : MonoBehaviour
                 break;
 
             case "PlayerControllerUI":
-                itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, callObject, spawnPos);
+                itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, callObject, spawnPos, itemNumber);
                 break;
                 
             default:

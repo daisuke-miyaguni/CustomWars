@@ -18,6 +18,7 @@ public class SafeAreaOut : MonoBehaviour
     void Start()
     {
         render = GetComponent<Renderer>();
+        gameObject.name = "Desk";
     }
 
     void Update()
@@ -56,8 +57,7 @@ public class SafeAreaOut : MonoBehaviour
 
     void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.tag == "Dust" ||
-			other.gameObject.tag == "Fan")
+        if (other.gameObject.tag == "Dust")
         {
             Destroy(other.gameObject);
         }
