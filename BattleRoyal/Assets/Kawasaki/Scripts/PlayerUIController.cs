@@ -44,6 +44,11 @@ public class PlayerUIController : MonoBehaviour
         SetButtons();
     }
 
+    public MyItemStatus GetMyItemStatus()
+    {
+        return myItemStatus;
+    }
+
     public void SetButtons()
     {
         attackButton.GetComponent<Button>();

@@ -4327,6 +4327,7 @@ MonoBehaviour:
   power: 3
   speed: 1
   defense: 1
+  recoveryPower: 15
 --- !u!114 &591787817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7430,6 +7431,9 @@ MonoBehaviour:
   getButton: {fileID: 889022300}
   openButton: {fileID: 2041594310}
   hpSlider: {fileID: 359301979}
+  usePocketItem:
+  - {fileID: 219127871}
+  - {fileID: 1363412614}
   inventory: {fileID: 286839746}
   customSlot:
   - {fileID: 833236263}

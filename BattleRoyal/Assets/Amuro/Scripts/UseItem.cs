@@ -10,7 +10,7 @@ public class UseItem : MonoBehaviour
 
     private PocketStatus pocketStatus;
 
-    private Player player;
+    // private Player player;
 
     private PlayerController myPlayer;
 
@@ -26,8 +26,8 @@ public class UseItem : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
-        pocketStatus = FindObjectOfType<PocketStatus>();
+        // player = FindObjectOfType<Player>();
+        pocketStatus = gameObject.transform.root.GetComponent<PocketStatus>();
         panelImage = transform.GetChild(0).GetComponent<Image>();
         itemCheck = false;
     }
@@ -79,7 +79,7 @@ public class UseItem : MonoBehaviour
 
             case PocketStatus.Pocket.riyo_p:
 
-                var recover = itemData.GetItemPower();
+                float recover = itemData.GetItemPower();
 
                 myPlayer.CallRecover(Mathf.CeilToInt(recover));
 

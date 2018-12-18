@@ -19,7 +19,7 @@ public class ProcessingSlot : MonoBehaviour
 
     private GameObject instanceDragItemUI;  //アイテムをドラッグしたときに生成する画像
 
-    public static GameObject itemSlot;      //アイテムスロット格納用
+    private GameObject itemSlot;      //アイテムスロット格納用
 
     private Text informationText;       //アイテム情報を表示するテキストUI    
 
@@ -56,7 +56,7 @@ public class ProcessingSlot : MonoBehaviour
 
     public IEnumerator displayCount()
     {
-        myItemStatus =FindObjectOfType<MyItemStatus>();
+        myItemStatus = gameObject.transform.root.GetComponent<PlayerUIController>().GetMyItemStatus();
         countText = transform.Find("Count").GetChild(0).GetComponent<Text>();
 
         if (myItemStatus.GetItemCount(myItemData.GetItemId()) > 1)

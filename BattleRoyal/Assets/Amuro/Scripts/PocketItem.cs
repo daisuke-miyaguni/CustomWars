@@ -9,7 +9,7 @@ public class PocketItem : MonoBehaviour
 
     private MyItemStatus myItemStatus;
 
-    private ProcessingSlot processingSlot;
+    // private ProcessingSlot processingSlot;
 
     private DragSlot dragSlot;
 
@@ -63,59 +63,25 @@ public class PocketItem : MonoBehaviour
 
         dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
-        var id = myItemData.GetItemId();
+        int id = myItemData.GetItemId();
 
-        if (myItemData.GetItemType() == MyItemStatus.Item.mon && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.ball && panelParam == false
-        || myItemData.GetItemType() == MyItemStatus.Item.riyo && panelParam == false)
+        if (id > 2 && panelParam == false)
         {
-            itemSlot = ProcessingSlot.itemSlot;             //ドラッグしてきた持ち物パネルを取得持ち物
+            itemSlot = dragSlot.GetSlotData();            //ドラッグしてきた持ち物パネルを取得持ち物
             //Debug.Log(itemSlot);
 
             ShowInformation();
 
-            switch (myItemData.GetItemType())               //カスタムパネルに装備
-            {
-                case MyItemStatus.Item.mon:
+            //カスタムパネルに装備
+            panelParam = true;
+            pocketStatus.SetItemData(myItemData, slotNum);
 
-                    panelParam = true;
-
-                    itemNum = 0;
-
-                    pocketStatus.SetItemData(myItemData, slotNum);
-
-                    break;
-
-                case MyItemStatus.Item.ball:
-
-                    panelParam = true;
-
-                    itemNum = 1;
-
-                    pocketStatus.SetItemData(myItemData, slotNum);
-
-                    break;
-
-
-                case MyItemStatus.Item.riyo:
-
-                    panelParam = true;
-
-                    itemNum = 2;
-
-                    pocketStatus.SetItemData(myItemData, slotNum);
-
-                    break;
-
-                default:
-                    break;
-            }
 
             switch (dragSlot.GetDeleteNum())
             {
                 case 1:
-                    myItemStatus.SetItemCount(id, 1);
-                    var processingSlot = itemSlot.GetComponent<ProcessingSlot>();
+                    myItemStatus.SetItemCount(id, -1);
+                    ProcessingSlot processingSlot = itemSlot.GetComponent<ProcessingSlot>();
                     StartCoroutine(processingSlot.displayCount());
 
                     if (myItemStatus.GetItemCount(id) <= 0)
@@ -126,13 +92,11 @@ public class PocketItem : MonoBehaviour
 
                     break;
 
-                case 2:
-
-                    break;
-
                 case 3:
 
                     itemSlot.GetComponent<PocketItem>().PanelDelete();
+                    break;
+                default:
                     break;
             }
 
@@ -175,12 +139,4 @@ public class PocketItem : MonoBehaviour
         panelParam = false;
         pocketStatus.SetItemDelete(slotNum);
     }
-
-
-    public int GetItemNum()
-    {
-        return itemNum;
-    }
-
-
 }
