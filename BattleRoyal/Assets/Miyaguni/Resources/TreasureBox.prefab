@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 65790048234280420}
   - component: {fileID: 114750974907175846}
   - component: {fileID: 114909043433642580}
+  - component: {fileID: 114805507800463538}
   m_Layer: 8
   m_Name: TreasureBox
   m_TagString: ItemBox
@@ -265,6 +266,17 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114805507800463538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1871495111859070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114857477887190646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,6 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSpawnPower: 7
   icon: {fileID: 1928096229950174}
+  itemSpawnCount: 3
 --- !u!114 &114916035158315502
 MonoBehaviour:
   m_ObjectHideFlags: 1

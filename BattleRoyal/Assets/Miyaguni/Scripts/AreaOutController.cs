@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class AreaOutController : MonoBehaviour
 {
-    private void OnCollisionExit(Collision other)
+    private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Desk")
+        if(other.gameObject.tag == "Area")
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
