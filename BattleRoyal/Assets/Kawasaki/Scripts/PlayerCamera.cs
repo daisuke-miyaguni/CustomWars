@@ -34,51 +34,188 @@ public class PlayerCamera : MonoBehaviour
     void Update()
     {
         if (myPV.isMine)
-            RotateCamera();
+        {
+            CheckTouch();
+        }
     }
 
-    private void RotateCamera()
+    private void CheckTouch()
     {
         myCamera.transform.position += gameObject.transform.position - myPos;
         myPos = gameObject.transform.position;
 
-        if (playerController.GetMoveDirection().x + playerController.GetMoveDirection().z != 0 &&
-            !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+        if (Input.touchCount == 1 && playerController.GetMoveDirection() == Vector3.zero)
+        {
+            print("a");
+            RotateCamera(Input.GetTouch(0));
+        }
+        if (Input.touchCount == 2 && playerController.GetMoveDirection() != Vector3.zero)
+        {
+            print("b");
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                RotateCamera2(Input.GetTouch(i));
+            }
+            // for (int i = 0; i < Input.touchCount; i++)
+            // {
+            //     if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(i).fingerId))
+            //     {
+            //         print(i);
+            //         RotateCamera(Input.GetTouch(i));
+            //     }
+            // }
+        }
+    }
+
+    //     for (int i = 0; i < Input.touchCount; i++)
+    //     {
+    //         Touch touch = Input.GetTouch(i);
+    //         if (playerController.GetMoveDirection() != Vector3.zero &&
+    //             !EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+    //         {
+    //             return;
+    //         }
+    //     }
+
+
+
+
+
+
+
+
+
+    //     if (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+    //     {
+    //         Touch touch = Input.GetTouch(1);
+    //         if (touch.phase == TouchPhase.Began)
+    //         {
+    //             startPos = touch.position;
+    //         }
+    //         else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+    //         {
+    //             float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+    //             float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+    //             Vector2 angle = new Vector2(x, y).normalized;
+    //             myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+    //         }
+    //     }
+    //     else if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+    //     {
+    //         Touch touch = Input.GetTouch(0);
+    //         if (touch.phase == TouchPhase.Began)
+    //         {
+    //             startPos = touch.position;
+    //         }
+    //         else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+    //         {
+    //             float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+    //             float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+    //             Vector2 angle = new Vector2(x, y).normalized;
+    //             myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+    //         }
+    //     }
+    // }
+
+
+
+
+
+
+    
+
+    private void RotateCamera2(Touch t)
+    {
+        Touch touch = t;
+        if (touch.phase == TouchPhase.Began && playerController.GetMoveDirection() != Vector3.zero)
         {
             return;
         }
-        else if (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+        else
         {
-            Touch touch = Input.GetTouch(1);
-            if (touch.phase == TouchPhase.Began)
-            {
-                startPos = touch.position;
-            }
-            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            {
-                float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
-                float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
-                Vector2 angle = new Vector2(x, y).normalized;
-                myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
-            }
+            startPos = touch.position;
         }
-        else if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+
+        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                startPos = touch.position;
-            }
-            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            {
-                float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
-                float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
-                Vector2 angle = new Vector2(x, y).normalized;
-                myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
-            }
+            float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+            float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+            Vector2 angle = new Vector2(x, y).normalized;
+            myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+
         }
+        else
+        {
+
+        }
+
+    }
+    private void RotateCamera(Touch t)
+    {
+        Touch touch = t;
+        if (touch.phase == TouchPhase.Began)
+        {
+            startPos = touch.position;
+        }
+        else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+        {
+            float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+            float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+            Vector2 angle = new Vector2(x, y).normalized;
+            myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+
+        }
+        else
+        {
+
+        }
+
     }
 }
+
+
+
+
+//         if (playerController.GetMoveDirection().x + playerController.GetMoveDirection().z != 0 &&
+//             !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+//         {
+//             return;
+//         }
+//         else if (Input.touchCount > 1 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+//         {
+//             Touch touch = Input.GetTouch(1);
+//             if (touch.phase == TouchPhase.Began)
+//             {
+//                 startPos = touch.position;
+//             }
+//             else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+//             {
+//                 float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+//                 float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+//                 Vector2 angle = new Vector2(x, y).normalized;
+//                 myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+//             }
+//         }
+//         else if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+//         {
+//             Touch touch = Input.GetTouch(0);
+//             if (touch.phase == TouchPhase.Began)
+//             {
+//                 startPos = touch.position;
+//             }
+//             else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+//             {
+//                 float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+//                 float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+//                 Vector2 angle = new Vector2(x, y).normalized;
+//                 myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+//             }
+//         }
+//     }
+// }
+
+
+
 
 // // マウスの右クリックを押している間
 // if (Input.GetMouseButton(1))

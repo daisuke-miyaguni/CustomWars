@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class BlackboardEraserEffect : MonoBehaviour
 {
-	[SerializeField] GameObject eraserEffect;
+    [SerializeField] GameObject eraserEffect;
 
-	PhotonView bbePV;
+    PhotonView bbePV;
 
-	void Start()
-	{
-		bbePV = GetComponent<PhotonView>();
-	}
+    void Start()
+    {
+        bbePV = GetComponent<PhotonView>();
+    }
 
-	void OnTriggerEnter(Collider other)
-	{
-		bbePV.RPC("EffectStart", PhotonTargets.AllViaServer);
-	}
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            bbePV.RPC("EffectStart", PhotonTargets.AllViaServer);
+        }
+    }
 
-	[PunRPC]
-	void EffectStart()
-	{
+    [PunRPC]
+    void EffectStart()
+    {
         eraserEffect.SetActive(true);
     }
 
-	
+
 }

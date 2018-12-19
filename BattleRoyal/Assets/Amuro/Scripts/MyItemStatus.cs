@@ -6,14 +6,11 @@ using UnityEngine.UI;
 public class MyItemStatus : MonoBehaviour
 {
     private ItemData itemData;
-    private ItemParam param;
+    private GameObject itemObject;
+
+    private CreateSlotScript createSlot;
 
     PhotonView myItemPV;
-
-    public void SetMyItemPV(PhotonView pv)
-    {
-        myItemPV = pv;
-    }
 
     public GameObject getButton;
 
@@ -30,9 +27,17 @@ public class MyItemStatus : MonoBehaviour
     [SerializeField]
     private bool[] itemFlags = new bool[6];                   //　アイテムを持っているかどうかのフラグ
 
+    [SerializeField]
+    private int[] itemCount = new int[6];
+
+    void Awake()
+    {
+        myItemPV = GetComponent<PhotonView>();
+    }
+    
     void Start()
     {
-        getButton = GameObject.Find("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
+        getButton = GameObject.FindWithTag("PlayerControllerUI").gameObject.transform.Find("getButton").gameObject;
         // getButton.GetComponent<Button>();
         if (getButton.activeSelf)
         {
@@ -47,12 +52,7 @@ public class MyItemStatus : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
         {
-            param = other.gameObject.GetComponent<ItemParam>();
-            var type = param.GetItems();
-            if (itemFlags[(int)type])
-            {
-                return;
-            }
+            itemObject = other.gameObject;
 
             if (myItemPV.isMine)
             {
@@ -65,7 +65,7 @@ public class MyItemStatus : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
         {
-            param = null;
+            itemObject = null;
             if (myItemPV.isMine)
             {
                 getButton.SetActive(false);
@@ -76,13 +76,15 @@ public class MyItemStatus : MonoBehaviour
 
     public void OnGetButton()
     {
-        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
         if (myItemPV.isMine)
         {
-            var type = param.GetItems();
+            ItemParam param = itemObject.GetComponent<ItemParam>();
+            var id = param.GetItemId();
 
-            itemFlags[(int)type] = true;
+            itemFlags[id] = true;
+            itemCount[id] += 1;
         }
+        myItemPV.RPC("WasgetItem", PhotonTargets.AllViaServer);
     }
 
     public bool GetItemFlag(Item item)
@@ -90,14 +92,25 @@ public class MyItemStatus : MonoBehaviour
         return itemFlags[(int)item];
     }
 
+    public int GetItemCount(int count)
+    {
+        return itemCount[count];
+    }
+
     public void SetItemFlag(int id, bool hoge)
     {
         itemFlags[id] = hoge;
     }
+
+    public void SetItemCount(int id, int amount)
+    {
+        itemCount[id] += amount;
+    }
+
     [PunRPC]
     void WasgetItem()
     {
-        Destroy(param.gameObject);
+        Destroy(itemObject);
         if (myItemPV.isMine)
         {
             getButton.SetActive(false);

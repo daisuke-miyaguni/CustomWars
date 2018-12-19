@@ -7,11 +7,11 @@ public class Player : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public readonly int maxHp = 100;              //最大HP
+    public readonly float maxHp = 100;              //最大HP
 
-    public static int hp;                         //HP
+    public static float hp;                         //HP
 
-    public static int atk = 10;                  //プレイヤーの攻撃力
+    public static float atk = 10;                  //プレイヤーの攻撃力
 
 
     // Use this for initialization
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Recovery(int amount)
+    public void Recovery(float amount)
     {
         hp += amount;
 

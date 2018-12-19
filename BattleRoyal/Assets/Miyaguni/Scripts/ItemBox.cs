@@ -12,21 +12,19 @@ public class ItemBox : MonoBehaviour
         DeleteItemBox
     }
 
-    int itemCount = 3;
     [SerializeField] float itemSpawnPower;
     
     [SerializeField] GameObject icon;
 
-    BoxCollider bc;		// 宝箱のオープン範囲
 	PhotonView photonView;
 
     ItemSpawner itemSpawner;
 
+    [SerializeField] int itemSpawnCount = 3;
+
 	void Start()
 	{
 		photonView = GetComponent<PhotonView>();
-		bc = GetComponent<BoxCollider>();
-		itemCount = 3;
         itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
 	}
     
@@ -34,7 +32,7 @@ public class ItemBox : MonoBehaviour
     public void OpenOnClick()
     {
         Vector3 objectPos = this.gameObject.transform.position;
-        itemSpawner.CallItemSpawn(this.gameObject, objectPos);
+        itemSpawner.CallItemSpawn(this.gameObject, objectPos, itemSpawnCount);
         photonView.RPC(PunRPCList.DeleteItemBox.ToString(), PhotonTargets.AllViaServer);
     }
 
@@ -42,5 +40,7 @@ public class ItemBox : MonoBehaviour
 	void DeleteItemBox()
 	{
 		Destroy(this.gameObject);
+        PlayerUIController playerUIs = GameObject.FindWithTag("PlayerControllerUI").GetComponent<PlayerUIController>();
+        playerUIs.openButton.gameObject.SetActive(false);
 	}
 }

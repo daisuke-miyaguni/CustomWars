@@ -46,7 +46,7 @@ public class CreateSlotScript : MonoBehaviour
                     {
                         var instanceSlot = Instantiate(slot) as GameObject;
 
-                        instanceSlot.name = "ItemSlot";
+                        instanceSlot.name = item.GetItemName();
 
                         instanceSlot.transform.SetParent(transform);
 
@@ -59,34 +59,39 @@ public class CreateSlotScript : MonoBehaviour
                 break;
 
             case 1:
+                if (myItemStatus.GetItemCount(myItemData.GetItemId()) <= 1)
                 {
                     var instanceSlot = Instantiate(slot) as GameObject;
 
-                    instanceSlot.name = "ItemSlot";
+                    instanceSlot.name = myItemData.GetItemName();
 
                     instanceSlot.transform.SetParent(transform);
 
                     instanceSlot.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                    instanceSlot.GetComponent<ProcessingSlot>().SetItemData(myItemData);
+                    var display = instanceSlot.GetComponent<ProcessingSlot>();
 
-                    break;
+                    display.SetItemData(myItemData);
+
                 }
+
+                var itemSlot = transform.Find(myItemData.GetItemName()).GetComponent<ProcessingSlot>();
+
+                StartCoroutine(itemSlot.displayCount());
+
+                break;
 
             default:
 
                 break;
-
         }
-
-
     }
 
     public void MouseDrop()                                 //item_panelでアイテムをもったままドラッグ終了したら呼び出す
     {
         if (FindObjectOfType<DragSlot>() == null)
         {
-            print("ok");
+            //print("ok");
             return;
         }
 
@@ -103,80 +108,78 @@ public class CreateSlotScript : MonoBehaviour
         {
 
             case MyItemStatus.Item.parts1:
+                callNum = 1;
+
                 if (myItemStatus.GetItemFlag(MyItemStatus.Item.parts1) == false)
                 {
                     myItemStatus.SetItemFlag(id, true);
-                    callNum = 1;
-                    CreateSlot(itemDataBase.GetItemData());
-
-                    customObject.GetComponent<CustomSlot>().PanelDelete();
                 }
-
                 break;
 
-
             case MyItemStatus.Item.parts2:
+                callNum = 1;
+
                 if (myItemStatus.GetItemFlag(MyItemStatus.Item.parts2) == false)
                 {
                     myItemStatus.SetItemFlag(id, true);
-                    callNum = 1;
-                    CreateSlot(itemDataBase.GetItemData());
-
-                    customObject.GetComponent<CustomSlot>().PanelDelete();
                 }
-
                 break;
 
-
             case MyItemStatus.Item.parts3:
+                callNum = 1;
+
                 if (myItemStatus.GetItemFlag(MyItemStatus.Item.parts3) == false)
                 {
                     myItemStatus.SetItemFlag(id, true);
-                    callNum = 1;
-                    CreateSlot(itemDataBase.GetItemData());
-
-                    customObject.GetComponent<CustomSlot>().PanelDelete();
                 }
-
                 break;
 
             case MyItemStatus.Item.mon:
+                callNum = 1;
+
                 if (myItemStatus.GetItemFlag(MyItemStatus.Item.mon) == false)
                 {
                     myItemStatus.SetItemFlag(id, true);
-                    callNum = 1;
-                    CreateSlot(itemDataBase.GetItemData());
-
-                    customObject.GetComponent<PocketItem>().PanelDelete();
                 }
-
                 break;
 
             case MyItemStatus.Item.ball:
+                callNum = 1;
+
                 if (myItemStatus.GetItemFlag(MyItemStatus.Item.ball) == false)
                 {
                     myItemStatus.SetItemFlag(id, true);
-                    callNum = 1;
-                    CreateSlot(itemDataBase.GetItemData());
-
-                    customObject.GetComponent<PocketItem>().PanelDelete();
                 }
-
                 break;
 
             case MyItemStatus.Item.riyo:
+                callNum = 1;
+
                 if (myItemStatus.GetItemFlag(MyItemStatus.Item.riyo) == false)
                 {
                     myItemStatus.SetItemFlag(id, true);
-                    callNum = 1;
-                    CreateSlot(itemDataBase.GetItemData());
-
-                    customObject.GetComponent<PocketItem>().PanelDelete();
                 }
-
                 break;
 
             default:
+                break;
+        }
+
+        switch (dragSlot.GetDeleteNum())
+        {
+            case 1:
+                break;
+
+            case 2:
+                myItemStatus.SetItemCount(id, 1);
+                CreateSlot(itemDataBase.GetItemData());
+                customObject.GetComponent<CustomSlot>().PanelDelete();
+                break;
+
+            case 3:
+                myItemStatus.SetItemCount(id, 1);
+                CreateSlot(itemDataBase.GetItemData());
+                customObject.GetComponent<PocketItem>().PanelDelete();
                 break;
         }
     }

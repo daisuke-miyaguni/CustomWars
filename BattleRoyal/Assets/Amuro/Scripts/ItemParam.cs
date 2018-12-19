@@ -8,9 +8,21 @@ public class ItemParam : MonoBehaviour
 
     private ItemDataBase itemDataBase;
 
-    public int itemNum;
+    public enum items
+    {
+        Cap,
+        Correction,
+        Ruler,
+        Glue,
+        Spikes,
+        Recovery1,
+    }
 
-    private MyItemStatus.Item items;
+    public items item = items.Cap;
+
+    private int itemId;
+
+    // rivate MyItemStatus.Item items;
 
     Rigidbody rb;
     PhotonView ipPV;
@@ -19,41 +31,23 @@ public class ItemParam : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        switch (itemNum)
-        {
-            case 0:
-                items = MyItemStatus.Item.parts1;
-                break;
+        int itemNum = (int)item;
 
-            case 1:
-                items = MyItemStatus.Item.parts2;
-                break;
-
-            case 2:
-                items = MyItemStatus.Item.parts3;
-                break;
-
-            case 3:
-                items = MyItemStatus.Item.mon;
-                break;
-
-            case 4:
-                items = MyItemStatus.Item.ball;
-                break;
-
-            case 5:
-                items = MyItemStatus.Item.riyo;
-                break;
-        }
+        itemId = itemNum;
 
         rb = GetComponent<Rigidbody>();
         ipPV = GetComponent<PhotonView>();
         ipPTV = GetComponent<PhotonTransformView>();
     }
 
-    public MyItemStatus.Item GetItems()
+    // public MyItemStatus.Item GetItems()
+    // {
+    //     return items;
+    // }
+
+    public int GetItemId()
     {
-        return items;
+        return itemId;
     }
 
     // Update is called once per frame

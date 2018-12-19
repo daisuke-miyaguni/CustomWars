@@ -10,7 +10,9 @@ public class UseItem : MonoBehaviour
 
     private PocketStatus pocketStatus;
 
-    private Player player;
+    // private Player player;
+
+    private PlayerController myPlayer;
 
     private GameObject Inve;
 
@@ -24,10 +26,15 @@ public class UseItem : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
-        pocketStatus = FindObjectOfType<PocketStatus>();
+        // player = FindObjectOfType<Player>();
+        pocketStatus = gameObject.transform.root.GetComponent<PocketStatus>();
         panelImage = transform.GetChild(0).GetComponent<Image>();
         itemCheck = false;
+    }
+
+    public void SetMyPlayer(PlayerController Player)
+    {
+        this.myPlayer = Player;
     }
 
     public void SetItemSwitch(ItemData itemData)                    //pocketpanelにドラッグされたアイテムデータを取得する
@@ -72,9 +79,9 @@ public class UseItem : MonoBehaviour
 
             case PocketStatus.Pocket.riyo_p:
 
-                var recover = itemData.GetItemPower();
+                float recover = itemData.GetItemPower();
 
-                player.Recovery(recover);
+                myPlayer.CallRecover(Mathf.CeilToInt(recover));
 
                 panelImage.sprite = null;
 
