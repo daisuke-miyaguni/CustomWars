@@ -64,6 +64,8 @@ public class DragDelete : MonoBehaviour
         {
             case 1:
                 myItemStatus.SetItemCount(id, -1);
+                var processingSlot = deleteSlot.GetComponent<ProcessingSlot>();
+                processingSlot.StartCoroutine("displayCount");
 
                 if (myItemStatus.GetItemCount(id) <= 0)
                 {

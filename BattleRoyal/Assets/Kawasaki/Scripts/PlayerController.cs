@@ -87,6 +87,12 @@ public class PlayerController : MonoBehaviour
         return myItemStatus;
     }
 
+    //追加
+    public int GetPlayerHp()
+    {
+        return currentHP;
+    }
+
     Vector3 weaponPos;
 
     void Awake()
@@ -106,7 +112,7 @@ public class PlayerController : MonoBehaviour
         weaponCollider.enabled = false;
 
         if (myPV.isMine)
-        {   
+        {
             // myItemStatus取得
             myItemStatus = GetComponent<MyItemStatus>();
             // photontransformview取得
@@ -243,7 +249,7 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(int amount)
     {
         currentHP -= amount;
-        
+
         if (currentHP <= 0)
         {
             currentHP = 0;
@@ -267,11 +273,19 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void Recover(int amount)
     {
-        if (currentHP >= maxHP)
+        //ここで使えない処理をすると、アイテム使用時にアイテムが消えるだけになってしまうのでコメントアウトしてます。
+        /*if (currentHP >= maxHP)       
         {
             return;
-        }
+        }*/
+
         currentHP += amount;
+
+        if (currentHP >= maxHP)
+        {
+            currentHP = maxHP;
+        }
+
         hpSlider.value = currentHP;
         if (myPV.isMine)
         {
