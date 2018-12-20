@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 114822309633378708}
   - component: {fileID: 114755389727075430}
   m_Layer: 8
-  m_Name: ruler
+  m_Name: Ruler
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
