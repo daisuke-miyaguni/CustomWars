@@ -22,6 +22,10 @@ public class WeaponManager : Photon.MonoBehaviour
     [SerializeField] GameObject[] itemCustomSlots = new GameObject[3];
     string customSlotString = "customs_slot";
 
+    public bool weaponCollision = false;
+
+    CapsuleCollider weaponCollider;
+
     PhotonView weaponPV;
 
 
@@ -114,6 +118,8 @@ public class WeaponManager : Photon.MonoBehaviour
     void Awake()
     {
         weaponPV = GetComponent<PhotonView>();
+        weaponCollider = GetComponent<CapsuleCollider>();
+        weaponCollider.enabled = false;
     }
 
     void Start()
@@ -144,10 +150,13 @@ public class WeaponManager : Photon.MonoBehaviour
         if (stream.isWriting)
         {
             stream.SendNext(weaponPower);
+            stream.SendNext(weaponCollision);
         }
         else
         {
             weaponPower = (int)stream.ReceiveNext();
+            weaponCollision = (bool)stream.ReceiveNext();
+            weaponCollider.enabled = weaponCollision;
         }
     }
 }
