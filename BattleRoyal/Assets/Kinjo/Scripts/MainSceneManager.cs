@@ -173,6 +173,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//ロビーへ移動する
 	public void GoToTitle ()
 	{
+		Time.timeScale = 1;
 		PhotonNetwork.LeaveRoom();
 		playerNumber -= 1;
 		SceneManager.LoadScene(lobbyScene);
