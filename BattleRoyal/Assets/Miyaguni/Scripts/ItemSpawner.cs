@@ -28,7 +28,7 @@ public class ItemSpawner : MonoBehaviour
                 break;
 
             case "PlayerControllerUI":
-                itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, callObject, spawnPos, itemNumber);
+                itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, spawnPos, itemNumber);
                 break;
                 
             default:
@@ -64,7 +64,7 @@ public class ItemSpawner : MonoBehaviour
     }
 
     [PunRPC]
-    void DropItem(GameObject dropItem, Vector3 playerPos, int spawnItemNum)
+    void DropItem(Vector3 playerPos, int spawnItemNum)
     {
         GameObject item = items[spawnItemNum];
 
@@ -76,7 +76,9 @@ public class ItemSpawner : MonoBehaviour
             0,
             null
         );
+
         Rigidbody itemRb = item.GetComponent<Rigidbody>();
+
         itemRb.AddForce
         (
             UnityEngine.Random.Range(-itemSpawnPower, itemSpawnPower),

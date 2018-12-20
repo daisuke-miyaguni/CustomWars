@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class ButtonAnimation : MonoBehaviour {
-[SerializeField] float interval = 0.5f;
-Image imageComponent;
-	void Start ()
+
+public class ButtonAnimation : MonoBehaviour
+{
+    [SerializeField] float interval = 0.5f;
+    Image imageComponent;
+	
+    void Start ()
 	{
 		imageComponent = GetComponent<Image>();
 		StartCoroutine("Flashing");
@@ -16,8 +19,8 @@ Image imageComponent;
 	{
 		if(Input.GetMouseButtonDown(1))
 		{
-			StopCoroutine("Flashing");
-			StartCoroutine("GoToLobby");
+			StopCoroutine(Flashing());
+			StartCoroutine(GoToLobby());
 			//SceneManager.LoadScene(1);
 		}
 	}
@@ -38,7 +41,7 @@ Image imageComponent;
 			imageComponent.enabled = !imageComponent.enabled;
 			yield return new WaitForSeconds(interval / 4);
 		}
-		SceneManager.LoadScene(1);
-	}
 
+        GameObject.Find("TitleManager").GetComponent<TitleManager>().MoveLobby();
+	}
 }

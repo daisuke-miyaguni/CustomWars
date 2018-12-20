@@ -398,7 +398,7 @@ MonoBehaviour:
   playerStateText: {fileID: 234731539}
   playerIDText: {fileID: 1071871840}
   maxPlayerList: 4
-  minPlayerList: 1
+  minPlayerList: 2
   gameStartTime: 1
   photonSceneTransitioner: {fileID: 1328181894}
   sendRateSetting: 30
@@ -549,6 +549,26 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1328181895}
+    - target: {fileID: 224038065746454074, guid: 25588fac358bb0d428c9b844eff41166,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224038065746454074, guid: 25588fac358bb0d428c9b844eff41166,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224038065746454074, guid: 25588fac358bb0d428c9b844eff41166,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114150382985531278, guid: 25588fac358bb0d428c9b844eff41166,
+        type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 25588fac358bb0d428c9b844eff41166, type: 2}
   m_IsPrefabParent: 0
