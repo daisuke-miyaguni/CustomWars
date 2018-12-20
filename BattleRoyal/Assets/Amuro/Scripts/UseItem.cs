@@ -80,6 +80,12 @@ public class UseItem : MonoBehaviour
             case PocketStatus.Pocket.riyo_p:
 
                 float recover = itemData.GetItemPower();
+                
+                //HPが100以上なら使用できない
+                if (myPlayer.GetPlayerHp() >= 100 )
+                {
+                    return;
+                }
 
                 myPlayer.CallRecover(Mathf.CeilToInt(recover));
 

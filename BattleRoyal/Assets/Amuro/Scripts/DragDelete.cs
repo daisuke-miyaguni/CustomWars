@@ -57,9 +57,6 @@ public class DragDelete : MonoBehaviour
         //     myPlayer.transform.position.z + 0.8f
         // );
 
-        // ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成        
-        itemSpawner.CallItemSpawn(this.gameObject, myPlayer.gameObject.transform.position, myItemData.GetItemId());
-
         switch (dragSlot.GetDeleteNum())
         {
             case 1:
@@ -90,5 +87,8 @@ public class DragDelete : MonoBehaviour
             default:
                 break;
         }
+
+        // ドロップされたアイテムのタイプを取得し、プレイヤーの場所にオブジェクトを生成        
+        itemSpawner.CallItemSpawn(this.gameObject, myPlayer.gameObject.transform.position, id);
     }
 }

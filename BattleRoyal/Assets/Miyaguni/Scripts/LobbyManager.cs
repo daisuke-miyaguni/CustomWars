@@ -21,10 +21,10 @@ public class LobbyManager : Photon.MonoBehaviour
     [SerializeField] PhotonSceneTransitioner photonSceneTransitioner;	// シーン移動者
 
     string roomName = "Room";    // ルーム名
-    string playerCount = "PlayerCount: ";    // PlayerCountの文字列
-    string playerID = "PlayerID: ";    // PlayerCountの文字列
-    string playerStateHost = "Host";    // PlayerがHostのときの文字列
-    string playerStateGuest = "Guest";      // PlayerがGuestのときの文字列
+    string playerCount = "現在の人数: ";    // PlayerCountの文字列
+    string playerID = "ID: ";    // PlayerCountの文字列
+    string playerStateHost = "ホスト";    // PlayerがHostのときの文字列
+    string playerStateGuest = "ゲスト";      // PlayerがGuestのときの文字列
 
     [SerializeField] int sendRateSetting = 30;
     [SerializeField] int sendRateOnSerializeSetting = 30;
