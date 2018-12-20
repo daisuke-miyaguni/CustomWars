@@ -7,6 +7,7 @@ public class SafeAreaOutObject : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (Time.timeScale != 0)
         if (other.gameObject.tag != "Player")
         {
             Destroy(other.gameObject);
