@@ -15,7 +15,7 @@ public class MainGameController : MonoBehaviour
            if (!PhotonNetwork.connected)
         {                         //Photonに接続できていなければ
             PhotonNetwork.ConnectUsingSettings(null);   //Photonに接続する
-            Debug.Log("Photonに接続しました。");
+            // Debug.Log("Photonに接続しました。");
         }
 
     }
@@ -23,7 +23,7 @@ public class MainGameController : MonoBehaviour
     //Auto-JoinLobbyにチェックを入れているとPhotonに接続後OnJoinLobby()が呼ばれる。
     public void OnJoinedLobby()
     {
-        Debug.Log("ロビーに入りました。");
+        // Debug.Log("ロビーに入りました。");
         //Randomで部屋を選び、部屋に入る（部屋が無ければOnPhotonRandomJoinFailedが呼ばれる）
         PhotonNetwork.JoinRandomRoom();
     }
@@ -31,7 +31,7 @@ public class MainGameController : MonoBehaviour
     //JoinRandomRoomが失敗したときに呼ばれる
     public void OnPhotonRandomJoinFailed()
     {
-        Debug.Log("ルームの入室に失敗しました。");
+        // Debug.Log("ルームの入室に失敗しました。");
         //TestRoomという名前の部屋を作成して、部屋に入る
         PhotonNetwork.CreateRoom("TestRoom");
     }
@@ -39,7 +39,7 @@ public class MainGameController : MonoBehaviour
     //部屋に入った時に呼ばれる
     public void OnJoinedRoom()
     {
-        Debug.Log("ルームに入りました。");
+        // Debug.Log("ルームに入りました。");
 
         if (!PhotonNetwork.connected)
         {
