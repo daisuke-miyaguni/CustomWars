@@ -5,7 +5,7 @@ using UnityEngine;
 public class DustManager : MonoBehaviour
 {
     int initChildCount;
-    [SerializeField] float itemBoxInstantePosY = 0.0f;
+    [SerializeField] float itemBoxInstantePosY = -0.55f;
 
 
     [SerializeField] int maxTrashCounter;
@@ -41,19 +41,20 @@ public class DustManager : MonoBehaviour
     {
         if (gameObject.transform.childCount >= GetMaxTrashCounter())
         {
-            dustPV.RPC("FullTrashs", PhotonTargets.AllViaServer);
+            dustPV.RPC("FullTrashs", PhotonTargets.MasterClient);
         }
     }
 
     [PunRPC]
     void FullTrashs()
     {
-        PhotonNetwork.Instantiate
+        PhotonNetwork.InstantiateSceneObject
         (
             itemBox.name,
             new Vector3(transform.position.x, itemBoxInstantePosY, transform.position.z - 5.0f),
             Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 180.0f), 0)),
-            0
+            0,
+            null
         );
         foreach (Transform i in gameObject.transform.Find("Trash"))
         {
