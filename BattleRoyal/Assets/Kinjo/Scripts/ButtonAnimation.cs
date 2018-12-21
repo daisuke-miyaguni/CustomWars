@@ -17,7 +17,7 @@ public class ButtonAnimation : MonoBehaviour
 
 	void Update()
 	{
-		if(Input.GetMouseButtonDown(1))
+		if(Input.GetMouseButtonDown(0))
 		{
 			StopCoroutine(Flashing());
 			StartCoroutine(GoToLobby());
