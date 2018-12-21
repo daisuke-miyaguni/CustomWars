@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
             hpText = GameObject.Find("HPText").GetComponent<Text>();
             hpText.text = "HP: " + currentHP.ToString();
             otherHpBar.SetActive(false);
-            // myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
+            myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
 
             isJump = true;
 
@@ -133,11 +133,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // [PunRPC]
-    // void Hpber()
-    // {
-    //     otherHpBar.SetActive(true);
-    // }
+    [PunRPC]
+    void Hpber()
+    {
+        otherHpBar.SetActive(true);
+    }
 
 
     void FixedUpdate()
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void CallAttack()
     {
-        string animParam = "attack";
+        string animParam = "attack1";
         animator.SetTrigger(animParam);
         StartCoroutine(Attack(animParam));
     }
@@ -257,13 +257,13 @@ public class PlayerController : MonoBehaviour
         //weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
-    //12月20追加
-    [PunRPC]
-    private void SendAtakkedToEnemy(int pvId, bool weaponCol)
-    {
-        CapsuleCollider enemyCollider = PhotonView.Find(pvId).gameObject.transform.Find("weapon").GetComponent<CapsuleCollider>();
-        enemyCollider.enabled = weaponCol;
-    }
+    // //12月20追加
+    // [PunRPC]
+    // private void SendAtakkedToEnemy(int pvId, bool weaponCol)
+    // {
+    //     CapsuleCollider enemyCollider = PhotonView.Find(pvId).gameObject.transform.Find("weapon").GetComponent<CapsuleCollider>();
+    //     enemyCollider.enabled = weaponCol;
+    // }
 
     // ダメージを受ける
     [PunRPC]

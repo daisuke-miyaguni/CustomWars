@@ -54,4 +54,5 @@ MonoBehaviour:
   - TakeDamage
   - WasgetItem
   - Wasparryed
+  - Hpber
   DisableAutoOpenWizard: 1

@@ -3232,7 +3232,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385980560763454}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.25}
+  m_LocalPosition: {x: 0, y: 0, z: -2.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4971736294079172}
@@ -3730,7 +3730,7 @@ Animator:
   m_GameObject: {fileID: 1827299230965776}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8c3f94dc589096b4aba47dea6c92e26e, type: 3}
-  m_Controller: {fileID: 9100000, guid: dfeea4d8a65c5784eb9712411a72122d, type: 2}
+  m_Controller: {fileID: 9100000, guid: e44a54ed6d0305b458342353edb74087, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -3991,8 +3991,6 @@ MonoBehaviour:
   itemBox: {fileID: 0}
   moveSpeed: 7
   jumpForce: 5
-  attackStayTime: 0.2
-  attackTime: 0.15
   parryCollider: {fileID: 135120115179249662}
   parryStayTime: 0.7
   parryTime: 0.1
