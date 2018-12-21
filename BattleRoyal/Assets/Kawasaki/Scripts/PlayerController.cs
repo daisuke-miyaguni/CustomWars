@@ -234,14 +234,24 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(attackStayTime);
         animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
         weaponCollider.enabled = true;
+        myPV.RPC("SendAtakkedToEnemy",PhotonTargets.AllViaServer,myPV.viewID,true);//12月20追加
         playerUIController.attackButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(attackTime);
         weaponCollider.enabled = false;
+        myPV.RPC("SendAtakkedToEnemy",PhotonTargets.AllViaServer,myPV.viewID,false);//12月20追加
         playerUIController.attackButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+    }
+
+    //12月20追加
+    [PunRPC]
+    private void SendAtakkedToEnemy(int pvId, bool weaponCol)
+    {
+        CapsuleCollider enemyCollider = PhotonView.Find(pvId).gameObject.transform.Find("weapon").GetComponent<CapsuleCollider>();
+        enemyCollider.enabled = weaponCol;
     }
 
     // ダメージを受ける
@@ -378,6 +388,7 @@ public class PlayerController : MonoBehaviour
             hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.Find("MainManager").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(1);
+            Destroy(GameObject.FindWithTag("PlayerControllerUI"));
         }
     }
 

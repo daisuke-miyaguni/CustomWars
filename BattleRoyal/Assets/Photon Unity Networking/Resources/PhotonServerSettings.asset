@@ -54,4 +54,5 @@ MonoBehaviour:
   - TakeDamage
   - WasgetItem
   - Wasparryed
+  - SendAtakkedToEnemy
   DisableAutoOpenWizard: 1
