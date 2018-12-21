@@ -56,7 +56,8 @@ public class PlayerCamera : MonoBehaviour
 
         if (Input.touchCount == 1)
         {
-            if (beforeDistance == Vector3.zero)
+            if (playerController.GetMoveDirection() == Vector3.zero &&
+                !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
                 isFirstTouch = false;
                 isSecondTouch = false;
@@ -71,12 +72,14 @@ public class PlayerCamera : MonoBehaviour
             // print("rotation" + beforeCameraAngle == myCamera.transform.rotation.y.ToString());
             if (isFirstTouch || beforeDistance == Vector3.zero)
             {
-                // print("1");
-                isFirstTouch = true;
-                isSecondTouch = false;
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId)){
+                    // print("1");
+                    isFirstTouch = true;
+                    isSecondTouch = false;
 
-                currentTouch = Input.GetTouch(0);
-                RotateCamera(currentTouch);
+                    currentTouch = Input.GetTouch(0);
+                    RotateCamera(currentTouch);
+                }
             }
             else if (isSecondTouch || beforeDistance != Vector3.zero)
             {
@@ -98,6 +101,7 @@ public class PlayerCamera : MonoBehaviour
         if (touch.phase == TouchPhase.Began)
         {
             startPos = touch.position;
+            print(startPos);
         }
         else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
         {
