@@ -43,16 +43,6 @@ public class PlayerController : MonoBehaviour
         player_ruler
     }
 
-
-    private enum PlayerAnimatorParameters
-    {
-        run,
-        jump,
-        parry,
-        desprate,
-        attack
-    }
-
     private enum GameObjectTags
     {
         weapon,
@@ -175,11 +165,11 @@ public class PlayerController : MonoBehaviour
 
         if (moveForward == Vector3.zero)
         {
-            animator.SetBool(PlayerAnimatorParameters.run.ToString(), false);
+            animator.SetBool("run", false);
         }
         else
         {
-            animator.SetBool(PlayerAnimatorParameters.run.ToString(), true);
+            animator.SetBool("run", true);
         }
 
         weapon.transform.localPosition = weaponPos;
@@ -208,7 +198,7 @@ public class PlayerController : MonoBehaviour
         if (isJump)
         {
             playerUIController.jumpButton.interactable = false;
-            animator.SetTrigger(PlayerAnimatorParameters.jump.ToString());
+            animator.SetTrigger("jump");
             weapon.transform.localPosition = weaponPos;
             weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             isJump = false;
@@ -226,16 +216,18 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void CallAttack()
     {
-        StartCoroutine(Attack(PlayerAnimatorParameters.attack.ToString()));
+        string animParam = "attack";
+        animator.SetTrigger(animParam);
+        StartCoroutine(Attack(animParam));
     }
 
-    IEnumerator Attack(string animParam)
+    IEnumerator Attack(string currentAnim)
     {
         bool finish = false;
         AnimatorStateInfo currentAnimState = animator.GetCurrentAnimatorStateInfo(0);
         while (!finish)
         {
-            if(currentAnimState.IsName(animParam))
+            if(currentAnimState.IsName(currentAnim))
             {
                 weaponCollider.enabled = true;
                 myWM.weaponCollision = true;
@@ -428,7 +420,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Parrying()
     {
-        animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
+        animator.SetTrigger("parry");
         yield return new WaitForSeconds(parryStayTime);
         parryCollider.enabled = true;
         parryCollision = true;
@@ -451,7 +443,7 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void Wasparryed()
     {
-        animator.SetTrigger(PlayerAnimatorParameters.desprate.ToString());
+        animator.SetTrigger("desprate");
         currentHP -= Mathf.CeilToInt(wasparryedDamage);
         hpSlider.value = currentHP;
         if (myPV.isMine)
