@@ -226,24 +226,43 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void CallAttack()
     {
-        StartCoroutine(Attack());
+        StartCoroutine(Attack(PlayerAnimatorParameters.attack.ToString()));
     }
 
-    IEnumerator Attack()
+    IEnumerator Attack(string animParam)
     {
-        yield return new WaitForSeconds(attackStayTime);
-        animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
-        weaponCollider.enabled = true;
-        myWM.weaponCollision = true;
-        playerUIController.attackButton.interactable = false;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        yield return new WaitForSeconds(attackTime);
-        weaponCollider.enabled = false;
-        myWM.weaponCollision = false;
-        playerUIController.attackButton.interactable = true;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        bool finish = false;
+        AnimatorStateInfo currentAnimState = animator.GetCurrentAnimatorStateInfo(0);
+        while (!finish)
+        {
+            if(currentAnimState.IsName(animParam))
+            {
+                weaponCollider.enabled = true;
+                myWM.weaponCollision = true;
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                weaponCollider.enabled = false;
+                myWM.weaponCollision = false;
+                finish = true;
+            }
+            weapon.transform.localPosition = weaponPos;
+            weapon.transform.localRotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+        }
+        //yield return new WaitForSeconds(attackStayTime);
+        //animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
+        //weaponCollider.enabled = true;
+        //myWM.weaponCollision = true;
+        //playerUIController.attackButton.interactable = false;
+        //weapon.transform.localPosition = weaponPos;
+        //weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        //yield return new WaitForSeconds(attackTime);
+        //weaponCollider.enabled = false;
+        //myWM.weaponCollision = false;
+        //playerUIController.attackButton.interactable = true;
+        //weapon.transform.localPosition = weaponPos;
+        //weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
     // ダメージを受ける
