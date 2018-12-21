@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     // playerステータス
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
-    [SerializeField] private float attackStayTime = 0.2f;
-    [SerializeField] private float attackTime = 0.1f;
+    //[SerializeField] private float attackStayTime = 0.2f;
+    //[SerializeField] private float attackTime = 0.1f;
 
     private MobileInputController controller;
 
@@ -265,6 +265,14 @@ public class PlayerController : MonoBehaviour
         //weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
+    //12月20追加
+    [PunRPC]
+    private void SendAtakkedToEnemy(int pvId, bool weaponCol)
+    {
+        CapsuleCollider enemyCollider = PhotonView.Find(pvId).gameObject.transform.Find("weapon").GetComponent<CapsuleCollider>();
+        enemyCollider.enabled = weaponCol;
+    }
+
     // ダメージを受ける
     [PunRPC]
     private void TakeDamage(int amount)
@@ -399,6 +407,7 @@ public class PlayerController : MonoBehaviour
             hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.Find("MainManager").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(1);
+            Destroy(GameObject.FindWithTag("PlayerControllerUI"));
         }
     }
 
