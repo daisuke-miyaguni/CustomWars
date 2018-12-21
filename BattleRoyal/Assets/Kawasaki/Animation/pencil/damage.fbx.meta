@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dca13fc271cbbf146b9d8bf3594a15c0
+guid: 0b05a4d45f02a6f43a5557685dff071a
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -116,7 +116,7 @@ ModelImporter:
     4300012: polySurface20
     4300014: polySurface21
     4300016: polySurface22
-    7400000: idle
+    7400000: damage
     9500000: //RootNode
     13700000: polySurface11
     13700002: polySurface12
@@ -154,17 +154,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: idle
-      takeName: idle
+      name: damage
+      takeName: damage
       firstFrame: 1
-      lastFrame: 30
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -487,13 +487,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: idle(Clone)
+    - name: damage(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Character1_Reference
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -703,42 +703,42 @@ ModelImporter:
       rotation: {x: 9.3132246e-10, y: -0, z: -0.0000000018626449, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface11
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface12
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface15
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface18
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface19
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface20
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface21
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: polySurface22
-      parentName: idle(Clone)
+      parentName: damage(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
