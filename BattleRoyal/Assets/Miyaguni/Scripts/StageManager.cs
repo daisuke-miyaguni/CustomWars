@@ -86,7 +86,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            if (reductionCount + 1 > reductionScales.Length)
+            if (reductionCount + 1 == reductionScales.Length + 1)
             {
                 return;
             }

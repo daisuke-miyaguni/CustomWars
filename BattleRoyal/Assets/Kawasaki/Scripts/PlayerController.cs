@@ -230,13 +230,11 @@ public class PlayerController : MonoBehaviour
             if(currentAnimState.IsName(currentAnim))
             {
                 weaponCollider.enabled = true;
-                myWM.weaponCollision = true;
                 yield return new WaitForSeconds(0.1f);
             }
             else
             {
                 weaponCollider.enabled = false;
-                myWM.weaponCollision = false;
                 finish = true;
             }
             weapon.transform.localPosition = weaponPos;
