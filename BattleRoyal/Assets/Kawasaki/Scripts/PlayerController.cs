@@ -16,12 +16,14 @@ public class PlayerController : MonoBehaviour
 
     private const int maxHP = 100;
     [SerializeField] private int currentHP = maxHP;
-    [SerializeField] private Slider hpSlider;
-    [SerializeField] private GameObject weapon;
+    private Slider hpSlider;
     [SerializeField] private GameObject otherHpBar;
+    [SerializeField] private Slider otherHpBarSlider;
 
-    [SerializeField] private GameObject itemBox;
+    private GameObject itemBox;
 
+    [SerializeField] private GameObject weapon;
+    CapsuleCollider weaponCollider;
     WeaponManager myWM;
 
     // playerステータス
@@ -36,13 +38,6 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
-    private enum PlayerAnimatorController
-    {
-        player_pencil,
-        player_eraser,
-        player_ruler
-    }
-
     private enum GameObjectTags
     {
         weapon,
@@ -52,14 +47,32 @@ public class PlayerController : MonoBehaviour
         AreaOut
     }
 
-    CapsuleCollider weaponCollider;
+    int idleState = Animator.StringToHash("Base Layer.idle");
+
+    int[] jumpState = new int[2]
+    {
+        Animator.StringToHash("Base Layer.jump_idle"),
+        Animator.StringToHash("Base Layer.jump_run"),
+    };
+
+    int attackState = Animator.StringToHash("Base Layer.attack1");
+
+    int parryState = Animator.StringToHash("Base Layer.parry");
+
+    int runState = Animator.StringToHash("Base Layer.run");
+ 
+    //int[] atkState = new int[3] {
+    //                            Animator.StringToHash("Base Layer.attack1"),
+    //                            Animator.StringToHash("Base Layer.attack2"),
+    //                            Animator.StringToHash("Base Layer.attack")
+    //                           };
 
     // player parry情報
-    [SerializeField] private SphereCollider parryCollider;
-    [SerializeField] private float parryStayTime = 0.3f;
-    [SerializeField] private float parryTime = 0.5f;
+    [SerializeField] private GameObject parry;
+    private SphereCollider parryCollider;
+    //[SerializeField] private float parryStayTime = 0.3f;
+    //[SerializeField] private float parryTime = 0.5f;
     [SerializeField] private float wasparryedDamage = 15;
-    [SerializeField] private float rebelliousTime = 0.3f;
     private bool parryCollision = false;
 
     [SerializeField] private float angleMax;
@@ -94,49 +107,52 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start()
-    {
-        parryCollider = parryCollider.GetComponent<SphereCollider>();
-        parryCollider.enabled = false;
-        // weaponCollider = weapon.GetComponent<BoxCollider>();
+    {   
+        // アニメーター取得
         animator = GetComponent<Animator>();
+        // parry当たり判定設定、コライダー取得
+        parryCollider = parry.GetComponent<SphereCollider>();
+        parryCollider.enabled = false;
+        // 武器の初期位置
+        weaponPos = weapon.transform.localPosition;
+        // WeaponManagerの取得
+        myWM = weapon.GetComponent<WeaponManager>();
         weaponCollider = weapon.GetComponent<CapsuleCollider>();
 
         if (myPV.isMine)
         {
+            // Player の向きを中央にする
+            // transform.LookAt(Vector3.zero);
             // myItemStatus取得
             myItemStatus = GetComponent<MyItemStatus>();
             // photontransformview取得
             myPTV = GetComponent<PhotonTransformView>();
-            playerUIController = GameObject.Find("PlayerControllerUI").GetComponent<PlayerUIController>();
+            playerUIController = GameObject.FindWithTag("PlayerControllerUI").gameObject.GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
             myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
             controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
-
+         
             //hp初期値設定
             currentHP = maxHP;
             hpSlider = playerUIController.GetHPSlider();
             hpSlider.value = currentHP;
-            hpText = GameObject.Find("HPText").GetComponent<Text>();
+            hpText = GameObject.Find("HPText").gameObject.GetComponent<Text>();
             hpText.text = "HP: " + currentHP.ToString();
             otherHpBar.SetActive(false);
             myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
-
+            // ジャンプ判定の初期化
             isJump = true;
-
-            weaponPos = weapon.transform.localPosition;
-
-            transform.LookAt(Vector3.zero);
-
-            myWM = weapon.GetComponent<WeaponManager>();
         }
+ 
     }
 
     [PunRPC]
     void Hpber()
     {
         otherHpBar.SetActive(true);
+        otherHpBarSlider.value = currentHP;
     }
 
 
@@ -155,6 +171,7 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
+
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -195,73 +212,72 @@ public class PlayerController : MonoBehaviour
     // ジャンプ
     public void Jump()
     {
+        // パリィ状態か攻撃状態のときはジャンプを呼ばない
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackState)
+        {
+            return;
+        }
         if (isJump)
         {
+            // ジャンプ中にジャンプボタンを押せなくする
             playerUIController.jumpButton.interactable = false;
-            animator.SetTrigger("jump");
+            // ジャンプアニメーション同期処理の呼び出し
+            myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
+            // 武器の位置を初期化
             weapon.transform.localPosition = weaponPos;
+            // 武器の角度を初期化
             weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            // ジャンプを不可能にする
             isJump = false;
         }
+    }
+
+    // ジャンプアニメーションの同期
+    [PunRPC]
+    void SyncJumpAnim()
+    {
+        // ジャンプアニメーションの再生
+        animator.SetTrigger("jump");
     }
 
     // 攻撃入力
     public void OnClickAttack()
     {
-        animator.SetFloat("Speed", myWM.GetWeaponSpeed());
-        myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
+        // 現在のアニメーション状態の取得
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+
+        // アイドル状態か、走り状態か、パリィ状態の時にのみ攻撃ボタンで攻撃を呼ぶ
+        if (currentState.fullPathHash == idleState
+        || currentState.fullPathHash == runState
+        || currentState.fullPathHash == parryState)
+        {
+            myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
+        }
+        else
+        {
+            return;
+        }
     }
 
-    // 攻撃
+    // 攻撃処理を呼び出す
     [PunRPC]
     private void CallAttack()
     {
-        string animParam = "attack1";
-        animator.SetTrigger(animParam);
-        StartCoroutine(Attack(animParam));
+        // 武器の当たり判定変更の呼び出し
+        StartCoroutine(Attack());
     }
 
-    IEnumerator Attack(string currentAnim)
+    // 攻撃処理
+    public IEnumerator Attack()
     {
-        bool finish = false;
-        AnimatorStateInfo currentAnimState = animator.GetCurrentAnimatorStateInfo(0);
-        while (!finish)
-        {
-            if(currentAnimState.IsName(currentAnim))
-            {
-                weaponCollider.enabled = true;
-                yield return new WaitForSeconds(0.1f);
-            }
-            else
-            {
-                weaponCollider.enabled = false;
-                finish = true;
-            }
-            weapon.transform.localPosition = weaponPos;
-            weapon.transform.localRotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
-        }
-        //yield return new WaitForSeconds(attackStayTime);
-        //animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
-        //weaponCollider.enabled = true;
-        //myWM.weaponCollision = true;
-        //playerUIController.attackButton.interactable = false;
-        //weapon.transform.localPosition = weaponPos;
-        //weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        //yield return new WaitForSeconds(attackTime);
-        //weaponCollider.enabled = false;
-        //myWM.weaponCollision = false;
-        //playerUIController.attackButton.interactable = true;
-        //weapon.transform.localPosition = weaponPos;
-        //weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        animator.SetFloat("Speed", myWM.GetWeaponSpeed());
+        animator.Play(attackState, 0, 0.15f);
+        weaponCollider.enabled = true;
+        yield return null;
+        yield return new WaitForAnimation(animator, 0);
+        weaponCollider.enabled = false;
     }
-
-    // //12月20追加
-    // [PunRPC]
-    // private void SendAtakkedToEnemy(int pvId, bool weaponCol)
-    // {
-    //     CapsuleCollider enemyCollider = PhotonView.Find(pvId).gameObject.transform.Find("weapon").GetComponent<CapsuleCollider>();
-    //     enemyCollider.enabled = weaponCol;
-    // }
 
     // ダメージを受ける
     [PunRPC]
@@ -281,6 +297,7 @@ public class PlayerController : MonoBehaviour
         }
 
         hpSlider.value = currentHP;
+        otherHpBarSlider.value = currentHP;
     }
 
     public void CallRecover(int heal)
@@ -306,6 +323,7 @@ public class PlayerController : MonoBehaviour
         }
 
         hpSlider.value = currentHP;
+        otherHpBarSlider.value = currentHP;
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
@@ -337,6 +355,7 @@ public class PlayerController : MonoBehaviour
             {
                 WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
                 int damage = Mathf.CeilToInt(wm.GetWeaponPower() * myWM.GetWeaponDefense());
+                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
             }
             // アイテム取得
@@ -390,19 +409,26 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void Death()
     {
-        Destroy(gameObject);
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
             hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.Find("MainManager").GetComponent<MainSceneManager>();
-            mainSceneManager.GoToResult(1);
+            mainSceneManager.GoToResult(false);
             Destroy(GameObject.FindWithTag("PlayerControllerUI"));
         }
+        Destroy(gameObject);
     }
 
     public void ParryClick()
     {
+        // 攻撃状態とジャンプ状態のときに押せなくする
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpState[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpState[1])
+        {
+            return;
+        }
         if (myPV.isMine)
         {
             playerUIController.parryButton.interactable = false;
@@ -418,19 +444,17 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Parrying()
     {
-        animator.SetTrigger("parry");
-        yield return new WaitForSeconds(parryStayTime);
+        animator.Play(parryState, 0, 0.1f);
         parryCollider.enabled = true;
-        parryCollision = true;
         playerUIController.parryButton.interactable = false;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        yield return new WaitForSeconds(parryTime);
+        yield return null;
+        yield return new WaitForAnimation(animator, 0);
         parryCollider.enabled = false;
-        parryCollision = false;
         playerUIController.parryButton.interactable = true;
+
         weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        weapon.transform.localRotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+
     }
 
     public void CallWasparryed()
@@ -443,33 +467,67 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger("desprate");
         currentHP -= Mathf.CeilToInt(wasparryedDamage);
-        hpSlider.value = currentHP;
+
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            myPV.RPC("Death", PhotonTargets.AllViaServer);
+        }
+
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
             StartCoroutine(Rebellious());
         }
 
-        if (currentHP <= 0)
-        {
-            currentHP = 0;
-            myPV.RPC("Death", PhotonTargets.Others);
-        }
+        hpSlider.value = currentHP;
+        otherHpBarSlider.value = currentHP;
     }
 
     IEnumerator Rebellious()
     {
-        // Parryの操作制御
+        animator.Play("desperate");
         playerUIController.attackButton.interactable = false;
         playerUIController.jumpButton.interactable = false;
         playerUIController.parryButton.interactable = false;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        yield return new WaitForSeconds(rebelliousTime);
+        yield return null;
+        yield return new WaitForAnimation(animator, 0);
         playerUIController.attackButton.interactable = true;
         playerUIController.jumpButton.interactable = true;
         playerUIController.parryButton.interactable = true;
+
+        //// アニメーション終了の定義
+        //bool finish = false;
+        //// 仰け反りアニメーションが再生されている時ボタンの操作をきる
+        //while(!finish)
+        //{
+        //    if(animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("desperate"))
+        //    {
+        //        playerUIController.attackButton.interactable = false;
+        //        playerUIController.jumpButton.interactable = false;
+        //        playerUIController.parryButton.interactable = false;
+        //        yield return new WaitForSeconds(0.1f);
+        //    }
+        //    else
+        //    {
+        //        playerUIController.attackButton.interactable = true;
+        //        playerUIController.jumpButton.interactable = true;
+        //        playerUIController.parryButton.interactable = true;
+        //        finish = true;
+        //    }
+        //}
+
+        //// Parryのパリィされたら操作を切る
+        //playerUIController.attackButton.interactable = false;
+        //playerUIController.jumpButton.interactable = false;
+        //playerUIController.parryButton.interactable = false;
+        //// 操作復帰
+        //playerUIController.attackButton.interactable = true;
+        //playerUIController.jumpButton.interactable = true;
+        //playerUIController.parryButton.interactable = true;
+        // 武器の位置の初期化
         weapon.transform.localPosition = weaponPos;
+        // 武器の角度の初期化
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 

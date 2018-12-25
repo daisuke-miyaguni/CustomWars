@@ -20,6 +20,7 @@ public class ParryChecker : MonoBehaviour
         {
             playerController.CallWasparryed();
             rootRb.AddForce(gameObject.transform.root.forward * -10f, ForceMode.Impulse);
+            other.gameObject.GetComponent<SphereCollider>().enabled = false;
         }
     }
 }

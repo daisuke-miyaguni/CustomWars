@@ -86,7 +86,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            if (reductionCount + 1 == reductionScales.Length + 1)
+            if (reductionCount + 1 == reductionScales.Length)
             {
                 return;
             }
@@ -103,7 +103,10 @@ public class StageManager : MonoBehaviour
     // 安地縮小を呼び出す
     public void ReceveReductionEvent()
     {
-        reductionCount++;
+        if (reductionCount < reductionScales.Length - 1)
+        {
+            reductionCount++;
+        }
     }
 
     void OnCollisionExit(Collision other)
