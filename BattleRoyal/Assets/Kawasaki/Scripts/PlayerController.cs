@@ -265,17 +265,23 @@ public class PlayerController : MonoBehaviour
     private void CallAttack()
     {
         // 武器の当たり判定変更の呼び出し
-        StartCoroutine(Attack());
+        //StartCoroutine(Attack());
+        Attack();
     }
 
-    // 攻撃処理
-    public IEnumerator Attack()
+    void Attack()
     {
         animator.SetFloat("Speed", myWM.GetWeaponSpeed());
-        animator.Play(attackState, 0, 0.15f);
+        animator.SetTrigger("attack1");
+    }
+
+    private void OnWeaponCollider()
+    {
         weaponCollider.enabled = true;
-        yield return null;
-        yield return new WaitForAnimation(animator, 0);
+    }
+
+    private void OffWeaponCollider()
+    {
         weaponCollider.enabled = false;
     }
 
