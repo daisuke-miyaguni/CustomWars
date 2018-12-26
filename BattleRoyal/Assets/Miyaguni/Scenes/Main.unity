@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.64279914, g: 0.605078, b: 0.54663694, a: 1}
+  m_IndirectSpecularColor: {r: 0.6427757, g: 0.60506344, b: 0.54660547, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8071,7 +8071,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1277115178}
-  - component: {fileID: 1277115179}
   m_Layer: 14
   m_Name: Books
   m_TagString: Desk
@@ -8111,17 +8110,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1277115179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1277115177}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47ab68726589bd45b789662435ce166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1287229487
 GameObject:
   m_ObjectHideFlags: 0
