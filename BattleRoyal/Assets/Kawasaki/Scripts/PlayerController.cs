@@ -78,8 +78,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
 
-    private bool isJump;
-
     private GameObject playerCamera;
     Vector2 startPos;
 
@@ -142,8 +140,6 @@ public class PlayerController : MonoBehaviour
             hpText.text = "HP: " + currentHP.ToString();
             otherHpBar.SetActive(false);
             myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
-            // ジャンプ判定の初期化
-            isJump = true;
         }
  
     }
@@ -189,10 +185,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("run", true);
         }
 
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-
-
         // キャラクターの向きを進行方向に
         if (moveForward != Vector3.zero)
         {
@@ -218,19 +210,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (isJump)
-        {
-            // ジャンプ中にジャンプボタンを押せなくする
-            playerUIController.jumpButton.interactable = false;
-            // ジャンプアニメーション同期処理の呼び出し
-            myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
-            // 武器の位置を初期化
-            weapon.transform.localPosition = weaponPos;
-            // 武器の角度を初期化
-            weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            // ジャンプを不可能にする
-            isJump = false;
-        }
+        // ジャンプアニメーション同期処理の呼び出し
+        myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
     }
 
     // ジャンプアニメーションの同期
@@ -239,6 +220,23 @@ public class PlayerController : MonoBehaviour
     {
         // ジャンプアニメーションの再生
         animator.SetTrigger("jump");
+        // 武器の位置を初期化
+        weapon.transform.localPosition = weaponPos;
+        // 武器の角度を初期化
+        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+    }
+
+
+
+    void OnJumpButton()
+    {
+        playerUIController.jumpButton.interactable = true;
+    }    
+    
+    void OffJumpButton()
+    {
+        // ジャンプ中にジャンプボタンを押せなくする
+        playerUIController.jumpButton.interactable = false;
     }
 
     // 攻撃入力
@@ -330,21 +328,6 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
-        }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (myPV.isMine)
-        {
-            // 着地
-            if (other.gameObject.layer == 14 || other.gameObject.layer == 15)
-            {
-                isJump = true;
-                playerUIController.jumpButton.interactable = true;
-                weapon.transform.localPosition = weaponPos;
-                weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            }
         }
     }
 
