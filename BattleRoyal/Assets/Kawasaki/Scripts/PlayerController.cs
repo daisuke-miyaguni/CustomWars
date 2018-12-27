@@ -470,7 +470,7 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void Wasparryed()
     {
-        animator.SetTrigger("desprate");
+        animator.SetTrigger("desperate");
         currentHP -= Mathf.CeilToInt(wasparryedDamage);
 
         if (currentHP <= 0)
