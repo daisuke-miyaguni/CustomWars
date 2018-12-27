@@ -47,22 +47,23 @@ public class PlayerController : MonoBehaviour
         AreaOut
     }
 
-    int idleState = Animator.StringToHash("Base Layer.idle");
+    [SerializeField] private float firstComboEffectiveTime = 0.7f;
+    [SerializeField] private float secondComboEffectiveTime = 0.5f;
 
-    int[] jumpState = new int[2]
+    int[] jumpStates = new int[2]
     {
         Animator.StringToHash("Base Layer.jump_idle"),
         Animator.StringToHash("Base Layer.jump_run"),
     };
 
-    int attackState = Animator.StringToHash("Base Layer.attack1");
-    int firstComboState = Animator.StringToHash("Base Layer.attack1");
-    int secondComboState = Animator.StringToHash("Base Layer.attack2");
-    int finalComboState = Animator.StringToHash("Base Layer.attack3");
+    int[] attackStates = new int[3]
+    {
+        Animator.StringToHash("Base Layer.attack1"),
+        Animator.StringToHash("Base Layer.attack2"),
+        Animator.StringToHash("Base Layer.attack3")
+    };
 
     int parryState = Animator.StringToHash("Base Layer.parry");
-
-    int runState = Animator.StringToHash("Base Layer.run");
 
     // player parry情報
     [SerializeField] private GameObject parry;
@@ -201,9 +202,9 @@ public class PlayerController : MonoBehaviour
     {
         // パリィ状態か攻撃状態のときはジャンプを呼ばない
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == firstComboState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == secondComboState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == finalComboState)
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2])
         {
             return;
         }
@@ -237,6 +238,10 @@ public class PlayerController : MonoBehaviour
     // 攻撃入力
     public void OnClickAttack()
     {
+        if(animator.IsInTransition(0))
+        {
+            return;
+        }
         // 現在のアニメーション状態の取得
         AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -260,16 +265,18 @@ public class PlayerController : MonoBehaviour
     private void CallAttack()
     {
         animator.SetFloat("Speed", myWM.GetWeaponSpeed());
+        // 現在のアニメーション状態の取得
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
         // animator.SetTrigger("attack1");
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("attack1"))
+        if (currentState.IsName("attack1") && currentState.normalizedTime < firstComboEffectiveTime)
         {
             animator.SetTrigger("attack2");
         }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack2"))
+        else if (currentState.IsName("attack2") && currentState.normalizedTime < secondComboEffectiveTime)
         {
             animator.SetTrigger("attack3");
         }
-        else
+        else if (!currentState.IsName("attack1") && !currentState.IsName("attack2"))
         {
             animator.SetTrigger("attack1");
         }
@@ -418,11 +425,11 @@ public class PlayerController : MonoBehaviour
     public void ParryClick()
     {
         // 攻撃状態とジャンプ状態のときに押せなくする
-        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == firstComboState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == secondComboState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == finalComboState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpState[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpState[1])
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1])
         {
             return;
         }
@@ -488,6 +495,7 @@ public class PlayerController : MonoBehaviour
 
     void desperating()
     {
+        weaponCollider.enabled = false;
         playerUIController.attackButton.interactable = false;
         playerUIController.jumpButton.interactable = false;
         playerUIController.parryButton.interactable = false;

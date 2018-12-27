@@ -3975,6 +3975,8 @@ MonoBehaviour:
   weapon: {fileID: 1385980560763454}
   moveSpeed: 7
   jumpForce: 5
+  firstComboEffectiveTime: 0.6
+  secondComboEffectiveTime: 0.6
   parry: {fileID: 1726801128195448}
   wasparryedDamage: 15
   angleMax: 30
