@@ -18,9 +18,9 @@ public class ParryChecker : MonoBehaviour
         if (other.gameObject.tag == "Parry"
         && other.gameObject.transform.root != this.gameObject.transform.root)
         {
+            other.gameObject.GetComponent<SphereCollider>().enabled = false;
             playerController.CallWasparryed();
             rootRb.AddForce(gameObject.transform.root.forward * -10f, ForceMode.Impulse);
-            other.gameObject.GetComponent<SphereCollider>().enabled = false;
         }
     }
 }

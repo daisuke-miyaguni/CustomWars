@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private SphereCollider parryCollider;
     [SerializeField] private float wasparryedDamage = 15;
     private bool parryCollision = false;
+    private bool parring = false;
 
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
@@ -122,6 +123,8 @@ public class PlayerController : MonoBehaviour
             myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
             controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
+
+            parring = false;
 
             //hp初期値設定
             currentHP = maxHP;
@@ -351,24 +354,28 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            // 被弾
-            if (other.gameObject.tag == GameObjectTags.weapon.ToString()
-            && other.gameObject != weapon)
+            switch(other.gameObject.tag)
             {
-                WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
-                int damage = Mathf.CeilToInt(wm.GetWeaponPower() * myWM.GetWeaponDefense());
-                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
-                myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
-            }
-            // アイテム取得
-            if (other.gameObject.tag == GameObjectTags.Item.ToString())
-            {
-                itemList.Add(other.gameObject.name);
-            }
-            // ステージ外判定
-            if (other.gameObject.tag == GameObjectTags.AreaOut.ToString())
-            {
-                myPV.RPC("Death", PhotonTargets.AllViaServer);
+                // 被弾
+                case "weapon":
+                    if(other.gameObject != weapon && !parring)
+                    {
+                        WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
+                        int damage = Mathf.CeilToInt(wm.GetWeaponPower() * myWM.GetWeaponDefense());
+                        other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                        myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
+                    }
+                    break;
+                // アイテム
+                case "Item":
+                    itemList.Add(other.gameObject.name);
+                    break;
+                // ステージ外処理
+                case "AreaOut":
+                    myPV.RPC("Death", PhotonTargets.AllViaServer);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -453,12 +460,14 @@ public class PlayerController : MonoBehaviour
     void OnParry()
     {
         parryCollider.enabled = true;
+        parring = true;
         playerUIController.parryButton.interactable = false;
     }
 
     void OffParry()
     {
         parryCollider.enabled = false;
+        parring = false;
         playerUIController.parryButton.interactable = true;
     }
 
