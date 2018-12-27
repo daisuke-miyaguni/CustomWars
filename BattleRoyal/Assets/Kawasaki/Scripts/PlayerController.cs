@@ -264,15 +264,12 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void CallAttack()
     {
-        // 武器の当たり判定変更の呼び出し
-        //StartCoroutine(Attack());
-        Attack();
-    }
-
-    void Attack()
-    {
         animator.SetFloat("Speed", myWM.GetWeaponSpeed());
         animator.SetTrigger("attack1");
+        // 武器の位置の初期化
+        weapon.transform.localPosition = weaponPos;
+        // 武器の角度の初期化
+        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
     private void OnWeaponCollider()
@@ -445,22 +442,23 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void CallParry()
     {
-        StartCoroutine(Parrying());
+        animator.SetTrigger("parry");
+        // 武器の位置の初期化
+        weapon.transform.localPosition = weaponPos;
+        // 武器の角度の初期化
+        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
-    IEnumerator Parrying()
+    void OnParry()
     {
-        animator.Play(parryState, 0, 0.1f);
         parryCollider.enabled = true;
         playerUIController.parryButton.interactable = false;
-        yield return null;
-        yield return new WaitForAnimation(animator, 0);
+    }
+
+    void OffParry()
+    {
         parryCollider.enabled = false;
         playerUIController.parryButton.interactable = true;
-
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
-
     }
 
     public void CallWasparryed()
@@ -483,58 +481,29 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
-            StartCoroutine(Rebellious());
+            animator.SetTrigger("desperate");
+            // 武器の位置の初期化
+            weapon.transform.localPosition = weaponPos;
+            // 武器の角度の初期化
+            weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         }
 
         hpSlider.value = currentHP;
         otherHpBarSlider.value = currentHP;
     }
 
-    IEnumerator Rebellious()
+    void desperating()
     {
-        animator.Play("desperate");
         playerUIController.attackButton.interactable = false;
         playerUIController.jumpButton.interactable = false;
         playerUIController.parryButton.interactable = false;
-        yield return null;
-        yield return new WaitForAnimation(animator, 0);
+    }
+
+    void desperated()
+    {
         playerUIController.attackButton.interactable = true;
         playerUIController.jumpButton.interactable = true;
         playerUIController.parryButton.interactable = true;
-
-        //// アニメーション終了の定義
-        //bool finish = false;
-        //// 仰け反りアニメーションが再生されている時ボタンの操作をきる
-        //while(!finish)
-        //{
-        //    if(animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("desperate"))
-        //    {
-        //        playerUIController.attackButton.interactable = false;
-        //        playerUIController.jumpButton.interactable = false;
-        //        playerUIController.parryButton.interactable = false;
-        //        yield return new WaitForSeconds(0.1f);
-        //    }
-        //    else
-        //    {
-        //        playerUIController.attackButton.interactable = true;
-        //        playerUIController.jumpButton.interactable = true;
-        //        playerUIController.parryButton.interactable = true;
-        //        finish = true;
-        //    }
-        //}
-
-        //// Parryのパリィされたら操作を切る
-        //playerUIController.attackButton.interactable = false;
-        //playerUIController.jumpButton.interactable = false;
-        //playerUIController.parryButton.interactable = false;
-        //// 操作復帰
-        //playerUIController.attackButton.interactable = true;
-        //playerUIController.jumpButton.interactable = true;
-        //playerUIController.parryButton.interactable = true;
-        // 武器の位置の初期化
-        weapon.transform.localPosition = weaponPos;
-        // 武器の角度の初期化
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
