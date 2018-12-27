@@ -56,16 +56,13 @@ public class PlayerController : MonoBehaviour
     };
 
     int attackState = Animator.StringToHash("Base Layer.attack1");
+    int firstComboState = Animator.StringToHash("Base Layer.attack1");
+    int secondComboState = Animator.StringToHash("Base Layer.attack2");
+    int finalComboState = Animator.StringToHash("Base Layer.attack3");
 
     int parryState = Animator.StringToHash("Base Layer.parry");
 
     int runState = Animator.StringToHash("Base Layer.run");
- 
-    //int[] atkState = new int[3] {
-    //                            Animator.StringToHash("Base Layer.attack1"),
-    //                            Animator.StringToHash("Base Layer.attack2"),
-    //                            Animator.StringToHash("Base Layer.attack")
-    //                           };
 
     // player parry情報
     [SerializeField] private GameObject parry;
@@ -151,7 +148,6 @@ public class PlayerController : MonoBehaviour
         otherHpBarSlider.value = currentHP;
     }
 
-
     void FixedUpdate()
     {
         if (myPV.isMine)
@@ -167,7 +163,6 @@ public class PlayerController : MonoBehaviour
     // 移動処理
     private void Move()
     {
-
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
 
@@ -206,7 +201,9 @@ public class PlayerController : MonoBehaviour
     {
         // パリィ状態か攻撃状態のときはジャンプを呼ばない
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackState)
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == firstComboState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == secondComboState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == finalComboState)
         {
             return;
         }
@@ -226,8 +223,6 @@ public class PlayerController : MonoBehaviour
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
-
-
     void OnJumpButton()
     {
         playerUIController.jumpButton.interactable = true;
@@ -246,9 +241,11 @@ public class PlayerController : MonoBehaviour
         AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
         // アイドル状態か、走り状態か、パリィ状態の時にのみ攻撃ボタンで攻撃を呼ぶ
-        if (currentState.fullPathHash == idleState
-        || currentState.fullPathHash == runState
-        || currentState.fullPathHash == parryState)
+        if (currentState.IsName("idle")
+        || currentState.IsName("run")
+        || currentState.IsName("parry")
+        || currentState.IsName("attack1")
+        || currentState.IsName("attack2"))
         {
             myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
         }
@@ -263,7 +260,19 @@ public class PlayerController : MonoBehaviour
     private void CallAttack()
     {
         animator.SetFloat("Speed", myWM.GetWeaponSpeed());
-        animator.SetTrigger("attack1");
+        // animator.SetTrigger("attack1");
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("attack1"))
+        {
+            animator.SetTrigger("attack2");
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack2"))
+        {
+            animator.SetTrigger("attack3");
+        }
+        else
+        {
+            animator.SetTrigger("attack1");
+        }
         // 武器の位置の初期化
         weapon.transform.localPosition = weaponPos;
         // 武器の角度の初期化
@@ -409,7 +418,9 @@ public class PlayerController : MonoBehaviour
     public void ParryClick()
     {
         // 攻撃状態とジャンプ状態のときに押せなくする
-        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackState
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == firstComboState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == secondComboState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == finalComboState
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpState[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpState[1])
         {
