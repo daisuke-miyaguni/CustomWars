@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,8 +28,6 @@ public class PlayerController : MonoBehaviour
     // playerステータス
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
-    //[SerializeField] private float attackStayTime = 0.2f;
-    //[SerializeField] private float attackTime = 0.1f;
 
     private MobileInputController controller;
 
@@ -68,8 +65,6 @@ public class PlayerController : MonoBehaviour
     // player parry情報
     [SerializeField] private GameObject parry;
     private SphereCollider parryCollider;
-    //[SerializeField] private float parryStayTime = 0.3f;
-    //[SerializeField] private float parryTime = 0.5f;
     [SerializeField] private float wasparryedDamage = 15;
     private bool parryCollision = false;
 
@@ -103,7 +98,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start()
-    {   
+    {
         // アニメーター取得
         animator = GetComponent<Animator>();
         // parry当たり判定設定、コライダー取得
@@ -117,8 +112,6 @@ public class PlayerController : MonoBehaviour
 
         if (myPV.isMine)
         {
-            // Player の向きを中央にする
-            // transform.LookAt(Vector3.zero);
             // myItemStatus取得
             myItemStatus = GetComponent<MyItemStatus>();
             // photontransformview取得
@@ -129,7 +122,7 @@ public class PlayerController : MonoBehaviour
             myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
             controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
-         
+
             //hp初期値設定
             currentHP = maxHP;
             hpSlider = playerUIController.GetHPSlider();
@@ -139,7 +132,7 @@ public class PlayerController : MonoBehaviour
             otherHpBar.SetActive(false);
             myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
         }
- 
+
     }
 
     [PunRPC]
@@ -170,7 +163,7 @@ public class PlayerController : MonoBehaviour
         // 方向キーの入力値とカメラの向きから、移動方向を決定
         Vector3 moveForward = cameraForward * GetMoveDirection().z + Camera.main.transform.right * GetMoveDirection().x;
         // 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
-        myRB.velocity += (moveForward * moveSpeed)/* + new Vector3(0, myRB.velocity.y, 0)*/ ;
+        myRB.velocity += (moveForward * moveSpeed);
 
         if (moveForward == Vector3.zero)
         {
@@ -193,6 +186,14 @@ public class PlayerController : MonoBehaviour
     {
         float x = controller.Horizontal;
         float z = controller.Vertical;
+
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.jump_idle")
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2])
+        {
+            return Vector3.zero;
+        }
 
         return new Vector3(x, 0, z);
     }
@@ -227,8 +228,8 @@ public class PlayerController : MonoBehaviour
     void OnJumpButton()
     {
         playerUIController.jumpButton.interactable = true;
-    }    
-    
+    }
+
     void OffJumpButton()
     {
         // ジャンプ中にジャンプボタンを押せなくする
@@ -238,7 +239,7 @@ public class PlayerController : MonoBehaviour
     // 攻撃入力
     public void OnClickAttack()
     {
-        if(animator.IsInTransition(0))
+        if (animator.IsInTransition(0))
         {
             return;
         }
@@ -311,10 +312,12 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
+            hpSlider.value = currentHP;
         }
-
-        hpSlider.value = currentHP;
-        otherHpBarSlider.value = currentHP;
+        else
+        {
+            otherHpBarSlider.value = currentHP;
+        }
     }
 
     public void CallRecover(int heal)
@@ -326,12 +329,6 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void Recover(int amount)
     {
-        //ここで使えない処理をすると、アイテム使用時にアイテムが消えるだけになってしまうのでコメントアウトしてます。
-        /*if (currentHP >= maxHP)       
-        {
-            return;
-        }*/
-
         currentHP += amount;
 
         if (currentHP >= maxHP)
@@ -339,11 +336,14 @@ public class PlayerController : MonoBehaviour
             currentHP = maxHP;
         }
 
-        hpSlider.value = currentHP;
-        otherHpBarSlider.value = currentHP;
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
+            hpSlider.value = currentHP;
+        }
+        else
+        {
+            otherHpBarSlider.value = currentHP;
         }
     }
 
@@ -482,15 +482,17 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
-            animator.SetTrigger("desperate");
+            hpSlider.value = currentHP;
             // 武器の位置の初期化
             weapon.transform.localPosition = weaponPos;
             // 武器の角度の初期化
             weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         }
+        else
+        {
+            otherHpBarSlider.value = currentHP;
 
-        hpSlider.value = currentHP;
-        otherHpBarSlider.value = currentHP;
+        }
     }
 
     void desperating()
