@@ -7,6 +7,8 @@ public class WeaponManager : Photon.MonoBehaviour
 {
     WeaponManager wm;
     PhotonView weaponPV;
+    PlayerController playerController;
+    Rigidbody rootRb;
 
     Text powerText;
     Text speedText;
@@ -94,6 +96,8 @@ public class WeaponManager : Photon.MonoBehaviour
         weaponPV = GetComponent<PhotonView>();
         weaponCollider = GetComponent<CapsuleCollider>();
         weaponCollider.enabled = false;
+        playerController = gameObject.transform.root.GetComponent<PlayerController>();
+        rootRb = gameObject.transform.root.GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -141,13 +145,18 @@ public class WeaponManager : Photon.MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.gameObject.tag == "Player")
-    //    {
-    //        gameObject.GetComponent<CapsuleCollider>().enabled = false;
-    //    }
-    //}
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Parry"
+        && other.gameObject.transform.root != this.gameObject.transform.root
+        && weaponPV.isMine)
+        {
+            //other.gameObject.GetComponent<SphereCollider>().enabled = false;
+            this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            playerController.CallWasparryed();
+            rootRb.AddForce(gameObject.transform.root.forward * -10f, ForceMode.Impulse);
+        }
+    }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

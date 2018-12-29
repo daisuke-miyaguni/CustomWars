@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     // player parry情報
     [SerializeField] private GameObject parry;
     private SphereCollider parryCollider;
-    [SerializeField] private float wasparryedDamage = 15;
+    [SerializeField] private float wasparryedDamage = 15.0f;
     private bool parryCollision = false;
     private bool parring = false;
 
@@ -230,13 +230,20 @@ public class PlayerController : MonoBehaviour
 
     void OnJumpButton()
     {
-        playerUIController.jumpButton.interactable = true;
+        // ジャンプが終了後、ジャンプボタンを押せるようにする
+        if(myPV.isMine)
+        {
+            playerUIController.jumpButton.interactable = true;
+        }
     }
 
     void OffJumpButton()
     {
         // ジャンプ中にジャンプボタンを押せなくする
-        playerUIController.jumpButton.interactable = false;
+        if (myPV.isMine)
+        {
+            playerUIController.jumpButton.interactable = false;
+        }
     }
 
     // 攻撃入力
@@ -461,14 +468,20 @@ public class PlayerController : MonoBehaviour
     {
         parryCollider.enabled = true;
         parring = true;
-        playerUIController.parryButton.interactable = false;
+        if(myPV.isMine)
+        {
+            playerUIController.parryButton.interactable = false;
+        }
     }
 
     void OffParry()
     {
         parryCollider.enabled = false;
         parring = false;
-        playerUIController.parryButton.interactable = true;
+        if (myPV.isMine)
+        {
+            playerUIController.parryButton.interactable = true;
+        }
     }
 
     public void CallWasparryed()
@@ -500,7 +513,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             otherHpBarSlider.value = currentHP;
-
         }
     }
 
