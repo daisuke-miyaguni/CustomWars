@@ -14,7 +14,12 @@ public class WeaponManager : Photon.MonoBehaviour
     Text speedText;
     Text defenseText;
 
+    [SerializeField] private GameObject cap;
+    [SerializeField] private GameObject correction;
+    [SerializeField] private GameObject ruler;
+
     private int weaponPower = 15;
+    private int powerPartsCounts = 0;
 
     public float GetWeaponPower()
     {
@@ -24,6 +29,17 @@ public class WeaponManager : Photon.MonoBehaviour
     public void SetWeaponPower(int partsPower)
     {
         this.weaponPower = weaponPower + partsPower;
+        this.powerPartsCounts = (weaponPower/3) - 5;
+
+        if(powerPartsCounts > 0)
+        {
+            cap.SetActive(true);
+        }
+        else
+        {
+            cap.SetActive(false);
+        }
+
         powerText.text = "Power: " + weaponPower.ToString();
     }
 
@@ -53,6 +69,16 @@ public class WeaponManager : Photon.MonoBehaviour
                 weaponSpeed = 1.00f;
                 break;
         }
+
+        if (speedPartsCounts > 0)
+        {
+            correction.SetActive(true);
+        }
+        else
+        {
+            correction.SetActive(false);
+        }
+
         speedText.text = "Speed: " + weaponSpeed.ToString();
     }
 
@@ -82,11 +108,21 @@ public class WeaponManager : Photon.MonoBehaviour
                 weaponDefense = 1.000f;
                 break;
         }
+
+        if (defensePartsCounts > 0)
+        {
+            ruler.SetActive(true);
+        }
+        else
+        {
+            ruler.SetActive(false);
+        }
+
         defenseText.text = "Defense: " + weaponDefense.ToString();
     }
 
     CustomSlot customSlot;
-    [SerializeField] GameObject[] itemCustomSlots = new GameObject[3];
+    GameObject[] itemCustomSlots = new GameObject[3];
     string customSlotString = "customs_slot";
 
     public CapsuleCollider weaponCollider;

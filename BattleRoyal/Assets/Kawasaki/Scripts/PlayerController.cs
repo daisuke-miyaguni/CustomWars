@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour
     private bool parryCollision = false;
     private bool parring = false;
 
+    private bool jumping = false;
+
+    private bool desperate = false;
+
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
 
@@ -193,7 +197,8 @@ public class PlayerController : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.jump_idle")
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2])
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState)
         {
             return Vector3.zero;
         }
@@ -208,7 +213,9 @@ public class PlayerController : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2])
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || jumping
+        || desperate)
         {
             return;
         }
@@ -233,7 +240,7 @@ public class PlayerController : MonoBehaviour
         // ジャンプが終了後、ジャンプボタンを押せるようにする
         if(myPV.isMine)
         {
-            playerUIController.jumpButton.interactable = true;
+            jumping = false;
         }
     }
 
@@ -242,7 +249,7 @@ public class PlayerController : MonoBehaviour
         // ジャンプ中にジャンプボタンを押せなくする
         if (myPV.isMine)
         {
-            playerUIController.jumpButton.interactable = false;
+            jumping = true;
         }
     }
 
@@ -443,13 +450,14 @@ public class PlayerController : MonoBehaviour
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1])
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1]
+        || parring
+        || desperate)
         {
             return;
         }
         if (myPV.isMine)
         {
-            playerUIController.parryButton.interactable = false;
             myPV.RPC("CallParry", PhotonTargets.AllViaServer);
         }
     }
@@ -468,20 +476,12 @@ public class PlayerController : MonoBehaviour
     {
         parryCollider.enabled = true;
         parring = true;
-        if(myPV.isMine)
-        {
-            playerUIController.parryButton.interactable = false;
-        }
     }
 
     void OffParry()
     {
         parryCollider.enabled = false;
         parring = false;
-        if (myPV.isMine)
-        {
-            playerUIController.parryButton.interactable = true;
-        }
     }
 
     public void CallWasparryed()
@@ -519,16 +519,12 @@ public class PlayerController : MonoBehaviour
     void desperating()
     {
         weaponCollider.enabled = false;
-        playerUIController.attackButton.interactable = false;
-        playerUIController.jumpButton.interactable = false;
-        playerUIController.parryButton.interactable = false;
+        desperate = true;
     }
 
     void desperated()
     {
-        playerUIController.attackButton.interactable = true;
-        playerUIController.jumpButton.interactable = true;
-        playerUIController.parryButton.interactable = true;
+        desperate = false;
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
