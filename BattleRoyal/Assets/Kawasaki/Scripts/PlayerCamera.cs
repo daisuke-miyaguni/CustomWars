@@ -10,20 +10,29 @@ public class PlayerCamera : MonoBehaviour
     private Camera myCamera;
     private PhotonView myPV;
     private Vector3 myPos;
-    private Vector2 startPos;
+    [SerializeField] private Vector2 startPos;
     [SerializeField] private float rotateSpeed;
 
-    private float beforeCameraAngle;
-    private Vector3 beforeDistance;
-    private bool isRotate;
-    private Touch currentTouch = new Touch();
-    private bool isFirstTouch;
-    private bool isSecondTouch;
+    // private float beforeCameraAngle;
+    // private Vector3 beforeDistance;
+    // private bool isRotate;
+    [SerializeField] private Touch currentTouch;
+    [SerializeField] private bool isFirstTouch;
+    [SerializeField] private bool isSecondTouch;
+    [SerializeField] private bool isSingleTouch;
+    // [SerializeField] private int beforTouchCount;
+
+    private Vector2 currentstartPos;
+    [SerializeField] private TouchPhase touchPhase;
+
+
+    /*指一本のときの一番最初の処理がelseに入っていいる */
 
 
     void Awake()
     {
         myPV = GetComponent<PhotonView>();
+        // print(startPos);
     }
 
     void Start()
@@ -35,94 +44,180 @@ public class PlayerCamera : MonoBehaviour
             myPos = gameObject.transform.position;
 
             playerController = this.gameObject.GetComponent<PlayerController>();
-            beforeCameraAngle = myCamera.transform.rotation.y;
-            beforeDistance = playerController.GetMoveDirection();
+            // beforeCameraAngle = myCamera.transform.rotation.y;
+            // beforeDistance = playerController.GetMoveDirection();
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        // if (Input.touchCount > 0)
+        // {
+        //     foreach (Touch t in Input.touches)
+        //     {
+        //         Debug.Log(t.fingerId);
+        //         // if (t.phase == TouchPhase.Began)
+        //         // {
+        //         //     Debug.Log("fid=" + t.fingerId + " x=" + t.position.x + " y=" + t.position.y);
+        //         // }
+        //         // else if (t.phase == TouchPhase.Ended){
+        //         //     // Debug.Log("fid=" + t.fingerId + " x=" + t.position.x + " y=" + t.position.y);
+
+        //         // }                          
+        //     }
+        // }
         if (myPV.isMine)
         {
             CheckTouch();
         }
     }
+    void LateUpdate()
+    {
+        myCamera.transform.position += gameObject.transform.position - myPos;
+        myPos = gameObject.transform.position;
+    }
 
     private void CheckTouch()
     {
-
-        myCamera.transform.position += gameObject.transform.position - myPos;
-        myPos = gameObject.transform.position;
-
         if (Input.touchCount == 1)
         {
-            if (playerController.GetMoveDirection() == Vector3.zero &&
-                !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            // print(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId));
+            // print(playerController.GetMoveDirection() != Vector3.zero);
+
+            if (playerController.GetMoveDirection() == Vector3.zero)
             {
-                isFirstTouch = false;
+                print("1");
+                isSingleTouch = true;
+                // isFirstTouch = false;
                 isSecondTouch = false;
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    if (Input.touches[i].fingerId == 0)
+                    {
+                        currentTouch = Input.touches[i];
+                    }
+                }
                 currentTouch = Input.GetTouch(0);
+                touchPhase = currentTouch.phase;
+                // print("else");
+                // print("direction" + playerController.GetMoveDirection());
                 RotateCamera(currentTouch);
+
             }
+
         }
+        // print(currentTouch.fingerId);
         else if (Input.touchCount > 1)
         {
+
+            if (isSingleTouch)  /* (!isSingleTouch)*/
+            {
+                print("3");
+
+                // isSingleTouch = false;
+                isFirstTouch = true;
+                // currentTouch = Input.GetTouch(0);
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    if (Input.touches[i].fingerId == currentTouch.fingerId)
+                    {
+                        currentTouch = Input.touches[i];
+                    }
+                }
+                RotateCamera(currentTouch);
+
+            }
+            else /*if (isSingleTouch)*/
+            {
+                print("2");
+
+                isSecondTouch = true;
+                isSingleTouch = false;
+                // currentTouch = Input.GetTouch(1);
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    if (Input.touches[i].fingerId == 1)
+                    {
+                        currentTouch = Input.touches[i];
+                    }
+                }
+
+                RotateCamera(currentTouch);
+            }
+
+
             // print("2本");
             // print("Distance" + beforeDistance == playerController.GetMoveDirection().ToString());
             // print("rotation" + beforeCameraAngle == myCamera.transform.rotation.y.ToString());
-            if (isFirstTouch || beforeDistance == Vector3.zero)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId)){
-                    // print("1");
-                    isFirstTouch = true;
-                    isSecondTouch = false;
 
-                    currentTouch = Input.GetTouch(0);
-                    RotateCamera(currentTouch);
-                }
-            }
-            else if (isSecondTouch || beforeDistance != Vector3.zero)
-            {
-                // print("2");
-                isSecondTouch = true;
-                isFirstTouch = false;
-                currentTouch = Input.GetTouch(1);
-                RotateCamera(currentTouch);
-            }
+
+
+            // if (isFirstTouch || beforeDistance == Vector3.zero)
+            // {
+            //     if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
+            //     {
+            //         // print("1");
+            //         isFirstTouch = true;
+            //         isSecondTouch = false;
+
+            //         currentTouch = Input.GetTouch(0);
+            //         RotateCamera(currentTouch);
+            //     }
+            // }
         }
-        // RotateCamera(currentTouch);
-        beforeDistance = playerController.GetMoveDirection();
+        // beforeDistance = playerController.GetMoveDirection();
+        // beforTouchCount = Input.touchCount;
+        // touchPhase = Input.GetTouch(0).phase;
     }
 
 
     private void RotateCamera(Touch t)
     {
         Touch touch = t;
-        if (touch.phase == TouchPhase.Began)
+        // print(t.fingerId);
+        if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
         {
-            startPos = touch.position;
-            print(startPos);
-        }
-        else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-        {
-            float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
-            float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
-            // print("x=" + x);
-            // print("y=" + y);
+            print("UI");
+            if (touch.phase == TouchPhase.Began)
+            {
+                startPos = touch.position;
 
-            Vector2 angle = new Vector2(x, y).normalized;
-            // beforeCameraAngle = myCamera.transform.rotation.y;
-            myCamera.transform.RotateAround(myPos, Vector3.up, angle.x * rotateSpeed);
+                // startPos = touch.position;
+                print("touchstart");
+                // print("startpos" + startPos);
+            }
+            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            {
+                float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+                float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+                                                         // print("x=" + x);
+                                                         // print("y=" + y);
+                                                         // print("xstartpos=" + startPos.x);
+                                                         // print("ystartpos=" + startPos.y);
 
+                // print("xtouchpos=" + touch.position.x);
+                // print("ytouchpos=" + touch.position.y);
 
-        }
-        else if (touch.phase == TouchPhase.Ended)
-        {
-            // beforeCameraAngle = myCamera.transform.rotation.y;
-            isFirstTouch = false;
-            isSecondTouch = false;
-            print("End");
+                Vector2 angle = new Vector2(x, y).normalized;
+                // beforeCameraAngle = myCamera.transform.rotation.y;
+                if (angle.x > 0)
+                {
+                    myCamera.transform.RotateAround(myPos, Vector3.up, rotateSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    myCamera.transform.RotateAround(myPos, Vector3.up, -rotateSpeed * Time.deltaTime);
+                }
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                // beforeCameraAngle = myCamera.transform.rotation.y;
+                isSingleTouch = false;
+                isFirstTouch = false;
+                isSecondTouch = false;
+                // print("End");
 
+            }
         }
     }
 
