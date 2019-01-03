@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class PlayerCamera : MonoBehaviour
 {
     private PlayerController playerController;
+    private MobileInputController controller;
     private Camera myCamera;
     private PhotonView myPV;
     private Vector3 myPos;
@@ -44,12 +45,14 @@ public class PlayerCamera : MonoBehaviour
             myPos = gameObject.transform.position;
 
             playerController = this.gameObject.GetComponent<PlayerController>();
+            controller = GameObject.Find("RightJoyStick").gameObject.GetComponent<MobileInputController>();
+
             // beforeCameraAngle = myCamera.transform.rotation.y;
             // beforeDistance = playerController.GetMoveDirection();
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // if (Input.touchCount > 0)
         // {
@@ -68,7 +71,18 @@ public class PlayerCamera : MonoBehaviour
         // }
         if (myPV.isMine)
         {
-            CheckTouch();
+            if(controller.Coordinate().x ==0){
+                return;
+            }
+            else if (controller.Coordinate().x > 0)
+            {
+                myCamera.transform.RotateAround(myPos, Vector3.up, rotateSpeed * Time.deltaTime);
+            }
+            else
+            {
+                myCamera.transform.RotateAround(myPos, Vector3.up, -rotateSpeed * Time.deltaTime);
+            }
+            // CheckTouch();
         }
     }
     void LateUpdate()
@@ -77,149 +91,149 @@ public class PlayerCamera : MonoBehaviour
         myPos = gameObject.transform.position;
     }
 
-    private void CheckTouch()
-    {
-        if (Input.touchCount == 1)
-        {
-            // print(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId));
-            // print(playerController.GetMoveDirection() != Vector3.zero);
+    // private void CheckTouch()
+    // {
+    //     if (Input.touchCount == 1)
+    //     {
+    //         // print(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId));
+    //         // print(playerController.GetMoveDirection() != Vector3.zero);
 
-            if (playerController.GetMoveDirection() == Vector3.zero)
-            {
-                print("1");
-                isSingleTouch = true;
-                // isFirstTouch = false;
-                isSecondTouch = false;
-                for (int i = 0; i < Input.touchCount; i++)
-                {
-                    if (Input.touches[i].fingerId == 0)
-                    {
-                        currentTouch = Input.touches[i];
-                    }
-                }
-                currentTouch = Input.GetTouch(0);
-                touchPhase = currentTouch.phase;
-                // print("else");
-                // print("direction" + playerController.GetMoveDirection());
-                RotateCamera(currentTouch);
+    //         if (playerController.GetMoveDirection() == Vector3.zero)
+    //         {
+    //             print("1");
+    //             isSingleTouch = true;
+    //             // isFirstTouch = false;
+    //             isSecondTouch = false;
+    //             for (int i = 0; i < Input.touchCount; i++)
+    //             {
+    //                 if (Input.touches[i].fingerId == 0)
+    //                 {
+    //                     currentTouch = Input.touches[i];
+    //                 }
+    //             }
+    //             currentTouch = Input.GetTouch(0);
+    //             touchPhase = currentTouch.phase;
+    //             // print("else");
+    //             // print("direction" + playerController.GetMoveDirection());
+    //             RotateCamera(currentTouch);
 
-            }
+    //         }
 
-        }
-        // print(currentTouch.fingerId);
-        else if (Input.touchCount > 1)
-        {
+    //     }
+    //     // print(currentTouch.fingerId);
+    //     else if (Input.touchCount > 1)
+    //     {
 
-            if (isSingleTouch)  /* (!isSingleTouch)*/
-            {
-                print("3");
+    //         if (isSingleTouch)  /* (!isSingleTouch)*/
+    //         {
+    //             print("3");
 
-                // isSingleTouch = false;
-                isFirstTouch = true;
-                // currentTouch = Input.GetTouch(0);
-                for (int i = 0; i < Input.touchCount; i++)
-                {
-                    if (Input.touches[i].fingerId == currentTouch.fingerId)
-                    {
-                        currentTouch = Input.touches[i];
-                    }
-                }
-                RotateCamera(currentTouch);
+    //             // isSingleTouch = false;
+    //             isFirstTouch = true;
+    //             // currentTouch = Input.GetTouch(0);
+    //             for (int i = 0; i < Input.touchCount; i++)
+    //             {
+    //                 if (Input.touches[i].fingerId == currentTouch.fingerId)
+    //                 {
+    //                     currentTouch = Input.touches[i];
+    //                 }
+    //             }
+    //             RotateCamera(currentTouch);
 
-            }
-            else /*if (isSingleTouch)*/
-            {
-                print("2");
+    //         }
+    //         else /*if (isSingleTouch)*/
+    //         {
+    //             print("2");
 
-                isSecondTouch = true;
-                isSingleTouch = false;
-                // currentTouch = Input.GetTouch(1);
-                for (int i = 0; i < Input.touchCount; i++)
-                {
-                    if (Input.touches[i].fingerId == 1)
-                    {
-                        currentTouch = Input.touches[i];
-                    }
-                }
+    //             isSecondTouch = true;
+    //             isSingleTouch = false;
+    //             // currentTouch = Input.GetTouch(1);
+    //             for (int i = 0; i < Input.touchCount; i++)
+    //             {
+    //                 if (Input.touches[i].fingerId == 1)
+    //                 {
+    //                     currentTouch = Input.touches[i];
+    //                 }
+    //             }
 
-                RotateCamera(currentTouch);
-            }
-
-
-            // print("2本");
-            // print("Distance" + beforeDistance == playerController.GetMoveDirection().ToString());
-            // print("rotation" + beforeCameraAngle == myCamera.transform.rotation.y.ToString());
+    //             RotateCamera(currentTouch);
+    //         }
 
 
-
-            // if (isFirstTouch || beforeDistance == Vector3.zero)
-            // {
-            //     if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
-            //     {
-            //         // print("1");
-            //         isFirstTouch = true;
-            //         isSecondTouch = false;
-
-            //         currentTouch = Input.GetTouch(0);
-            //         RotateCamera(currentTouch);
-            //     }
-            // }
-        }
-        // beforeDistance = playerController.GetMoveDirection();
-        // beforTouchCount = Input.touchCount;
-        // touchPhase = Input.GetTouch(0).phase;
-    }
+    //         // print("2本");
+    //         // print("Distance" + beforeDistance == playerController.GetMoveDirection().ToString());
+    //         // print("rotation" + beforeCameraAngle == myCamera.transform.rotation.y.ToString());
 
 
-    private void RotateCamera(Touch t)
-    {
-        Touch touch = t;
-        // print(t.fingerId);
-        if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-        {
-            print("UI");
-            if (touch.phase == TouchPhase.Began)
-            {
-                startPos = touch.position;
 
-                // startPos = touch.position;
-                print("touchstart");
-                // print("startpos" + startPos);
-            }
-            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-            {
-                float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
-                float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
-                                                         // print("x=" + x);
-                                                         // print("y=" + y);
-                                                         // print("xstartpos=" + startPos.x);
-                                                         // print("ystartpos=" + startPos.y);
+    //         // if (isFirstTouch || beforeDistance == Vector3.zero)
+    //         // {
+    //         //     if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
+    //         //     {
+    //         //         // print("1");
+    //         //         isFirstTouch = true;
+    //         //         isSecondTouch = false;
 
-                // print("xtouchpos=" + touch.position.x);
-                // print("ytouchpos=" + touch.position.y);
+    //         //         currentTouch = Input.GetTouch(0);
+    //         //         RotateCamera(currentTouch);
+    //         //     }
+    //         // }
+    //     }
+    //     // beforeDistance = playerController.GetMoveDirection();
+    //     // beforTouchCount = Input.touchCount;
+    //     // touchPhase = Input.GetTouch(0).phase;
+    // }
 
-                Vector2 angle = new Vector2(x, y).normalized;
-                // beforeCameraAngle = myCamera.transform.rotation.y;
-                if (angle.x > 0)
-                {
-                    myCamera.transform.RotateAround(myPos, Vector3.up, rotateSpeed * Time.deltaTime);
-                }
-                else
-                {
-                    myCamera.transform.RotateAround(myPos, Vector3.up, -rotateSpeed * Time.deltaTime);
-                }
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                // beforeCameraAngle = myCamera.transform.rotation.y;
-                isSingleTouch = false;
-                isFirstTouch = false;
-                isSecondTouch = false;
-                // print("End");
 
-            }
-        }
-    }
+    // private void RotateCamera(Touch t)
+    // {
+    //     Touch touch = t;
+    //     // print(t.fingerId);
+    //     if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+    //     {
+    //         print("UI");
+    //         if (touch.phase == TouchPhase.Began)
+    //         {
+    //             startPos = touch.position;
+
+    //             // startPos = touch.position;
+    //             print("touchstart");
+    //             // print("startpos" + startPos);
+    //         }
+    //         else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+    //         {
+    //             float x = touch.position.x - startPos.x; //横移動量(-1<tx<1)
+    //             float y = touch.position.y - startPos.y; //縦移動量(-1<ty<1)
+    //                                                      // print("x=" + x);
+    //                                                      // print("y=" + y);
+    //                                                      // print("xstartpos=" + startPos.x);
+    //                                                      // print("ystartpos=" + startPos.y);
+
+    //             // print("xtouchpos=" + touch.position.x);
+    //             // print("ytouchpos=" + touch.position.y);
+
+    //             Vector2 angle = new Vector2(x, y).normalized;
+    //             // beforeCameraAngle = myCamera.transform.rotation.y;
+    //             if (angle.x > 0)
+    //             {
+    //                 myCamera.transform.RotateAround(myPos, Vector3.up, rotateSpeed * Time.deltaTime);
+    //             }
+    //             else
+    //             {
+    //                 myCamera.transform.RotateAround(myPos, Vector3.up, -rotateSpeed * Time.deltaTime);
+    //             }
+    //         }
+    //         else if (touch.phase == TouchPhase.Ended)
+    //         {
+    //             // beforeCameraAngle = myCamera.transform.rotation.y;
+    //             isSingleTouch = false;
+    //             isFirstTouch = false;
+    //             isSecondTouch = false;
+    //             // print("End");
+
+    //         }
+    //     }
+    // }
 
 
 
