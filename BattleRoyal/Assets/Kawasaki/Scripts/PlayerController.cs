@@ -219,6 +219,10 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
+        playerUIController.parryMiyaguniButton.interactable = false;
+        playerUIController.attackMiyaguniButton.interactable = false;
+
         // ジャンプアニメーション同期処理の呼び出し
         myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
     }
@@ -241,6 +245,7 @@ public class PlayerController : MonoBehaviour
         if(myPV.isMine)
         {
             jumping = false;
+            playerUIController.jumpMiyaguniButton.interactable = true;
         }
     }
 
@@ -250,6 +255,9 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             jumping = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
+            playerUIController.jumpMiyaguniButton.interactable = false;
         }
     }
 
@@ -270,6 +278,11 @@ public class PlayerController : MonoBehaviour
         || currentState.IsName("attack1")
         || currentState.IsName("attack2"))
         {
+            if (myPV.isMine)
+            {
+                playerUIController.jumpMiyaguniButton.interactable = false;
+                playerUIController.parryMiyaguniButton.interactable = false;
+            }
             myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
         }
         else
@@ -307,6 +320,11 @@ public class PlayerController : MonoBehaviour
     private void OnWeaponCollider()
     {
         weaponCollider.enabled = true;
+        if(myPV.isMine)
+        {
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+        }
     }
 
     private void OffWeaponCollider()
@@ -401,7 +419,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
             {
                 itemBox = other.gameObject;
-                playerUIController.openButton.gameObject.SetActive(true);
+                playerUIController.openMiyaguniButton.gameObject.SetActive(true);
             }
         }
     }
@@ -413,7 +431,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
             {
                 itemBox = null;
-                playerUIController.openButton.gameObject.SetActive(false);
+                playerUIController.openMiyaguniButton.gameObject.SetActive(false);
             }
         }
     }
@@ -422,7 +440,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            playerUIController.openButton.gameObject.SetActive(false);
+            playerUIController.openMiyaguniButton.gameObject.SetActive(false);
         }
         itemBox.transform.root.gameObject.GetComponent<ItemBox>().OpenOnClick();
         itemBox = null;
@@ -458,6 +476,8 @@ public class PlayerController : MonoBehaviour
         }
         if (myPV.isMine)
         {
+            playerUIController.jumpMiyaguniButton.interactable = false;
+            playerUIController.attackMiyaguniButton.interactable = false;
             myPV.RPC("CallParry", PhotonTargets.AllViaServer);
         }
     }
@@ -476,6 +496,11 @@ public class PlayerController : MonoBehaviour
     {
         parryCollider.enabled = true;
         parring = true;
+        if(myPV.isMine)
+        {
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
+        }
     }
 
     void OffParry()

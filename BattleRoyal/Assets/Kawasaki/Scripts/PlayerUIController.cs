@@ -11,14 +11,14 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] private CreateSlotScript createSlot;
 
-    [SerializeField] public GameObject attackButton;
-    [SerializeField] public GameObject jumpButton;
-    [SerializeField] public GameObject inventoryButton;
-    [SerializeField] public GameObject parryButton;
+    [SerializeField] public MiyaguniButton attackMiyaguniButton;
+    [SerializeField] public MiyaguniButton jumpMiyaguniButton;
+    [SerializeField] public MiyaguniButton inventoryMiyaguniButton;
+    [SerializeField] public MiyaguniButton parryMiyaguniButton;
 
-    [SerializeField] public GameObject getButton;
+    [SerializeField] public MiyaguniButton getMiyaguniButton;
 
-    [SerializeField] public GameObject openButton;
+    [SerializeField] public MiyaguniButton openMiyaguniButton;
 
     [SerializeField] Slider hpSlider;
 
@@ -54,67 +54,31 @@ public class PlayerUIController : MonoBehaviour
     {
 
         // 攻撃ボタンに攻撃処理をもたせる
-        //attackButton.gameObject.GetComponent<Button>();
-        //attackButton.onClick.AddListener(playerController.OnClickAttack);
-
-        EventTrigger attackTrigger = attackButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry attackEntry = new EventTrigger.Entry();
-        attackEntry.eventID = EventTriggerType.PointerDown;
-        attackEntry.callback.AddListener((attack) => playerController.OnClickAttack());
-        attackTrigger.triggers.Add(attackEntry);
+        attackMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        attackMiyaguniButton.onDown.AddListener(playerController.OnClickAttack);
 
         // ジャンプボタンにジャンプ処理をもたせる
-        //jumpButton.gameObject.GetComponent<Button>();
-        //jumpButton.onClick.AddListener(playerController.Jump);
-
-        EventTrigger jumpTrigger = jumpButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry jumpEntry = new EventTrigger.Entry();
-        jumpEntry.eventID = EventTriggerType.PointerDown;
-        jumpEntry.callback.AddListener((jump) => playerController.Jump());
-        jumpTrigger.triggers.Add(jumpEntry);
+        jumpMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        jumpMiyaguniButton.onDown.AddListener(playerController.Jump);
 
         // インベントリーボタンにインベントリーを開く処理をもたせる
-        //inventoryButton.GetComponent<Button>();
-        //inventoryButton.onClick.AddListener(this.OpenInventory);
-
-        EventTrigger inventoryTrigger = inventoryButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry inventoryEntry = new EventTrigger.Entry();
-        inventoryEntry.eventID = EventTriggerType.PointerDown;
-        inventoryEntry.callback.AddListener((inventory) => OpenInventory());
-        inventoryTrigger.triggers.Add(inventoryEntry);
+        inventoryMiyaguniButton.GetComponent<MiyaguniButton>();
+        inventoryMiyaguniButton.onDown.AddListener(this.OpenInventory);
 
         // ゲットボタンにアイテムを取得する処理をもたせる
-        //getButton.gameObject.GetComponent<Button>();
-        //getButton.onClick.AddListener(myItemStatus.OnGetButton);
-
-        EventTrigger getTrigger = getButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry getEntry = new EventTrigger.Entry();
-        getEntry.eventID = EventTriggerType.PointerDown;
-        getEntry.callback.AddListener((get) => myItemStatus.OnGetButton());
-        getTrigger.triggers.Add(getEntry);
+        getMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        getMiyaguniButton.onDown.AddListener(myItemStatus.OnGetButton);
 
         // パリィボタンにパリィを取得する処理をもたせる
-        //parryButton.gameObject.GetComponent<Button>();
-        //parryButton.onClick.AddListener(playerController.ParryClick);
-
-        EventTrigger parryTrigger = parryButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry parryEntry = new EventTrigger.Entry();
-        parryEntry.eventID = EventTriggerType.PointerDown;
-        parryEntry.callback.AddListener((parry) => playerController.ParryClick());
-        parryTrigger.triggers.Add(parryEntry);
+        parryMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        parryMiyaguniButton.onDown.AddListener(playerController.ParryClick);
 
         // オープンボタンに宝箱を開く処理をもたせる
-        //openButton.gameObject.GetComponent<Button>();
-        //openButton.onClick.AddListener(playerController.OnClickOpenButton);
-
-        EventTrigger openTrigger = openButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry openEntry = new EventTrigger.Entry();
-        openEntry.eventID = EventTriggerType.PointerDown;
-        openEntry.callback.AddListener((open) => playerController.OnClickOpenButton());
-        openTrigger.triggers.Add(openEntry);
+        openMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        openMiyaguniButton.onDown.AddListener(playerController.OnClickOpenButton);
 
         // オープンボタンを非表示にする
-        openButton.gameObject.SetActive(false);
+        openMiyaguniButton.gameObject.SetActive(false);
 
         // アイテム使用ボタンにプレイヤーの情報を渡す
         for(int i = 0; i < usePocketItem.Length; i++)
