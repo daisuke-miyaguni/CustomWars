@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour
     private bool parryCollision = false;
     private bool parring = false;
 
+    private bool jumping = false;
+
+    private bool desperate = false;
+
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
 
@@ -193,7 +197,8 @@ public class PlayerController : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.jump_idle")
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2])
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState)
         {
             return Vector3.zero;
         }
@@ -208,10 +213,16 @@ public class PlayerController : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2])
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || jumping
+        || desperate)
         {
             return;
         }
+
+        playerUIController.parryMiyaguniButton.interactable = false;
+        playerUIController.attackMiyaguniButton.interactable = false;
+
         // ジャンプアニメーション同期処理の呼び出し
         myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
     }
@@ -233,7 +244,8 @@ public class PlayerController : MonoBehaviour
         // ジャンプが終了後、ジャンプボタンを押せるようにする
         if(myPV.isMine)
         {
-            playerUIController.jumpButton.interactable = true;
+            jumping = false;
+            playerUIController.jumpMiyaguniButton.interactable = true;
         }
     }
 
@@ -242,7 +254,10 @@ public class PlayerController : MonoBehaviour
         // ジャンプ中にジャンプボタンを押せなくする
         if (myPV.isMine)
         {
-            playerUIController.jumpButton.interactable = false;
+            jumping = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
+            playerUIController.jumpMiyaguniButton.interactable = false;
         }
     }
 
@@ -263,6 +278,11 @@ public class PlayerController : MonoBehaviour
         || currentState.IsName("attack1")
         || currentState.IsName("attack2"))
         {
+            if (myPV.isMine)
+            {
+                playerUIController.jumpMiyaguniButton.interactable = false;
+                playerUIController.parryMiyaguniButton.interactable = false;
+            }
             myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
         }
         else
@@ -300,6 +320,11 @@ public class PlayerController : MonoBehaviour
     private void OnWeaponCollider()
     {
         weaponCollider.enabled = true;
+        if(myPV.isMine)
+        {
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+        }
     }
 
     private void OffWeaponCollider()
@@ -394,7 +419,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
             {
                 itemBox = other.gameObject;
-                playerUIController.openButton.gameObject.SetActive(true);
+                playerUIController.openMiyaguniButton.gameObject.SetActive(true);
             }
         }
     }
@@ -406,7 +431,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
             {
                 itemBox = null;
-                playerUIController.openButton.gameObject.SetActive(false);
+                playerUIController.openMiyaguniButton.gameObject.SetActive(false);
             }
         }
     }
@@ -415,7 +440,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            playerUIController.openButton.gameObject.SetActive(false);
+            playerUIController.openMiyaguniButton.gameObject.SetActive(false);
         }
         itemBox.transform.root.gameObject.GetComponent<ItemBox>().OpenOnClick();
         itemBox = null;
@@ -443,13 +468,16 @@ public class PlayerController : MonoBehaviour
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1])
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1]
+        || parring
+        || desperate)
         {
             return;
         }
         if (myPV.isMine)
         {
-            playerUIController.parryButton.interactable = false;
+            playerUIController.jumpMiyaguniButton.interactable = false;
+            playerUIController.attackMiyaguniButton.interactable = false;
             myPV.RPC("CallParry", PhotonTargets.AllViaServer);
         }
     }
@@ -470,7 +498,8 @@ public class PlayerController : MonoBehaviour
         parring = true;
         if(myPV.isMine)
         {
-            playerUIController.parryButton.interactable = false;
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
         }
     }
 
@@ -478,10 +507,6 @@ public class PlayerController : MonoBehaviour
     {
         parryCollider.enabled = false;
         parring = false;
-        if (myPV.isMine)
-        {
-            playerUIController.parryButton.interactable = true;
-        }
     }
 
     public void CallWasparryed()
@@ -519,16 +544,12 @@ public class PlayerController : MonoBehaviour
     void desperating()
     {
         weaponCollider.enabled = false;
-        playerUIController.attackButton.interactable = false;
-        playerUIController.jumpButton.interactable = false;
-        playerUIController.parryButton.interactable = false;
+        desperate = true;
     }
 
     void desperated()
     {
-        playerUIController.attackButton.interactable = true;
-        playerUIController.jumpButton.interactable = true;
-        playerUIController.parryButton.interactable = true;
+        desperate = false;
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

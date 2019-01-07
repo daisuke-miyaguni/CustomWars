@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerUIController : MonoBehaviour
 {
@@ -10,14 +11,14 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] private CreateSlotScript createSlot;
 
-    [SerializeField] public Button attackButton;
-    [SerializeField] public Button jumpButton;
-    [SerializeField] public Button inventoryButton;
-    [SerializeField] public Button parryButton;
+    [SerializeField] public MiyaguniButton attackMiyaguniButton;
+    [SerializeField] public MiyaguniButton jumpMiyaguniButton;
+    [SerializeField] public MiyaguniButton inventoryMiyaguniButton;
+    [SerializeField] public MiyaguniButton parryMiyaguniButton;
 
-    [SerializeField] public Button getButton;
+    [SerializeField] public MiyaguniButton getMiyaguniButton;
 
-    [SerializeField] public Button openButton;
+    [SerializeField] public MiyaguniButton openMiyaguniButton;
 
     [SerializeField] Slider hpSlider;
 
@@ -51,31 +52,33 @@ public class PlayerUIController : MonoBehaviour
 
     public void SetButtons()
     {
+
         // 攻撃ボタンに攻撃処理をもたせる
-        attackButton.gameObject.GetComponent<Button>();
-        attackButton.onClick.AddListener(playerController.OnClickAttack);
+        attackMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        attackMiyaguniButton.onDown.AddListener(playerController.OnClickAttack);
 
         // ジャンプボタンにジャンプ処理をもたせる
-        jumpButton.gameObject.GetComponent<Button>();
-        jumpButton.onClick.AddListener(playerController.Jump);
+        jumpMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        jumpMiyaguniButton.onDown.AddListener(playerController.Jump);
 
         // インベントリーボタンにインベントリーを開く処理をもたせる
-        inventoryButton.GetComponent<Button>();
-        inventoryButton.onClick.AddListener(this.OpenInventory);
+        inventoryMiyaguniButton.GetComponent<MiyaguniButton>();
+        inventoryMiyaguniButton.onDown.AddListener(this.OpenInventory);
 
         // ゲットボタンにアイテムを取得する処理をもたせる
-        getButton.gameObject.GetComponent<Button>();
-        getButton.onClick.AddListener(myItemStatus.OnGetButton);
+        getMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        getMiyaguniButton.onDown.AddListener(myItemStatus.OnGetButton);
 
         // パリィボタンにパリィを取得する処理をもたせる
-        parryButton.gameObject.GetComponent<Button>();
-        parryButton.onClick.AddListener(playerController.ParryClick);
+        parryMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        parryMiyaguniButton.onDown.AddListener(playerController.ParryClick);
 
         // オープンボタンに宝箱を開く処理をもたせる
-        openButton.gameObject.GetComponent<Button>();
-        openButton.onClick.AddListener(playerController.OnClickOpenButton);
+        openMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        openMiyaguniButton.onDown.AddListener(playerController.OnClickOpenButton);
+
         // オープンボタンを非表示にする
-        openButton.gameObject.SetActive(false);
+        openMiyaguniButton.gameObject.SetActive(false);
 
         // アイテム使用ボタンにプレイヤーの情報を渡す
         for(int i = 0; i < usePocketItem.Length; i++)
