@@ -302,14 +302,17 @@ public class PlayerController : MonoBehaviour
         if (currentState.IsName("attack1") && currentState.normalizedTime < firstComboEffectiveTime)
         {
             animator.SetTrigger("attack2");
+            // AudioManager.Instance.PlaySE("punch-middle2");
         }
         else if (currentState.IsName("attack2") && currentState.normalizedTime < secondComboEffectiveTime)
         {
             animator.SetTrigger("attack3");
+            // AudioManager.Instance.PlaySE("sword-slash4");
         }
         else if (!currentState.IsName("attack1") && !currentState.IsName("attack2"))
         {
             animator.SetTrigger("attack1");
+            // AudioManager.Instance.PlaySE("heavy_punch1");
         }
         // 武器の位置の初期化
         weapon.transform.localPosition = weaponPos;

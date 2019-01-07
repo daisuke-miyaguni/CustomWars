@@ -113,16 +113,17 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//リザルトの処理を開始する新
 	public void GoToResult (bool isDisconnected)
 	{
+		int rank = playerNumber;
 		Time.timeScale = 0;
 		resultPanel.SetActive(true);
 		if(isDisconnected)
 		{
-			rankText.text = "切断されました\nあなたの順位は" + playerNumber + "!";
+			rankText.text = "切断されました\nあなたの順位は" + rank + "!";
 			return;
 		}
         else
 		{
-			rankText.text = "あなたの順位は" + playerNumber + "です\nおつかれさま！";
+			rankText.text = "あなたの順位は" + rank + "です\nおつかれさま！";
 		}
 
 		if(playerNumber == 2)
