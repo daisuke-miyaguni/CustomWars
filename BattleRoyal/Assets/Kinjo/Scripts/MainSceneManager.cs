@@ -22,6 +22,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 
 	void Start ()
 	{
+		AudioManager.Instance.PlayBGM("game_maoudamashii_1_battle30");
 		myPhotonView = GetComponent<PhotonView>();
 		resultPanel.SetActive(false);
 		playerNumber = PhotonNetwork.playerList.Length;
