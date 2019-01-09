@@ -6,10 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainSceneManager : Photon.MonoBehaviour {
 	private int playerNumber;    //プレイヤー数
-	// private int activePlayerNumber;    //初期のプレイヤー数
-	// private bool alive = true;	// 生きてるかどうか
 	private float elapsedTime;    //経過時間
-	// private bool isDead = false;    //死んだかどうか
 	[SerializeField]private Text elapsedTimeText;    //経過時間を表示するテキストUI
 	[SerializeField]private Text playerNumberText;    //プレイヤー数を表示するテキストUI
 	[SerializeField]private float scaleDownStartTime = 5.0f;    	//縮小開始時の経過時間を指定
@@ -160,15 +157,16 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//切断されたときの処理
 	void OnPhotonPlayerDisconnected()
 	{
+		print("切断ください！");
 		//マスター側でプレイヤー数を同期する
 		if(PhotonNetwork.masterClient.IsMasterClient)
 		{
-			int currentPlayerNumber = PhotonNetwork.playerList.Length;
-			playerNumber = currentPlayerNumber;
+			playerNumber -= 1;
 			//勝者が決まったならリザルトへ
 			if(playerNumber == 1)
 			{
-				myPhotonView.RPC("ShowWinerResult",PhotonTargets.AllViaServer);
+				ShowWinnerResult();
+				print("切断されたよ！");
 			}
 		}
 	}
