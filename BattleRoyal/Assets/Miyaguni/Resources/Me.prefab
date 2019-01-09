@@ -3993,7 +3993,7 @@ MonoBehaviour:
   jumpForce: 5
   attackStayTime: 0.2
   attackTime: 0.15
-  sphereCollider: {fileID: 135120115179249662}
+  parryCollider: {fileID: 135120115179249662}
   parryStayTime: 0.7
   parryTime: 0.1
   wasparryedDamage: 15
@@ -4022,6 +4022,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114236719103130220}
   - {fileID: 114727601141751810}
+  - {fileID: 114670688797775632}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -4127,6 +4128,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  weaponCollision: 0
 --- !u!114 &114954451344024796
 MonoBehaviour:
   m_ObjectHideFlags: 1

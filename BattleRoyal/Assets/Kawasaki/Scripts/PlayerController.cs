@@ -65,11 +65,12 @@ public class PlayerController : MonoBehaviour
     CapsuleCollider weaponCollider;
 
     // player parry情報
-    [SerializeField] private SphereCollider sphereCollider;
+    [SerializeField] private SphereCollider parryCollider;
     [SerializeField] private float parryStayTime = 0.3f;
     [SerializeField] private float parryTime = 0.5f;
     [SerializeField] private float wasparryedDamage = 15;
     [SerializeField] private float rebelliousTime = 0.3f;
+    private bool parryCollision = false;
 
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
@@ -81,6 +82,8 @@ public class PlayerController : MonoBehaviour
 
     // アイテム周り
     private MyItemStatus myItemStatus;
+
+    private ItemSpawner itemSpawner;
 
     public MyItemStatus GetMyItemStatus()
     {
@@ -104,12 +107,15 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        sphereCollider = sphereCollider.GetComponent<SphereCollider>();
-        sphereCollider.enabled = false;
+        parryCollider = parryCollider.GetComponent<SphereCollider>();
+        parryCollider.enabled = false;
         // weaponCollider = weapon.GetComponent<BoxCollider>();
         animator = GetComponent<Animator>();
         weaponCollider = weapon.GetComponent<CapsuleCollider>();
-        weaponCollider.enabled = false;
+        itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
+
+        Debug.Log(itemSpawner);
+
 
         if (myPV.isMine)
         {
@@ -171,7 +177,7 @@ public class PlayerController : MonoBehaviour
         // 方向キーの入力値とカメラの向きから、移動方向を決定
         Vector3 moveForward = cameraForward * GetMoveDirection().z + Camera.main.transform.right * GetMoveDirection().x;
         // 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
-        myRB.velocity = moveForward * moveSpeed + new Vector3(0, myRB.velocity.y, 0);
+        myRB.velocity += (moveForward * moveSpeed)/* + new Vector3(0, myRB.velocity.y, 0)*/ ;
 
         if (moveForward == Vector3.zero)
         {
@@ -234,13 +240,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(attackStayTime);
         animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
         weaponCollider.enabled = true;
-        myPV.RPC("SendAtakkedToEnemy",PhotonTargets.AllViaServer,myPV.viewID,true);//12月20追加
+        myWM.weaponCollision = true;
         playerUIController.attackButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(attackTime);
         weaponCollider.enabled = false;
-        myPV.RPC("SendAtakkedToEnemy",PhotonTargets.AllViaServer,myPV.viewID,false);//12月20追加
+        myWM.weaponCollision = false;
         playerUIController.attackButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
@@ -386,9 +392,11 @@ public class PlayerController : MonoBehaviour
         {
             hpText.text = "HP: " + currentHP.ToString();
             hpSlider.value = currentHP;
-            MainSceneManager mainSceneManager = GameObject.Find("MainManager").GetComponent<MainSceneManager>();
+            MainSceneManager mainSceneManager = GameObject.FindWithTag("GameController").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(1);
-            Destroy(GameObject.FindWithTag("PlayerControllerUI"));
+            itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position, 0);       //死亡時にアイテムを落とす
+            Debug.Log("death");
+            Destroy(GameObject.Find("PlayerControllerUI"));
         }
     }
 
@@ -411,12 +419,14 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
         yield return new WaitForSeconds(parryStayTime);
-        sphereCollider.enabled = true;
+        parryCollider.enabled = true;
+        parryCollision = true;
         playerUIController.parryButton.interactable = false;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         yield return new WaitForSeconds(parryTime);
-        sphereCollider.enabled = false;
+        parryCollider.enabled = false;
+        parryCollision = false;
         playerUIController.parryButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
@@ -460,5 +470,18 @@ public class PlayerController : MonoBehaviour
         playerUIController.parryButton.interactable = true;
         weapon.transform.localPosition = weaponPos;
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+    }
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            stream.SendNext(parryCollision);
+        }
+        else
+        {
+            parryCollision = (bool)stream.ReceiveNext();
+            parryCollider.enabled = parryCollision;
+        }
     }
 }

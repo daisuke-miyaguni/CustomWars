@@ -128,6 +128,8 @@ public class MainSceneManager : Photon.MonoBehaviour {
 			myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
 		}
 		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
+
+		Destroy(GameObject.Find("PlayerControllerUI"));
 	}
 
 	//プレイヤー数の減少を更新,マスタークライアントで行う
@@ -173,6 +175,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//ロビーへ移動する
 	public void GoToTitle ()
 	{
+		Time.timeScale = 1;
 		PhotonNetwork.LeaveRoom();
 		playerNumber -= 1;
 		SceneManager.LoadScene(lobbyScene);

@@ -33,6 +33,7 @@ MonoBehaviour:
   - CallParry
   - Chat
   - Death
+  - DeathDrop
   - DeleteItemBox
   - DestroyRpc
   - DropItem
@@ -49,10 +50,10 @@ MonoBehaviour:
   - Recover
   - RequestForPickupItems
   - RequestForPickupTimes
+  - SendAtakkedToEnemy
   - ShowWinnerResult
   - ShuffleSpawnPos
   - TakeDamage
   - WasgetItem
   - Wasparryed
-  - SendAtakkedToEnemy
   DisableAutoOpenWizard: 1
