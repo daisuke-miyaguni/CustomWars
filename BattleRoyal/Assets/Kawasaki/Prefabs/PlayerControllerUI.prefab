@@ -596,7 +596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1586670526436014
 GameObject:
   m_ObjectHideFlags: 1
@@ -1065,12 +1065,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   createSlot: {fileID: 114957558535536146}
-  attackButton: {fileID: 0}
-  jumpButton: {fileID: 0}
-  inventoryButton: {fileID: 0}
-  parryButton: {fileID: 0}
-  getButton: {fileID: 0}
-  openButton: {fileID: 0}
+  attackMiyaguniButton: {fileID: 0}
+  jumpMiyaguniButton: {fileID: 0}
+  inventoryMiyaguniButton: {fileID: 0}
+  parryMiyaguniButton: {fileID: 0}
+  getMiyaguniButton: {fileID: 0}
+  openMiyaguniButton: {fileID: 0}
   hpSlider: {fileID: 114739099043660046}
   usePocketItem: []
   inventory: {fileID: 1562406187548068}

@@ -101,7 +101,7 @@ public class PocketItem : MonoBehaviour
             }
 
         }
-        //dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
+        dragSlot.DeleteDragItem();                          //　ドラッグしているアイテムデータの削除
         //pocketStatus.SetItemData(myItemData, slotNum);
     }
 

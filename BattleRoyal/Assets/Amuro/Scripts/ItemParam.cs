@@ -12,8 +12,8 @@ public class ItemParam : MonoBehaviour
     {
         Cap,
         Correction,
-        Ruler,        
-        Recovery1,
+        Ruler,
+        Recovery1,   
         Spikes,
         Glue,
     }

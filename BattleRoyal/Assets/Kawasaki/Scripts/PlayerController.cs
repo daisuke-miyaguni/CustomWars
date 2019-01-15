@@ -466,7 +466,6 @@ public class PlayerController : MonoBehaviour
             MainSceneManager mainSceneManager = GameObject.FindWithTag("GameController").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(false);
             itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position, 0);       //死亡時にアイテムを落とす
-            Debug.Log("death");
             Destroy(GameObject.Find("PlayerControllerUI"));
         }
         Destroy(gameObject);

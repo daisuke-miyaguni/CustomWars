@@ -76,7 +76,7 @@ public class ProcessingSlot : MonoBehaviour
     public void MouseBeginDrag()        //アイテムをドラッグしたときの挙動
     {
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
-        instanceDragItemUI.transform.SetParent(transform);
+        instanceDragItemUI.transform.SetParent(transform.parent.parent.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData, gameObject, 1);
     }
 
