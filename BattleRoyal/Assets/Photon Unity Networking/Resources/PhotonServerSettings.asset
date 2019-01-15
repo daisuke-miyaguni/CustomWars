@@ -39,6 +39,7 @@ MonoBehaviour:
   - DropItem
   - EffectStart
   - FullTrashs
+  - Hpber
   - InitPosition
   - InstantiateRpc
   - MoveScene
@@ -50,12 +51,10 @@ MonoBehaviour:
   - Recover
   - RequestForPickupItems
   - RequestForPickupTimes
-  - SendAtakkedToEnemy
   - ShowWinnerResult
   - ShuffleSpawnPos
+  - SyncJumpAnim
   - TakeDamage
   - WasgetItem
   - Wasparryed
-  - Hpber
-  - SyncJumpAnim49
   DisableAutoOpenWizard: 1
