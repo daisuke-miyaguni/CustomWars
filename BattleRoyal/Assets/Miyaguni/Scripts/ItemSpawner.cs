@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
+    [SerializeField]
+    private ItemDataBase itemDataBase;
+
     PhotonView itemSpawnPV;
 
     GameObject itemBox;
@@ -29,6 +32,11 @@ public class ItemSpawner : MonoBehaviour
 
             case "PlayerControllerUI":
                 itemSpawnPV.RPC("DropItem", PhotonTargets.MasterClient, spawnPos, itemNumber);
+                break;
+
+            //死亡時アイテムドロップ　12/21
+            case "Player":
+                itemSpawnPV.RPC("DeathDrop", PhotonTargets.MasterClient, callObject);
                 break;
                 
             default:
@@ -86,5 +94,44 @@ public class ItemSpawner : MonoBehaviour
             UnityEngine.Random.Range(0.5f, itemSpawnPower),
             ForceMode.VelocityChange
         );
+    }
+
+    //死亡時アイテムドロップ　12/21
+    [PunRPC]
+    void DeathDrop(GameObject myPlayer)
+    {   
+        Debug.Log("ok");
+        MyItemStatus myItemStatus = myPlayer.gameObject.GetComponent<MyItemStatus>();
+        itemDataBase = itemDataBase.GetComponent<ItemDataBase>();
+        
+        foreach (var item in itemDataBase.GetItemData())
+        {
+            if (myItemStatus.GetItemFlag(item.GetItemType()))
+            {
+                GameObject instantItem = items[item.GetItemId()];
+
+                for (int i = 0; i < myItemStatus.GetItemCount(item.GetItemId()); i++)
+                {
+                   instantItem = PhotonNetwork.InstantiateSceneObject
+                    (
+                        instantItem.name,
+                        myPlayer.transform.position,
+                        Quaternion.Euler(new Vector3(0, 1, 0) * UnityEngine.Random.Range(0f, 180f)),
+                        0,
+                        null
+                    );
+
+                    Rigidbody itemRb = instantItem.GetComponent<Rigidbody>();
+
+                    itemRb.AddForce
+                    (
+                        UnityEngine.Random.Range(-itemSpawnPower, itemSpawnPower),
+                        itemSpawnPower,
+                        UnityEngine.Random.Range(0.5f, itemSpawnPower),
+                        ForceMode.VelocityChange
+                    );
+                }
+            }
+        }
     }
 }
