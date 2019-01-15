@@ -12,10 +12,10 @@ public class ItemParam : MonoBehaviour
     {
         Cap,
         Correction,
-        Ruler,
-        Glue,
-        Spikes,
+        Ruler,        
         Recovery1,
+        Spikes,
+        Glue,
     }
 
     public items item = items.Cap;

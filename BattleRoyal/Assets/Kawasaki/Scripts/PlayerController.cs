@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,42 +15,25 @@ public class PlayerController : MonoBehaviour
 
     private const int maxHP = 100;
     [SerializeField] private int currentHP = maxHP;
-    [SerializeField] private Slider hpSlider;
-    [SerializeField] private GameObject weapon;
+    private Slider hpSlider;
     [SerializeField] private GameObject otherHpBar;
+    [SerializeField] private Slider otherHpBarSlider;
 
-    [SerializeField] private GameObject itemBox;
+    private GameObject itemBox;
 
+    [SerializeField] private GameObject weapon;
+    CapsuleCollider weaponCollider;
     WeaponManager myWM;
 
     // playerステータス
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
-    [SerializeField] private float attackStayTime = 0.2f;
-    [SerializeField] private float attackTime = 0.1f;
 
     private MobileInputController controller;
 
     private List<string> itemList = new List<string>();
 
     private Animator animator;
-
-    private enum PlayerAnimatorController
-    {
-        player_pencil,
-        player_eraser,
-        player_ruler
-    }
-
-
-    private enum PlayerAnimatorParameters
-    {
-        run,
-        jump,
-        parry,
-        desprate,
-        attack
-    }
 
     private enum GameObjectTags
     {
@@ -62,20 +44,37 @@ public class PlayerController : MonoBehaviour
         AreaOut
     }
 
-    CapsuleCollider weaponCollider;
+    [SerializeField] private float firstComboEffectiveTime = 0.7f;
+    [SerializeField] private float secondComboEffectiveTime = 0.5f;
+
+    int[] jumpStates = new int[2]
+    {
+        Animator.StringToHash("Base Layer.jump_idle"),
+        Animator.StringToHash("Base Layer.jump_run"),
+    };
+
+    int[] attackStates = new int[3]
+    {
+        Animator.StringToHash("Base Layer.attack1"),
+        Animator.StringToHash("Base Layer.attack2"),
+        Animator.StringToHash("Base Layer.attack3")
+    };
+
+    int parryState = Animator.StringToHash("Base Layer.parry");
 
     // player parry情報
-    [SerializeField] private SphereCollider parryCollider;
-    [SerializeField] private float parryStayTime = 0.3f;
-    [SerializeField] private float parryTime = 0.5f;
-    [SerializeField] private float wasparryedDamage = 15;
-    [SerializeField] private float rebelliousTime = 0.3f;
+    [SerializeField] private GameObject parry;
+    private SphereCollider parryCollider;
+    [SerializeField] private float wasparryedDamage = 15.0f;
     private bool parryCollision = false;
+    private bool parring = false;
+
+    private bool jumping = false;
+
+    private bool desperate = false;
 
     [SerializeField] private float angleMax;
     [SerializeField] private float angleMin;
-
-    private bool isJump;
 
     private GameObject playerCamera;
     Vector2 startPos;
@@ -107,10 +106,15 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        parryCollider = parryCollider.GetComponent<SphereCollider>();
-        parryCollider.enabled = false;
-        // weaponCollider = weapon.GetComponent<BoxCollider>();
+        // アニメーター取得
         animator = GetComponent<Animator>();
+        // parry当たり判定設定、コライダー取得
+        parryCollider = parry.GetComponent<SphereCollider>();
+        parryCollider.enabled = false;
+        // 武器の初期位置
+        weaponPos = weapon.transform.localPosition;
+        // WeaponManagerの取得
+        myWM = weapon.GetComponent<WeaponManager>();
         weaponCollider = weapon.GetComponent<CapsuleCollider>();
         itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
 
@@ -123,38 +127,33 @@ public class PlayerController : MonoBehaviour
             myItemStatus = GetComponent<MyItemStatus>();
             // photontransformview取得
             myPTV = GetComponent<PhotonTransformView>();
-            playerUIController = GameObject.Find("PlayerControllerUI").GetComponent<PlayerUIController>();
+            playerUIController = GameObject.FindWithTag("PlayerControllerUI").gameObject.GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
             myRB = this.gameObject.GetComponent<Rigidbody>();
             // 左スティック取得
             controller = GameObject.Find("LeftJoyStick").gameObject.GetComponent<MobileInputController>();
 
+            parring = false;
+
             //hp初期値設定
             currentHP = maxHP;
             hpSlider = playerUIController.GetHPSlider();
             hpSlider.value = currentHP;
-            hpText = GameObject.Find("HPText").GetComponent<Text>();
+            hpText = GameObject.Find("HPText").gameObject.GetComponent<Text>();
             hpText.text = "HP: " + currentHP.ToString();
             otherHpBar.SetActive(false);
-            // myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
-
-            isJump = true;
-
-            weaponPos = weapon.transform.localPosition;
-
-            transform.LookAt(Vector3.zero);
-
-            myWM = weapon.GetComponent<WeaponManager>();
+            myPV.RPC("Hpbar", PhotonTargets.OthersBuffered);
         }
+
     }
 
-    // [PunRPC]
-    // void Hpber()
-    // {
-    //     otherHpBar.SetActive(true);
-    // }
-
+    [PunRPC]
+    void Hpber()
+    {
+        otherHpBar.SetActive(true);
+        otherHpBarSlider.value = currentHP;
+    }
 
     void FixedUpdate()
     {
@@ -177,20 +176,16 @@ public class PlayerController : MonoBehaviour
         // 方向キーの入力値とカメラの向きから、移動方向を決定
         Vector3 moveForward = cameraForward * GetMoveDirection().z + Camera.main.transform.right * GetMoveDirection().x;
         // 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
-        myRB.velocity += (moveForward * moveSpeed)/* + new Vector3(0, myRB.velocity.y, 0)*/ ;
+        myRB.velocity += (moveForward * moveSpeed);
 
         if (moveForward == Vector3.zero)
         {
-            animator.SetBool(PlayerAnimatorParameters.run.ToString(), false);
+            animator.SetBool("run", false);
         }
         else
         {
-            animator.SetBool(PlayerAnimatorParameters.run.ToString(), true);
+            animator.SetBool("run", true);
         }
-
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-
 
         // キャラクターの向きを進行方向に
         if (moveForward != Vector3.zero)
@@ -205,59 +200,145 @@ public class PlayerController : MonoBehaviour
         float x = controller.Horizontal;
         float z = controller.Vertical;
 
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.jump_idle")
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState)
+        {
+            return Vector3.zero;
+        }
+
         return new Vector3(x, 0, z);
     }
 
     // ジャンプ
     public void Jump()
     {
-        if (isJump)
+        // パリィ状態か攻撃状態のときはジャンプを呼ばない
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || jumping
+        || desperate)
         {
-            playerUIController.jumpButton.interactable = false;
-            animator.SetTrigger(PlayerAnimatorParameters.jump.ToString());
-            weapon.transform.localPosition = weaponPos;
-            weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            isJump = false;
+            return;
+        }
+
+        playerUIController.parryMiyaguniButton.interactable = false;
+        playerUIController.attackMiyaguniButton.interactable = false;
+
+        // ジャンプアニメーション同期処理の呼び出し
+        myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
+    }
+
+    // ジャンプアニメーションの同期
+    [PunRPC]
+    void SyncJumpAnim()
+    {
+        // ジャンプアニメーションの再生
+        animator.SetTrigger("jump");
+        // 武器の位置を初期化
+        weapon.transform.localPosition = weaponPos;
+        // 武器の角度を初期化
+        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+    }
+
+    void OnJumpButton()
+    {
+        // ジャンプが終了後、ジャンプボタンを押せるようにする
+        if(myPV.isMine)
+        {
+            jumping = false;
+            playerUIController.jumpMiyaguniButton.interactable = true;
+        }
+    }
+
+    void OffJumpButton()
+    {
+        // ジャンプ中にジャンプボタンを押せなくする
+        if (myPV.isMine)
+        {
+            jumping = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
+            playerUIController.jumpMiyaguniButton.interactable = false;
         }
     }
 
     // 攻撃入力
     public void OnClickAttack()
     {
-        animator.SetFloat("Speed", myWM.GetWeaponSpeed());
-        myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
+        if (animator.IsInTransition(0))
+        {
+            return;
+        }
+        // 現在のアニメーション状態の取得
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+
+        // アイドル状態か、走り状態か、パリィ状態の時にのみ攻撃ボタンで攻撃を呼ぶ
+        if (currentState.IsName("idle")
+        || currentState.IsName("run")
+        || currentState.IsName("parry")
+        || currentState.IsName("attack1")
+        || currentState.IsName("attack2"))
+        {
+            if (myPV.isMine)
+            {
+                playerUIController.jumpMiyaguniButton.interactable = false;
+                playerUIController.parryMiyaguniButton.interactable = false;
+            }
+            myPV.RPC("CallAttack", PhotonTargets.AllViaServer);
+        }
+        else
+        {
+            return;
+        }
     }
 
-    // 攻撃
+    // 攻撃処理を呼び出す
     [PunRPC]
     private void CallAttack()
     {
-        StartCoroutine(Attack());
+        animator.SetFloat("Speed", myWM.GetWeaponSpeed());
+        // 現在のアニメーション状態の取得
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+        // animator.SetTrigger("attack1");
+        if (currentState.IsName("attack1") && currentState.normalizedTime < firstComboEffectiveTime)
+        {
+            animator.SetTrigger("attack2");
+            // AudioManager.Instance.PlaySE("punch-middle2");
+        }
+        else if (currentState.IsName("attack2") && currentState.normalizedTime < secondComboEffectiveTime)
+        {
+            animator.SetTrigger("attack3");
+            // AudioManager.Instance.PlaySE("sword-slash4");
+        }
+        else if (!currentState.IsName("attack1") && !currentState.IsName("attack2"))
+        {
+            animator.SetTrigger("attack1");
+            // AudioManager.Instance.PlaySE("heavy_punch1");
+        }
+        // 武器の位置の初期化
+        weapon.transform.localPosition = weaponPos;
+        // 武器の角度の初期化
+        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
-    IEnumerator Attack()
+    private void OnWeaponCollider()
     {
-        yield return new WaitForSeconds(attackStayTime);
-        animator.SetTrigger(PlayerAnimatorParameters.attack.ToString());
         weaponCollider.enabled = true;
-        myWM.weaponCollision = true;
-        playerUIController.attackButton.interactable = false;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        yield return new WaitForSeconds(attackTime);
-        weaponCollider.enabled = false;
-        myWM.weaponCollision = false;
-        playerUIController.attackButton.interactable = true;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        if(myPV.isMine)
+        {
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+        }
     }
 
-    //12月20追加
-    [PunRPC]
-    private void SendAtakkedToEnemy(int pvId, bool weaponCol)
+    private void OffWeaponCollider()
     {
-        CapsuleCollider enemyCollider = PhotonView.Find(pvId).gameObject.transform.Find("weapon").GetComponent<CapsuleCollider>();
-        enemyCollider.enabled = weaponCol;
+        weaponCollider.enabled = false;
     }
 
     // ダメージを受ける
@@ -275,9 +356,12 @@ public class PlayerController : MonoBehaviour
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
+            hpSlider.value = currentHP;
         }
-
-        hpSlider.value = currentHP;
+        else
+        {
+            otherHpBarSlider.value = currentHP;
+        }
     }
 
     public void CallRecover(int heal)
@@ -289,12 +373,6 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void Recover(int amount)
     {
-        //ここで使えない処理をすると、アイテム使用時にアイテムが消えるだけになってしまうのでコメントアウトしてます。
-        /*if (currentHP >= maxHP)       
-        {
-            return;
-        }*/
-
         currentHP += amount;
 
         if (currentHP >= maxHP)
@@ -302,25 +380,14 @@ public class PlayerController : MonoBehaviour
             currentHP = maxHP;
         }
 
-        hpSlider.value = currentHP;
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
+            hpSlider.value = currentHP;
         }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (myPV.isMine)
+        else
         {
-            // 着地
-            if (other.gameObject.layer == 14 || other.gameObject.layer == 15)
-            {
-                isJump = true;
-                playerUIController.jumpButton.interactable = true;
-                weapon.transform.localPosition = weaponPos;
-                weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            }
+            otherHpBarSlider.value = currentHP;
         }
     }
 
@@ -328,23 +395,28 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            // 被弾
-            if (other.gameObject.tag == GameObjectTags.weapon.ToString()
-            && other.gameObject != weapon)
+            switch(other.gameObject.tag)
             {
-                WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
-                int damage = Mathf.CeilToInt(wm.GetWeaponPower() * myWM.GetWeaponDefense());
-                myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
-            }
-            // アイテム取得
-            if (other.gameObject.tag == GameObjectTags.Item.ToString())
-            {
-                itemList.Add(other.gameObject.name);
-            }
-            // ステージ外判定
-            if (other.gameObject.tag == GameObjectTags.AreaOut.ToString())
-            {
-                myPV.RPC("Death", PhotonTargets.AllViaServer);
+                // 被弾
+                case "weapon":
+                    if(other.gameObject != weapon && !parring)
+                    {
+                        WeaponManager wm = other.gameObject.GetComponent<WeaponManager>();
+                        int damage = Mathf.CeilToInt(wm.GetWeaponPower() * myWM.GetWeaponDefense());
+                        other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                        myPV.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
+                    }
+                    break;
+                // アイテム
+                case "Item":
+                    itemList.Add(other.gameObject.name);
+                    break;
+                // ステージ外処理
+                case "AreaOut":
+                    myPV.RPC("Death", PhotonTargets.AllViaServer);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -356,7 +428,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
             {
                 itemBox = other.gameObject;
-                playerUIController.openButton.gameObject.SetActive(true);
+                playerUIController.openMiyaguniButton.gameObject.SetActive(true);
             }
         }
     }
@@ -368,7 +440,7 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
             {
                 itemBox = null;
-                playerUIController.openButton.gameObject.SetActive(false);
+                playerUIController.openMiyaguniButton.gameObject.SetActive(false);
             }
         }
     }
@@ -377,7 +449,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            playerUIController.openButton.gameObject.SetActive(false);
+            playerUIController.openMiyaguniButton.gameObject.SetActive(false);
         }
         itemBox.transform.root.gameObject.GetComponent<ItemBox>().OpenOnClick();
         itemBox = null;
@@ -387,24 +459,36 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     private void Death()
     {
-        Destroy(gameObject);
         if (myPV.isMine)
         {
             hpText.text = "HP: " + currentHP.ToString();
             hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.FindWithTag("GameController").GetComponent<MainSceneManager>();
-            mainSceneManager.GoToResult(1);
+            mainSceneManager.GoToResult(false);
             itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position, 0);       //死亡時にアイテムを落とす
             Debug.Log("death");
             Destroy(GameObject.Find("PlayerControllerUI"));
         }
+        Destroy(gameObject);
     }
 
     public void ParryClick()
     {
+        // 攻撃状態とジャンプ状態のときに押せなくする
+        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
+        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1]
+        || parring
+        || desperate)
+        {
+            return;
+        }
         if (myPV.isMine)
         {
-            playerUIController.parryButton.interactable = false;
+            playerUIController.jumpMiyaguniButton.interactable = false;
+            playerUIController.attackMiyaguniButton.interactable = false;
             myPV.RPC("CallParry", PhotonTargets.AllViaServer);
         }
     }
@@ -412,24 +496,28 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void CallParry()
     {
-        StartCoroutine(Parrying());
+        animator.SetTrigger("parry");
+        // 武器の位置の初期化
+        weapon.transform.localPosition = weaponPos;
+        // 武器の角度の初期化
+        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
-    IEnumerator Parrying()
+    void OnParry()
     {
-        animator.SetTrigger(PlayerAnimatorParameters.parry.ToString());
-        yield return new WaitForSeconds(parryStayTime);
         parryCollider.enabled = true;
-        parryCollision = true;
-        playerUIController.parryButton.interactable = false;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        yield return new WaitForSeconds(parryTime);
+        parring = true;
+        if(myPV.isMine)
+        {
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
+        }
+    }
+
+    void OffParry()
+    {
         parryCollider.enabled = false;
-        parryCollision = false;
-        playerUIController.parryButton.interactable = true;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        parring = false;
     }
 
     public void CallWasparryed()
@@ -440,36 +528,39 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void Wasparryed()
     {
-        animator.SetTrigger(PlayerAnimatorParameters.desprate.ToString());
+        animator.SetTrigger("desperate");
         currentHP -= Mathf.CeilToInt(wasparryedDamage);
-        hpSlider.value = currentHP;
-        if (myPV.isMine)
-        {
-            hpText.text = "HP: " + currentHP.ToString();
-            StartCoroutine(Rebellious());
-        }
 
         if (currentHP <= 0)
         {
             currentHP = 0;
-            myPV.RPC("Death", PhotonTargets.Others);
+            myPV.RPC("Death", PhotonTargets.AllViaServer);
+        }
+
+        if (myPV.isMine)
+        {
+            hpText.text = "HP: " + currentHP.ToString();
+            hpSlider.value = currentHP;
+            // 武器の位置の初期化
+            weapon.transform.localPosition = weaponPos;
+            // 武器の角度の初期化
+            weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        }
+        else
+        {
+            otherHpBarSlider.value = currentHP;
         }
     }
 
-    IEnumerator Rebellious()
+    void desperating()
     {
-        // Parryの操作制御
-        playerUIController.attackButton.interactable = false;
-        playerUIController.jumpButton.interactable = false;
-        playerUIController.parryButton.interactable = false;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        yield return new WaitForSeconds(rebelliousTime);
-        playerUIController.attackButton.interactable = true;
-        playerUIController.jumpButton.interactable = true;
-        playerUIController.parryButton.interactable = true;
-        weapon.transform.localPosition = weaponPos;
-        weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        weaponCollider.enabled = false;
+        desperate = true;
+    }
+
+    void desperated()
+    {
+        desperate = false;
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

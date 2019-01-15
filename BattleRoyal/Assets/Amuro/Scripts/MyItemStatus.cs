@@ -19,9 +19,9 @@ public class MyItemStatus : MonoBehaviour
         parts1,
         parts2,
         parts3,
-        mon,
+        riyo,
         ball,
-        riyo
+        mon
     };
 
     [SerializeField]

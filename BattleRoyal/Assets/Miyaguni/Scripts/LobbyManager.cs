@@ -37,6 +37,7 @@ public class LobbyManager : Photon.MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayBGM("bgm_maoudamashii_neorock79");
         photonSceneTransitioner = GetComponent<PhotonSceneTransitioner>();
         PhotonNetwork.sendRate = sendRateSetting;
         PhotonNetwork.sendRateOnSerialize = sendRateOnSerializeSetting;

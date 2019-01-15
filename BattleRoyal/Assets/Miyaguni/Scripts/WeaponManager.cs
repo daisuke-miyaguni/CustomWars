@@ -6,48 +6,49 @@ using UnityEngine.UI;
 public class WeaponManager : Photon.MonoBehaviour
 {
     WeaponManager wm;
-    private int weaponPower = 15;
-
-    private float weaponSpeed = 1.0f;
-    private int speedPartsCounts = 0;
-
-    private float weaponDefense = 1.0f;
-    private int defensePartsCounts = 0;
+    PhotonView weaponPV;
+    PlayerController playerController;
+    Rigidbody rootRb;
 
     Text powerText;
     Text speedText;
     Text defenseText;
 
-    CustomSlot customSlot;
-    [SerializeField] GameObject[] itemCustomSlots = new GameObject[3];
-    string customSlotString = "customs_slot";
+    [SerializeField] private GameObject cap;
+    [SerializeField] private GameObject correction;
+    [SerializeField] private GameObject ruler;
 
-    public bool weaponCollision = false;
-
-    CapsuleCollider weaponCollider;
-
-    PhotonView weaponPV;
-
+    private int weaponPower = 15;
+    private int powerPartsCounts = 0;
 
     public float GetWeaponPower()
     {
         return weaponPower;
+    }    
+    
+    public void SetWeaponPower(int partsPower)
+    {
+        this.weaponPower = weaponPower + partsPower;
+        this.powerPartsCounts = (weaponPower/3) - 5;
+
+        if(powerPartsCounts > 0)
+        {
+            cap.SetActive(true);
+        }
+        else
+        {
+            cap.SetActive(false);
+        }
+
+        powerText.text = "Power: " + weaponPower.ToString();
     }
+
+    private float weaponSpeed = 1.0f;
+    private int speedPartsCounts = 0;
 
     public float GetWeaponSpeed()
     {
         return weaponSpeed;
-    }
-
-    public float GetWeaponDefense()
-    {
-        return weaponDefense;
-    }
-
-    public void SetWeaponPower(int partsPower)
-    {
-        this.weaponPower = weaponPower + partsPower;
-        powerText.text = "Power: " + weaponPower.ToString();
     }
 
     public void SetWeaponSpeed(int partsSpeed)
@@ -68,7 +69,25 @@ public class WeaponManager : Photon.MonoBehaviour
                 weaponSpeed = 1.00f;
                 break;
         }
+
+        if (speedPartsCounts > 0)
+        {
+            correction.SetActive(true);
+        }
+        else
+        {
+            correction.SetActive(false);
+        }
+
         speedText.text = "Speed: " + weaponSpeed.ToString();
+    }
+
+    private float weaponDefense = 1.0f;
+    private int defensePartsCounts = 0;
+
+    public float GetWeaponDefense()
+    {
+        return weaponDefense;
     }
 
     public void SetWeaponDefense(int partsDefense)
@@ -89,7 +108,54 @@ public class WeaponManager : Photon.MonoBehaviour
                 weaponDefense = 1.000f;
                 break;
         }
+
+        if (defensePartsCounts > 0)
+        {
+            ruler.SetActive(true);
+        }
+        else
+        {
+            ruler.SetActive(false);
+        }
+
         defenseText.text = "Defense: " + weaponDefense.ToString();
+    }
+
+    CustomSlot customSlot;
+    GameObject[] itemCustomSlots = new GameObject[3];
+    string customSlotString = "customs_slot";
+
+    public CapsuleCollider weaponCollider;
+
+    void Awake()
+    {
+        weaponPV = GetComponent<PhotonView>();
+        weaponCollider = GetComponent<CapsuleCollider>();
+        weaponCollider.enabled = false;
+        playerController = gameObject.transform.root.GetComponent<PlayerController>();
+        rootRb = gameObject.transform.root.GetComponent<Rigidbody>();
+    }
+
+    void Start()
+    {
+        if (weaponPV.isMine)
+        {
+            for (int i = 0; i < itemCustomSlots.Length; i++)
+            {
+                itemCustomSlots[i] = GameObject.FindWithTag("PlayerControllerUI").gameObject.transform.Find("Inventory").gameObject.transform.Find("base_panel").gameObject.transform.Find("custom_panel").gameObject.transform.Find(customSlotString + (i + 1).ToString()).gameObject;
+                // itemCustomSlots[i] = GameObject.Find(customSlotString + (i + 1).ToString());
+                customSlot = itemCustomSlots[i].GetComponent<CustomSlot>();
+                customSlot.SetWeaponManager(this);
+            }
+
+            powerText = GameObject.Find("WeaponPower").GetComponent<Text>();
+            powerText.text = "Power: " + weaponPower.ToString();
+            speedText = GameObject.Find("WeaponSpeed").GetComponent<Text>();
+            speedText.text = "Speed: " + weaponSpeed.ToString();
+            defenseText = GameObject.Find("WeaponDefense").GetComponent<Text>();
+            defenseText.text = "Defense: " + weaponDefense.ToString();
+        }
+
     }
 
     public void AttachParts(float partsPower, int ID)
@@ -115,34 +181,17 @@ public class WeaponManager : Photon.MonoBehaviour
         }
     }
 
-    void Awake()
+    void OnTriggerEnter(Collider other)
     {
-        weaponPV = GetComponent<PhotonView>();
-        weaponCollider = GetComponent<CapsuleCollider>();
-        weaponCollider.enabled = false;
-    }
-
-    void Start()
-    {
-        if (weaponPV.isMine)
+        if (other.gameObject.tag == "Parry"
+        && other.gameObject.transform.root != this.gameObject.transform.root
+        && weaponPV.isMine)
         {
-            wm = GetComponent<WeaponManager>();
-            for (int i = 0; i < itemCustomSlots.Length; i++)
-            {
-                itemCustomSlots[i] = GameObject.Find("PlayerControllerUI").gameObject.transform.Find("Inventory").gameObject.transform.Find("base_panel").gameObject.transform.Find("custom_panel").gameObject.transform.Find(customSlotString + (i + 1).ToString()).gameObject;
-                // itemCustomSlots[i] = GameObject.Find(customSlotString + (i + 1).ToString());
-                customSlot = itemCustomSlots[i].GetComponent<CustomSlot>();
-                customSlot.SetWeaponManager(wm);
-            }
-
-            powerText = GameObject.Find("WeaponPower").GetComponent<Text>();
-            powerText.text = "Power: " + weaponPower.ToString();
-            speedText = GameObject.Find("WeaponSpeed").GetComponent<Text>();
-            speedText.text = "Speed: " + weaponSpeed.ToString();
-            defenseText = GameObject.Find("WeaponDefense").GetComponent<Text>();
-            defenseText.text = "Defense: " + weaponDefense.ToString();
+            //other.gameObject.GetComponent<SphereCollider>().enabled = false;
+            this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            playerController.CallWasparryed();
+            rootRb.AddForce(gameObject.transform.root.forward * -10f, ForceMode.Impulse);
         }
-
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -150,13 +199,10 @@ public class WeaponManager : Photon.MonoBehaviour
         if (stream.isWriting)
         {
             stream.SendNext(weaponPower);
-            stream.SendNext(weaponCollision);
         }
         else
         {
             weaponPower = (int)stream.ReceiveNext();
-            weaponCollision = (bool)stream.ReceiveNext();
-            weaponCollider.enabled = weaponCollision;
         }
     }
 }

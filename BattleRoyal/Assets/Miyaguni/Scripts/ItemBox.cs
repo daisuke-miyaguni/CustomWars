@@ -41,6 +41,6 @@ public class ItemBox : MonoBehaviour
 	{
 		Destroy(this.gameObject);
         PlayerUIController playerUIs = GameObject.FindWithTag("PlayerControllerUI").GetComponent<PlayerUIController>();
-        playerUIs.openButton.gameObject.SetActive(false);
+        playerUIs.openMiyaguniButton.gameObject.SetActive(false);
 	}
 }

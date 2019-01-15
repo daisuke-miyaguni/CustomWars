@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerUIController : MonoBehaviour
 {
@@ -10,16 +11,14 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] private CreateSlotScript createSlot;
 
-    [SerializeField] public Button attackButton;
-    [SerializeField] public Button jumpButton;
-    // [SerializeField] public Button itemButton;
-    [SerializeField] public Button inventoryButton;
-    // [SerializeField] public Button avoidButton;
-    [SerializeField] public Button parryButton;
+    [SerializeField] public MiyaguniButton attackMiyaguniButton;
+    [SerializeField] public MiyaguniButton jumpMiyaguniButton;
+    [SerializeField] public MiyaguniButton inventoryMiyaguniButton;
+    [SerializeField] public MiyaguniButton parryMiyaguniButton;
 
-    [SerializeField] public Button getButton;
+    [SerializeField] public MiyaguniButton getMiyaguniButton;
 
-    [SerializeField] public Button openButton;
+    [SerializeField] public MiyaguniButton openMiyaguniButton;
 
     [SerializeField] Slider hpSlider;
 
@@ -37,6 +36,7 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] GameObject deletePanel;
 
+    // プレイヤーとアイテム状態を定義する
     public void SetPlayerController(PlayerController player)
     {
         this.playerController = player.gameObject.GetComponent<PlayerController>();
@@ -44,6 +44,7 @@ public class PlayerUIController : MonoBehaviour
         SetButtons();
     }
 
+    // アイテム状態ゲッター
     public MyItemStatus GetMyItemStatus()
     {
         return myItemStatus;
@@ -51,52 +52,64 @@ public class PlayerUIController : MonoBehaviour
 
     public void SetButtons()
     {
-        attackButton.GetComponent<Button>();
-        attackButton.onClick.AddListener(playerController.OnClickAttack);
 
-        jumpButton.GetComponent<Button>();
-        jumpButton.onClick.AddListener(playerController.Jump);
+        // 攻撃ボタンに攻撃処理をもたせる
+        attackMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        attackMiyaguniButton.onDown.AddListener(playerController.OnClickAttack);
 
-        inventoryButton.GetComponent<Button>();
-        inventoryButton.onClick.AddListener(this.OpenInventory);
+        // ジャンプボタンにジャンプ処理をもたせる
+        jumpMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        jumpMiyaguniButton.onDown.AddListener(playerController.Jump);
 
-        getButton.GetComponent<Button>();
-        getButton.onClick.AddListener(myItemStatus.OnGetButton);        
+        // インベントリーボタンにインベントリーを開く処理をもたせる
+        inventoryMiyaguniButton.GetComponent<MiyaguniButton>();
+        inventoryMiyaguniButton.onDown.AddListener(this.OpenInventory);
 
-        // avoidButton.GetComponent<Button>();
-        // avoidButton.onClick.AddListener(playerController.Avoid);
+        // ゲットボタンにアイテムを取得する処理をもたせる
+        getMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        getMiyaguniButton.onDown.AddListener(myItemStatus.OnGetButton);
 
-        parryButton.GetComponent<Button>();
-        parryButton.onClick.AddListener(playerController.ParryClick);
+        // パリィボタンにパリィを取得する処理をもたせる
+        parryMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        parryMiyaguniButton.onDown.AddListener(playerController.ParryClick);
 
-        openButton.GetComponent<Button>();
-        openButton.onClick.AddListener(playerController.OnClickOpenButton);
-        openButton.gameObject.SetActive(false);
+        // オープンボタンに宝箱を開く処理をもたせる
+        openMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        openMiyaguniButton.onDown.AddListener(playerController.OnClickOpenButton);
 
+        // オープンボタンを非表示にする
+        openMiyaguniButton.gameObject.SetActive(false);
+
+        // アイテム使用ボタンにプレイヤーの情報を渡す
         for(int i = 0; i < usePocketItem.Length; i++)
         {
             usePocketItem[i].GetComponent<UseItem>().SetMyPlayer(playerController);
         }
 
+        // カスタムスロットにプレイヤーの情報を渡す
         for(int i = 0; i < customSlot.Length; i++)
         {
             customSlot[i].GetComponent<CustomSlot>().InitMyItemStatus(playerController);
         }
 
+        // ポケットスロットにプレイヤーの情報を渡す
         for (int i = 0; i < pocketItem.Length; i++)
         {
             pocketItem[i].GetComponent<PocketItem>().InitMyItemStatus(playerController);
         }
 
+        // ドロップボタンにプレイヤーの情報を渡す
         DragDelete dd = deletePanel.GetComponent<DragDelete>();
         dd.SetMyPlayer(playerController.gameObject);
 
+        // スロット作成にプレイヤーのアイテム状態の情報を渡す
         createSlot.SetMyItemStatus(playerController.GetMyItemStatus());
 
+        // インベントリーを非表示にする
         inventory.SetActive(false);
     }
 
-    // カバンを開く
+    // インベントリを開く
     public void OpenInventory()
     {
         if (!inventory.activeSelf)
