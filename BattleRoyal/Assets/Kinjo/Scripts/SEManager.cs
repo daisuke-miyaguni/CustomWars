@@ -9,15 +9,15 @@ public class SEManager : MonoBehaviour {
 		switch(atkNum)
 		{
 			case 0:
-			AudioManager.Instance.PlaySE("heavy_punch1");
+			AudioManager.Instance.PlaySE("sword-gesture1");
 			return;
 
 			case 1:
-			AudioManager.Instance.PlaySE("punch-middle2");
+			AudioManager.Instance.PlaySE("sword-gesture1");
 			return;
 
 			case 2:
-			AudioManager.Instance.PlaySE("sword-slash4");
+			AudioManager.Instance.PlaySE("sword-gesture3");
 			return;
 		}
 	}

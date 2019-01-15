@@ -16,6 +16,7 @@ public class PlayerCamera : MonoBehaviour
     private bool isDoubleTapStart;
     private float doubleTapTime;
     private int tapFingerID;
+    [SerializeField] private float tappedEnabledTime;
 
     // private float beforeCameraAngle;
     // private Vector3 beforeDistance;
@@ -76,7 +77,7 @@ public class PlayerCamera : MonoBehaviour
         if (isDoubleTapStart)
         {
             doubleTapTime += Time.deltaTime;
-            if (doubleTapTime < 0.2f)
+            if (doubleTapTime < tappedEnabledTime)
             {
                 if (Input.touchCount > 0)
                 {
