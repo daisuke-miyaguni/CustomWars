@@ -383,8 +383,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == 14
-        || collision.gameObject.layer == 15)
+        if (collision.gameObject.layer == 15)
         {
             jumping = false;
             playerUIController.jumpMiyaguniButton.interactable = true;
@@ -395,8 +394,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if(collision.gameObject.layer == 14
-        || collision.gameObject.layer == 15)
+        if(collision.gameObject.layer == 15)
         {
             jumping = true;
             playerUIController.jumpMiyaguniButton.interactable = false;
@@ -405,24 +403,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator OnCollisionStay(Collision collision)
-    {
-        yield return null;
-        if(collision.gameObject.layer == 15)
-        {
-            jumping = false;
-            playerUIController.jumpMiyaguniButton.interactable = true;
-            playerUIController.parryMiyaguniButton.interactable = true;
-            playerUIController.attackMiyaguniButton.interactable = true;
-        }
-        else
-        {
-            jumping = true;
-            playerUIController.jumpMiyaguniButton.interactable = false;
-            playerUIController.parryMiyaguniButton.interactable = false;
-            playerUIController.attackMiyaguniButton.interactable = false;
-        }
-    }
+    //private IEnumerator OnCollisionStay(Collision collision)
+    //{
+    //    yield return null;
+    //    if(collision.gameObject.layer == 15)
+    //    {
+    //        jumping = false;
+    //        playerUIController.jumpMiyaguniButton.interactable = true;
+    //        playerUIController.parryMiyaguniButton.interactable = true;
+    //        playerUIController.attackMiyaguniButton.interactable = true;
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
