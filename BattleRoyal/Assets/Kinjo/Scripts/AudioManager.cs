@@ -11,8 +11,9 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 	private string nextSEName;
 	private bool isFadeOut = false;
 	private float bgmFadeSpeedRate;
-
-	public AudioSource AttachBGMSource,AttachSESource;
+	private AudioSource bgmSource;
+	private List<AudioSource> seSourceList;
+	private const int seSourceNum = 10;
 
 	private Dictionary<string,AudioClip>bgmDic,seDic;
 
@@ -25,6 +26,26 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 		}
 
 		DontDestroyOnLoad(this.gameObject);
+
+		for(int i = 0; i<seSourceNum + 1; i++)
+		{
+			gameObject.AddComponent<AudioSource>();
+		}
+
+		AudioSource[] audioSourceArray = GetComponents<AudioSource>();
+		seSourceList = new List<AudioSource>();
+		for (int i = 0; i<audioSourceArray.Length; i++)
+		{
+			if(i==0)
+			{
+				audioSourceArray[i].loop = true;
+				bgmSource = audioSourceArray[i];
+			}
+			else
+			{
+				seSourceList.Add(audioSourceArray[i]); 
+			}
+		}
 
 		bgmDic = new Dictionary<string, AudioClip>();
 		seDic = new Dictionary<string, AudioClip>();
@@ -54,7 +75,15 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 		}
 
 		nextSEName = seName;
-		AttachSESource.PlayOneShot(seDic[nextSEName] as AudioClip);
+		foreach(AudioSource seSource in seSourceList)
+		{
+			if(!seSource.isPlaying)
+			{
+				seSource.PlayOneShot(seDic[nextSEName] as AudioClip);
+				return;
+			}
+
+		}
 	}
 
 	///<summary>
@@ -68,13 +97,13 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 			return;
 		}
 
-		if (!AttachBGMSource.isPlaying) {
+		if (!bgmSource.isPlaying) {
 			nextBGMName = "";
-			AttachBGMSource.clip = bgmDic [bgmName] as AudioClip;
-			AttachBGMSource.Play ();
+			bgmSource.clip = bgmDic [bgmName] as AudioClip;
+			bgmSource.Play ();
 		}
 		//違うBGMが流れている時は、流れているBGMをフェードアウトさせてから次を流す。同じBGMが流れている時はスルー
-		else if (AttachBGMSource.clip.name != bgmName) {
+		else if (bgmSource.clip.name != bgmName) {
 			nextBGMName = bgmName;
 			FadeOutBGM (fadeSpeed);
 		}
@@ -94,11 +123,11 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 			return;
 		}
 
-		AttachBGMSource.volume -= Time.deltaTime * bgmFadeSpeedRate;
-		if(AttachBGMSource.volume <= 0)
+		bgmSource.volume -= Time.deltaTime * bgmFadeSpeedRate;
+		if(bgmSource.volume <= 0)
 		{
-			AttachBGMSource.Stop();
-			AttachBGMSource.volume = PlayerPrefs.GetFloat("BGM_VOLUME_KEY",1.0f);
+			bgmSource.Stop();
+			bgmSource.volume = PlayerPrefs.GetFloat("BGM_VOLUME_KEY",1.0f);
 			isFadeOut = false;
 
 			if(!string.IsNullOrEmpty(nextBGMName))

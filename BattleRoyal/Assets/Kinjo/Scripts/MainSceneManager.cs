@@ -6,10 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainSceneManager : Photon.MonoBehaviour {
 	private int playerNumber;    //プレイヤー数
-	// private int activePlayerNumber;    //初期のプレイヤー数
-	// private bool alive = true;	// 生きてるかどうか
 	private float elapsedTime;    //経過時間
-	// private bool isDead = false;    //死んだかどうか
 	[SerializeField]private Text elapsedTimeText;    //経過時間を表示するテキストUI
 	[SerializeField]private Text playerNumberText;    //プレイヤー数を表示するテキストUI
 	[SerializeField]private float scaleDownStartTime = 5.0f;    	//縮小開始時の経過時間を指定
@@ -113,16 +110,17 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//リザルトの処理を開始する新
 	public void GoToResult (bool isDisconnected)
 	{
+		int rank = playerNumber;
 		Time.timeScale = 0;
 		resultPanel.SetActive(true);
 		if(isDisconnected)
 		{
-			rankText.text = "切断されました\nあなたの順位は" + playerNumber + "!";
+			rankText.text = "切断されました\nあなたの順位は" + rank + "!";
 			return;
 		}
         else
 		{
-			rankText.text = "あなたの順位は" + playerNumber + "です\nおつかれさま！";
+			rankText.text = "あなたの順位は" + rank + "です\nおつかれさま！";
 		}
 
 		if(playerNumber == 2)
@@ -130,6 +128,8 @@ public class MainSceneManager : Photon.MonoBehaviour {
 			myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
 		}
 		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
+
+		Destroy(GameObject.Find("PlayerControllerUI"));
 	}
 
 	//プレイヤー数の減少を更新,マスタークライアントで行う
@@ -159,15 +159,16 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//切断されたときの処理
 	void OnPhotonPlayerDisconnected()
 	{
+		print("切断ください！");
 		//マスター側でプレイヤー数を同期する
 		if(PhotonNetwork.masterClient.IsMasterClient)
 		{
-			int currentPlayerNumber = PhotonNetwork.playerList.Length;
-			playerNumber = currentPlayerNumber;
+			playerNumber -= 1;
 			//勝者が決まったならリザルトへ
 			if(playerNumber == 1)
 			{
-				myPhotonView.RPC("ShowWinerResult",PhotonTargets.AllViaServer);
+				ShowWinnerResult();
+				print("切断されたよ！");
 			}
 		}
 	}

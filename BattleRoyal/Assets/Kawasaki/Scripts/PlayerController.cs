@@ -82,6 +82,8 @@ public class PlayerController : MonoBehaviour
     // アイテム周り
     private MyItemStatus myItemStatus;
 
+    private ItemSpawner itemSpawner;
+
     public MyItemStatus GetMyItemStatus()
     {
         return myItemStatus;
@@ -114,6 +116,10 @@ public class PlayerController : MonoBehaviour
         // WeaponManagerの取得
         myWM = weapon.GetComponent<WeaponManager>();
         weaponCollider = weapon.GetComponent<CapsuleCollider>();
+        itemSpawner = GameObject.FindWithTag("ItemSpawner").gameObject.GetComponent<ItemSpawner>();
+
+        Debug.Log(itemSpawner);
+
 
         if (myPV.isMine)
         {
@@ -302,14 +308,17 @@ public class PlayerController : MonoBehaviour
         if (currentState.IsName("attack1") && currentState.normalizedTime < firstComboEffectiveTime)
         {
             animator.SetTrigger("attack2");
+            // AudioManager.Instance.PlaySE("punch-middle2");
         }
         else if (currentState.IsName("attack2") && currentState.normalizedTime < secondComboEffectiveTime)
         {
             animator.SetTrigger("attack3");
+            // AudioManager.Instance.PlaySE("sword-slash4");
         }
         else if (!currentState.IsName("attack1") && !currentState.IsName("attack2"))
         {
             animator.SetTrigger("attack1");
+            // AudioManager.Instance.PlaySE("heavy_punch1");
         }
         // 武器の位置の初期化
         weapon.transform.localPosition = weaponPos;
@@ -325,6 +334,7 @@ public class PlayerController : MonoBehaviour
             playerUIController.jumpMiyaguniButton.interactable = true;
             playerUIController.parryMiyaguniButton.interactable = true;
         }
+
     }
 
     private void OffWeaponCollider()
@@ -454,9 +464,10 @@ public class PlayerController : MonoBehaviour
         {
             hpText.text = "HP: " + currentHP.ToString();
             hpSlider.value = currentHP;
-            MainSceneManager mainSceneManager = GameObject.Find("MainManager").GetComponent<MainSceneManager>();
+            MainSceneManager mainSceneManager = GameObject.FindWithTag("GameController").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(false);
-            Destroy(GameObject.FindWithTag("PlayerControllerUI"));
+            itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position, 0);       //死亡時にアイテムを落とす
+            Destroy(GameObject.Find("PlayerControllerUI"));
         }
         Destroy(gameObject);
     }
