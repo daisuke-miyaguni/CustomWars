@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3aeff0fe46fb19e4c9d2effa8f332885
+guid: 2a236f1bcc64f6b4385ebe63881d15d1
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -160,7 +160,7 @@ ModelImporter:
       name: attack_03
       takeName: attack_03
       firstFrame: 0
-      lastFrame: 58
+      lastFrame: 64
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -180,14 +180,21 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.20880683
+      - time: 0.2067901
         functionName: OnWeaponCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5809659
+      - time: 0.23765433
+        functionName: PlayAttackSE
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.58641976
         functionName: OffWeaponCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
