@@ -230,6 +230,7 @@ public class PlayerController : MonoBehaviour
 
         // ジャンプアニメーション同期処理の呼び出し
         myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
+        AudioManager.Instance.PlaySE("highspeed-movement1");
     }
 
     // ジャンプアニメーションの同期
@@ -238,6 +239,7 @@ public class PlayerController : MonoBehaviour
     {
         // ジャンプアニメーションの再生
         animator.SetTrigger("jump");
+        AudioManager.Instance.PlaySE("landing1");
         // 武器の位置を初期化
         weapon.transform.localPosition = weaponPos;
         // 武器の角度を初期化
@@ -246,7 +248,6 @@ public class PlayerController : MonoBehaviour
 
     void OnJumpButton()
     {
-
     }
 
     void OffJumpButton()
@@ -354,6 +355,7 @@ public class PlayerController : MonoBehaviour
 
     public void CallRecover(int heal)
     {
+        AudioManager.Instance.PlaySE("magic-status-cure1");
         myPV.RPC("Recover", PhotonTargets.AllViaServer, heal);
     }
 
