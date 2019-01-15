@@ -65,11 +65,11 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
-        myCamera.transform.position += gameObject.transform.position - myPos;
-        myPos = gameObject.transform.position;
-    }
+    // void LateUpdate()
+    // {
+    //     myCamera.transform.position += gameObject.transform.position - myPos;
+    //     myPos = gameObject.transform.position;
+    // }
 
     private void RotateFront()
     {
@@ -118,6 +118,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void RotateCamera()
     {
+        myCamera.transform.position += gameObject.transform.position - myPos;
+        myPos = gameObject.transform.position;
         if (controller.Coordinate().x == 0)
         {
             return;
