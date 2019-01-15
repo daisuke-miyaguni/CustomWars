@@ -231,6 +231,7 @@ public class PlayerController : MonoBehaviour
 
         // ジャンプアニメーション同期処理の呼び出し
         myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
+        AudioManager.Instance.PlaySE("highspeed-movement1");
     }
 
     // ジャンプアニメーションの同期
@@ -252,6 +253,7 @@ public class PlayerController : MonoBehaviour
         {
             jumping = false;
             playerUIController.jumpMiyaguniButton.interactable = true;
+            AudioManager.Instance.PlaySE("landing1");
         }
     }
 
@@ -367,6 +369,7 @@ public class PlayerController : MonoBehaviour
 
     public void CallRecover(int heal)
     {
+        AudioManager.Instance.PlaySE("magic-status-cure1");
         myPV.RPC("Recover", PhotonTargets.AllViaServer, heal);
     }
 
