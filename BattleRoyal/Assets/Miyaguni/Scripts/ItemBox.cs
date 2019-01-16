@@ -31,6 +31,7 @@ public class ItemBox : MonoBehaviour
     // ボタンでボックスを開ける
     public void OpenOnClick()
     {
+        AudioManager.Instance.PlaySE("inserting-key-into-wooden-door-1");
         Vector3 objectPos = this.gameObject.transform.position;
         itemSpawner.CallItemSpawn(this.gameObject, objectPos, itemSpawnCount);
         photonView.RPC(PunRPCList.DeleteItemBox.ToString(), PhotonTargets.AllViaServer);

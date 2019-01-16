@@ -306,7 +306,6 @@ public class PlayerController : MonoBehaviour
             playerUIController.jumpMiyaguniButton.interactable = true;
             playerUIController.parryMiyaguniButton.interactable = true;
         }
-
     }
 
     private void OffWeaponCollider()
@@ -454,6 +453,7 @@ public class PlayerController : MonoBehaviour
             hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.FindWithTag("GameController").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(false);
+            print("死ね");
             itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position, 0);       //死亡時にアイテムを落とす
             Destroy(GameObject.Find("PlayerControllerUI"));
         }

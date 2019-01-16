@@ -43,6 +43,7 @@ public class DragSlot : MonoBehaviour
         dragItemData = null;
         slotData = null;
         deleteNum = 0;
+        Destroy(this.gameObject);
     }
 
     // Update is called once per frame

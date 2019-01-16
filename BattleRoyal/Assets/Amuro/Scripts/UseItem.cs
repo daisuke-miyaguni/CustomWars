@@ -55,14 +55,22 @@ public class UseItem : MonoBehaviour
         {
             case PocketStatus.Pocket.ball_p:
 
-                Debug.Log("もぉんスタァボォる");
+                float bigRecover = itemData.GetItemPower();
+                
+                //HPが100以上なら使用できない
+                if (myPlayer.GetPlayerHp() >= 100 )
+                {
+                    return;
+                }
+
+                myPlayer.CallRecover(Mathf.CeilToInt(bigRecover));
 
                 panelImage.sprite = null;
 
                 itemData = null;
 
                 itemCheck = false;
-
+                
                 break;
 
             case PocketStatus.Pocket.mon_p:
