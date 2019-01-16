@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.64279914, g: 0.605078, b: 0.54663694, a: 1}
+  m_IndirectSpecularColor: {r: 0.6427757, g: 0.60506344, b: 0.54660547, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -3701,7 +3701,7 @@ GameObject:
   - component: {fileID: 560984220}
   - component: {fileID: 560984219}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: JumpButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8196,7 +8196,8 @@ Prefab:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 65868950322056566, guid: 9cf20acedf6ed4d4ba0ed3a0fc3e806a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9cf20acedf6ed4d4ba0ed3a0fc3e806a, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1298300920 stripped
@@ -16233,7 +16234,8 @@ Prefab:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 65868950322056566, guid: 9cf20acedf6ed4d4ba0ed3a0fc3e806a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9cf20acedf6ed4d4ba0ed3a0fc3e806a, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1687774376 stripped
@@ -17051,7 +17053,7 @@ GameObject:
   - component: {fileID: 1846554105}
   - component: {fileID: 1846554104}
   m_Layer: 5
-  m_Name: Attack
+  m_Name: AttackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17166,7 +17168,7 @@ GameObject:
   - component: {fileID: 1885124936}
   - component: {fileID: 1885124935}
   m_Layer: 5
-  m_Name: Parry
+  m_Name: ParryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

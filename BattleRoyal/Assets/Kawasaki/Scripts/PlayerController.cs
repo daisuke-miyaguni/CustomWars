@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private GameObject inventory;
     PlayerUIController playerUIController;
 
+    Vector3 velocity;
+
     private const int maxHP = 100;
     [SerializeField] private int currentHP = maxHP;
     private Slider hpSlider;
@@ -159,9 +161,9 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            // 位置補完
-            Vector3 velocity = myRB.velocity;
-            myPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
+            //// 位置補間
+            //velocity = myRB.velocity;
+            //myPTV.SetSynchronizedValues(speed: velocity, turnSpeed: 0);
             // 移動処理の読み込み
             Move();
         }
@@ -226,9 +228,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        playerUIController.parryMiyaguniButton.interactable = false;
-        playerUIController.attackMiyaguniButton.interactable = false;
-
         // ジャンプアニメーション同期処理の呼び出し
         myPV.RPC("SyncJumpAnim", PhotonTargets.AllViaServer);
         AudioManager.Instance.PlaySE("highspeed-movement1");
@@ -240,6 +239,7 @@ public class PlayerController : MonoBehaviour
     {
         // ジャンプアニメーションの再生
         animator.SetTrigger("jump");
+        AudioManager.Instance.PlaySE("landing1");
         // 武器の位置を初期化
         weapon.transform.localPosition = weaponPos;
         // 武器の角度を初期化
@@ -248,25 +248,11 @@ public class PlayerController : MonoBehaviour
 
     void OnJumpButton()
     {
-        // ジャンプが終了後、ジャンプボタンを押せるようにする
-        if(myPV.isMine)
-        {
-            jumping = false;
-            playerUIController.jumpMiyaguniButton.interactable = true;
-            AudioManager.Instance.PlaySE("landing1");
-        }
     }
 
     void OffJumpButton()
     {
-        // ジャンプ中にジャンプボタンを押せなくする
-        if (myPV.isMine)
-        {
-            jumping = true;
-            playerUIController.parryMiyaguniButton.interactable = true;
-            playerUIController.attackMiyaguniButton.interactable = true;
-            playerUIController.jumpMiyaguniButton.interactable = false;
-        }
+
     }
 
     // 攻撃入力
@@ -393,6 +379,40 @@ public class PlayerController : MonoBehaviour
             otherHpBarSlider.value = currentHP;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 15)
+        {
+            jumping = false;
+            playerUIController.jumpMiyaguniButton.interactable = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+            playerUIController.attackMiyaguniButton.interactable = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.gameObject.layer == 15)
+        {
+            jumping = true;
+            playerUIController.jumpMiyaguniButton.interactable = false;
+            playerUIController.parryMiyaguniButton.interactable = false;
+            playerUIController.attackMiyaguniButton.interactable = false;
+        }
+    }
+
+    //private IEnumerator OnCollisionStay(Collision collision)
+    //{
+    //    yield return null;
+    //    if(collision.gameObject.layer == 15)
+    //    {
+    //        jumping = false;
+    //        playerUIController.jumpMiyaguniButton.interactable = true;
+    //        playerUIController.parryMiyaguniButton.interactable = true;
+    //        playerUIController.attackMiyaguniButton.interactable = true;
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
