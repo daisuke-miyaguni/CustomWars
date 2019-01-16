@@ -2297,7 +2297,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1087547857233642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: 0, y: 70, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224429560370735200}
@@ -2534,8 +2534,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1827299230965776}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.59, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.9939159, z: -0, w: 0.11014175}
+  m_LocalPosition: {x: 0.09, y: 0, z: -5.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4375401344603690}
@@ -2552,7 +2552,7 @@ Transform:
   - {fileID: 4852734007670736}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 167.35301, z: 0}
 --- !u!4 &4178187969562200
 Transform:
   m_ObjectHideFlags: 1
@@ -4676,7 +4676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 70
-  tappedEnabledTime: 0.15
+  tappedEnabledTime: 0.12
 --- !u!114 &114286670213146706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4787,7 +4787,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 30
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4809,11 +4809,16 @@ MonoBehaviour:
   otherHpBarSlider: {fileID: 114637524925190538}
   weapon: {fileID: 1385980560763454}
   moveSpeed: 7
-  jumpForce: 5
   firstComboEffectiveTime: 0.6
   secondComboEffectiveTime: 0.6
   parry: {fileID: 1726801128195448}
   wasparryedDamage: 15
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  bookLayer:
+    serializedVersion: 2
+    m_Bits: 16384
   angleMax: 30
   angleMin: -15
 --- !u!114 &114699949474176100
@@ -5517,7 +5522,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 20}
+  m_SizeDelta: {x: 75, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224446049881164486
 RectTransform:
@@ -5552,8 +5557,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -6.5}
-  m_SizeDelta: {x: 0, y: 3}
+  m_AnchoredPosition: {x: 0, y: -7.500001}
+  m_SizeDelta: {x: 0, y: 11.000002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224766555633455054
 RectTransform:

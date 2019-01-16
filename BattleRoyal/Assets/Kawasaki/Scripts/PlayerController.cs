@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private PhotonView myPV;
-    private PhotonTransformView myPTV;
+    //private PhotonTransformView myPTV;
     private Rigidbody myRB;
     private Camera myCamera;
     private Text hpText;
@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
 
     // playerステータス
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpForce;
 
     private MobileInputController controller;
 
@@ -63,6 +62,8 @@ public class PlayerController : MonoBehaviour
     private bool parring = false;
 
     private bool jumping = false;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask bookLayer;
 
     private bool desperate = false;
 
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
             // myItemStatus取得
             myItemStatus = GetComponent<MyItemStatus>();
             // photontransformview取得
-            myPTV = GetComponent<PhotonTransformView>();
+            //myPTV = GetComponent<PhotonTransformView>();
             playerUIController = GameObject.FindWithTag("PlayerControllerUI").gameObject.GetComponent<PlayerUIController>();
             playerUIController.SetPlayerController(this);
             // rigidbody取得
@@ -205,6 +206,37 @@ public class PlayerController : MonoBehaviour
         return new Vector3(x, 0, z);
     }
 
+    private void Update()
+    {
+        if(myPV.isMine)
+        {
+            JumpCheck();
+        }
+    }
+
+    void JumpCheck()
+    {
+        // ジャンプ状態の更新
+        jumping = Physics.Linecast(
+            transform.position + (transform.up * 1.25f),
+            transform.position - (transform.up * 0.03f),
+            groundLayer
+        );
+
+        if (!jumping)
+        {
+            playerUIController.attackMiyaguniButton.interactable = false;
+            playerUIController.parryMiyaguniButton.interactable = false;
+            playerUIController.jumpMiyaguniButton.interactable = false;
+        }
+        else
+        {
+            playerUIController.attackMiyaguniButton.interactable = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+            playerUIController.jumpMiyaguniButton.interactable = true;
+        }
+    }
+
     // ジャンプ
     public void Jump()
     {
@@ -213,7 +245,7 @@ public class PlayerController : MonoBehaviour
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
-        || jumping
+        || !jumping
         || desperate)
         {
             return;
@@ -232,11 +264,6 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("jump");
         // ジャンプSEの再生
         AudioManager.Instance.PlaySE("landing1");
-        // ボタンの管理
-        jumping = true;
-        playerUIController.jumpMiyaguniButton.interactable = false;
-        playerUIController.parryMiyaguniButton.interactable = false;
-        playerUIController.attackMiyaguniButton.interactable = false;
         // 武器の位置を初期化
         weapon.transform.localPosition = weaponPos;
         // 武器の角度を初期化
@@ -364,17 +391,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.layer == 15)
-        {
-            jumping = false;
-            playerUIController.attackMiyaguniButton.interactable = true;
-            playerUIController.parryMiyaguniButton.interactable = true;
-            playerUIController.jumpMiyaguniButton.interactable = true;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (myPV.isMine)
@@ -453,7 +469,6 @@ public class PlayerController : MonoBehaviour
             hpSlider.value = currentHP;
             MainSceneManager mainSceneManager = GameObject.FindWithTag("GameController").GetComponent<MainSceneManager>();
             mainSceneManager.GoToResult(false);
-            print("死ね");
             itemSpawner.CallItemSpawn(this.gameObject, gameObject.transform.position, 0);       //死亡時にアイテムを落とす
             Destroy(GameObject.Find("PlayerControllerUI"));
         }
@@ -469,7 +484,7 @@ public class PlayerController : MonoBehaviour
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1]
         || parring
-        || jumping
+        || !jumping
         || desperate)
         {
             return;
