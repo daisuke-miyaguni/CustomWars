@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.64279914, g: 0.605078, b: 0.54663694, a: 1}
+  m_IndirectSpecularColor: {r: 0.6427757, g: 0.60506344, b: 0.54660547, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2647,7 +2647,6 @@ GameObject:
   - component: {fileID: 412544791}
   - component: {fileID: 412544790}
   - component: {fileID: 412544792}
-  - component: {fileID: 412544793}
   m_Layer: 15
   m_Name: Book*2_2
   m_TagString: Desk
@@ -2711,18 +2710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &412544793
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 412544788}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 8, z: 6.3}
-  m_Center: {x: 1.5, y: 3.8, z: 0}
 --- !u!1 &420035885
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,7 +2724,6 @@ GameObject:
   - component: {fileID: 420035888}
   - component: {fileID: 420035891}
   - component: {fileID: 420035887}
-  - component: {fileID: 420035892}
   m_Layer: 15
   m_Name: Book4
   m_TagString: Desk
@@ -2842,18 +2828,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &420035892
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420035885}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.25, z: 0.18}
-  m_Center: {x: -0.015, y: 0.11, z: 0}
 --- !u!1 &467816954
 GameObject:
   m_ObjectHideFlags: 0
@@ -3120,7 +3094,6 @@ GameObject:
   - component: {fileID: 473167273}
   - component: {fileID: 473167272}
   - component: {fileID: 473167274}
-  - component: {fileID: 473167275}
   m_Layer: 15
   m_Name: Book*2_9
   m_TagString: Desk
@@ -3184,18 +3157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &473167275
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 473167270}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15.5, y: 0.2, z: 6.2}
-  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1001 &482595409
 Prefab:
   m_ObjectHideFlags: 0
@@ -5290,7 +5251,6 @@ GameObject:
   - component: {fileID: 599294506}
   - component: {fileID: 599294505}
   - component: {fileID: 599294507}
-  - component: {fileID: 599294508}
   m_Layer: 15
   m_Name: Book*2_6
   m_TagString: Desk
@@ -5354,18 +5314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &599294508
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 599294503}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15.5, y: 0.2, z: 6.2}
-  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1 &608850002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5601,7 +5549,6 @@ GameObject:
   - component: {fileID: 677953300}
   - component: {fileID: 677953299}
   - component: {fileID: 677953301}
-  - component: {fileID: 677953302}
   m_Layer: 15
   m_Name: Book*2_0
   m_TagString: Desk
@@ -5665,18 +5612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &677953302
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 677953297}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 8, z: 6.3}
-  m_Center: {x: 1.5, y: 3.8, z: 0}
 --- !u!1 &700466042
 GameObject:
   m_ObjectHideFlags: 0
@@ -6704,7 +6639,6 @@ GameObject:
   - component: {fileID: 881733540}
   - component: {fileID: 881733539}
   - component: {fileID: 881733541}
-  - component: {fileID: 881733542}
   m_Layer: 15
   m_Name: Book*2_4
   m_TagString: Desk
@@ -6768,18 +6702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &881733542
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 881733537}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 8, z: 6.3}
-  m_Center: {x: 1.5, y: 3.8, z: 0}
 --- !u!1 &885586865
 GameObject:
   m_ObjectHideFlags: 0
@@ -7600,7 +7522,6 @@ GameObject:
   - component: {fileID: 1006603055}
   - component: {fileID: 1006603058}
   - component: {fileID: 1006603054}
-  - component: {fileID: 1006603059}
   m_Layer: 15
   m_Name: Book3
   m_TagString: Desk
@@ -7705,18 +7626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1006603059
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1006603052}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.25, z: 0.18}
-  m_Center: {x: -0.015, y: 0.11, z: 0}
 --- !u!1 &1036935521
 GameObject:
   m_ObjectHideFlags: 0
@@ -9429,7 +9338,6 @@ GameObject:
   - component: {fileID: 1294236535}
   - component: {fileID: 1294236534}
   - component: {fileID: 1294236536}
-  - component: {fileID: 1294236537}
   m_Layer: 15
   m_Name: Book*2_8
   m_TagString: Desk
@@ -9493,18 +9401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1294236537
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1294236532}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15.5, y: 0.2, z: 6.2}
-  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1001 &1298300919
 Prefab:
   m_ObjectHideFlags: 0
@@ -9948,7 +9844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1365158485
 Transform:
   m_ObjectHideFlags: 0
@@ -13858,7 +13754,6 @@ GameObject:
   - component: {fileID: 1601675716}
   - component: {fileID: 1601675719}
   - component: {fileID: 1601675715}
-  - component: {fileID: 1601675720}
   m_Layer: 15
   m_Name: Book7
   m_TagString: Desk
@@ -13963,18 +13858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1601675720
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1601675713}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.25, z: 0.18}
-  m_Center: {x: -0.015, y: 0.11, z: 0}
 --- !u!1 &1608441106
 GameObject:
   m_ObjectHideFlags: 0
@@ -14135,7 +14018,6 @@ GameObject:
   - component: {fileID: 1644415999}
   - component: {fileID: 1644415998}
   - component: {fileID: 1644416000}
-  - component: {fileID: 1644416001}
   m_Layer: 15
   m_Name: Book*2_5
   m_TagString: Desk
@@ -14199,18 +14081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1644416001
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1644415996}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 8, z: 6.3}
-  m_Center: {x: 1.5, y: 3.8, z: 0}
 --- !u!1 &1677067675
 GameObject:
   m_ObjectHideFlags: 0
@@ -17657,7 +17527,6 @@ GameObject:
   - component: {fileID: 1694069481}
   - component: {fileID: 1694069482}
   - component: {fileID: 1694069480}
-  - component: {fileID: 1694069483}
   m_Layer: 15
   m_Name: Book*2_7
   m_TagString: Desk
@@ -17721,18 +17590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1694069483
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1694069478}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15.5, y: 0.2, z: 6.2}
-  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1 &1698235615
 GameObject:
   m_ObjectHideFlags: 0
@@ -19369,7 +19226,6 @@ GameObject:
   - component: {fileID: 2027429735}
   - component: {fileID: 2027429738}
   - component: {fileID: 2027429734}
-  - component: {fileID: 2027429739}
   m_Layer: 15
   m_Name: Book1
   m_TagString: Desk
@@ -19474,18 +19330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &2027429739
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2027429732}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.25, z: 0.18}
-  m_Center: {x: -0.015, y: 0.11, z: 0}
 --- !u!1 &2036269654
 GameObject:
   m_ObjectHideFlags: 0
@@ -19861,7 +19705,6 @@ GameObject:
   - component: {fileID: 2073227834}
   - component: {fileID: 2073227833}
   - component: {fileID: 2073227835}
-  - component: {fileID: 2073227836}
   m_Layer: 15
   m_Name: Book*2_1
   m_TagString: Desk
@@ -19925,18 +19768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &2073227836
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2073227831}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 8, z: 6.3}
-  m_Center: {x: 1.5, y: 3.8, z: 0}
 --- !u!1 &2095435967
 GameObject:
   m_ObjectHideFlags: 0
@@ -20023,7 +19854,6 @@ GameObject:
   - component: {fileID: 2118729830}
   - component: {fileID: 2118729829}
   - component: {fileID: 2118729831}
-  - component: {fileID: 2118729832}
   m_Layer: 15
   m_Name: Book*2_3
   m_TagString: Desk
@@ -20087,15 +19917,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d569defa8f02eb14ba4c103ed2871385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &2118729832
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2118729827}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 8, z: 6.3}
-  m_Center: {x: 1.5, y: 3.8, z: 0}

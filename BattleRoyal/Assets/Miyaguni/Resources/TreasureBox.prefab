@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 114750974907175846}
   - component: {fileID: 114909043433642580}
   - component: {fileID: 114805507800463538}
+  - component: {fileID: 54477378208101256}
   m_Layer: 8
   m_Name: TreasureBox
   m_TagString: ItemBox
@@ -183,6 +184,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294210572646824}
   m_Mesh: {fileID: 4300000, guid: b7efb198be0a84149b3ae5d3be0d2d0b, type: 3}
+--- !u!54 &54477378208101256
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1871495111859070}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &65790048234280420
 BoxCollider:
   m_ObjectHideFlags: 1
