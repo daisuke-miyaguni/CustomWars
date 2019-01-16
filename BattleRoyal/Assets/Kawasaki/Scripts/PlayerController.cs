@@ -37,15 +37,6 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
-    private enum GameObjectTags
-    {
-        weapon,
-        Desk,
-        Item,
-        ItemBox,
-        AreaOut
-    }
-
     [SerializeField] private float firstComboEffectiveTime = 0.7f;
     [SerializeField] private float secondComboEffectiveTime = 0.5f;
 
@@ -239,20 +230,17 @@ public class PlayerController : MonoBehaviour
     {
         // ジャンプアニメーションの再生
         animator.SetTrigger("jump");
+        // ジャンプSEの再生
         AudioManager.Instance.PlaySE("landing1");
+        // ボタンの管理
+        jumping = true;
+        playerUIController.jumpMiyaguniButton.interactable = false;
+        playerUIController.parryMiyaguniButton.interactable = false;
+        playerUIController.attackMiyaguniButton.interactable = false;
         // 武器の位置を初期化
         weapon.transform.localPosition = weaponPos;
         // 武器の角度を初期化
         weapon.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-    }
-
-    void OnJumpButton()
-    {
-    }
-
-    void OffJumpButton()
-    {
-
     }
 
     // 攻撃入力
@@ -292,21 +280,17 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", myWM.GetWeaponSpeed());
         // 現在のアニメーション状態の取得
         AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
-        // animator.SetTrigger("attack1");
         if (currentState.IsName("attack1") && currentState.normalizedTime < firstComboEffectiveTime)
         {
             animator.SetTrigger("attack2");
-            // AudioManager.Instance.PlaySE("punch-middle2");
         }
         else if (currentState.IsName("attack2") && currentState.normalizedTime < secondComboEffectiveTime)
         {
             animator.SetTrigger("attack3");
-            // AudioManager.Instance.PlaySE("sword-slash4");
         }
         else if (!currentState.IsName("attack1") && !currentState.IsName("attack2"))
         {
             animator.SetTrigger("attack1");
-            // AudioManager.Instance.PlaySE("heavy_punch1");
         }
         // 武器の位置の初期化
         weapon.transform.localPosition = weaponPos;
@@ -382,37 +366,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 15)
-        {
-            jumping = false;
-            playerUIController.jumpMiyaguniButton.interactable = true;
-            playerUIController.parryMiyaguniButton.interactable = true;
-            playerUIController.attackMiyaguniButton.interactable = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
         if(collision.gameObject.layer == 15)
         {
-            jumping = true;
-            playerUIController.jumpMiyaguniButton.interactable = false;
-            playerUIController.parryMiyaguniButton.interactable = false;
-            playerUIController.attackMiyaguniButton.interactable = false;
+            jumping = false;
+            playerUIController.attackMiyaguniButton.interactable = true;
+            playerUIController.parryMiyaguniButton.interactable = true;
+            playerUIController.jumpMiyaguniButton.interactable = true;
         }
     }
-
-    //private IEnumerator OnCollisionStay(Collision collision)
-    //{
-    //    yield return null;
-    //    if(collision.gameObject.layer == 15)
-    //    {
-    //        jumping = false;
-    //        playerUIController.jumpMiyaguniButton.interactable = true;
-    //        playerUIController.parryMiyaguniButton.interactable = true;
-    //        playerUIController.attackMiyaguniButton.interactable = true;
-    //    }
-    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -448,7 +409,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
+            if (other.gameObject.tag == "ItemBox")
             {
                 itemBox = other.gameObject;
                 playerUIController.openMiyaguniButton.gameObject.SetActive(true);
@@ -460,10 +421,14 @@ public class PlayerController : MonoBehaviour
     {
         if (myPV.isMine)
         {
-            if (other.gameObject.tag == GameObjectTags.ItemBox.ToString())
+            switch(other.gameObject.tag)
             {
-                itemBox = null;
-                playerUIController.openMiyaguniButton.gameObject.SetActive(false);
+                case "ItemBox":
+                    itemBox = null;
+                    playerUIController.openMiyaguniButton.gameObject.SetActive(false);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -504,6 +469,7 @@ public class PlayerController : MonoBehaviour
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
         || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1]
         || parring
+        || jumping
         || desperate)
         {
             return;
