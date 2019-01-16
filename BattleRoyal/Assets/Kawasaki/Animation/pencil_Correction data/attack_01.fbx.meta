@@ -177,21 +177,21 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.24974959
+      - time: 0.27197182
         functionName: OnWeaponCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.26787186
+      - time: 0.2937978
         functionName: PlayAttackSE
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.3627852
+      - time: 0.33685926
         functionName: OffWeaponCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
