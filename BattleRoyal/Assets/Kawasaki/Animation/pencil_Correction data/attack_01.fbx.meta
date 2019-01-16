@@ -184,14 +184,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.27946126
+      - time: 0.26787186
         functionName: PlayAttackSE
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5747057
+      - time: 0.3627852
         functionName: OffWeaponCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
