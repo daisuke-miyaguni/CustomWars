@@ -86,51 +86,54 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		playerNumberText.text = playerNumber.ToString();
 	}
 
-	//リザルトの処理を開始する旧
-	// public void GoToResult (int isDisconnected)
-	// {
-	// 	resultPanel.SetActive(true);
-	// 	if (isDisconnected == 0)
-	// 	{
-	// 	    rankText.text = "切断されました\nYour rank is " + activePlayerNumber + " ！";
-	// 		return;
-	// 	} 
-	// 	else if (isDisconnected ==1)
-	// 	{
-	// 		rankText.text = "Your rank is " + activePlayerNumber + " ！";
-	// 	}
-
-	// 	if (activePlayerNumber == 2)
-	// 	{
-	// 		myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
-	// 	}
-	// 	myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
-	// }
-
-	//リザルトの処理を開始する新
+	//リザルトの処理を開始する
 	public void GoToResult (bool isDisconnected)
 	{
 		int rank = playerNumber;
-		Time.timeScale = 0;
 		resultPanel.SetActive(true);
-		if(isDisconnected)
+		if (isDisconnected)
 		{
-			rankText.text = "切断されました\nあなたの順位は" + rank + "!";
-			return;
+			rankText.text = "切断されました\nあなたの順位は" + rank + "位";
 		}
-        else
+		else
 		{
-			rankText.text = "あなたの順位は" + rank + "です\nおつかれさま！";
+			rankText.text = "あなたの順位は" + rank + "位です!";
 		}
 
-		if(playerNumber == 2)
+		if (rank == 2)
 		{
 			myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
 		}
+
 		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
 
 		Destroy(GameObject.Find("PlayerControllerUI"));
 	}
+
+	//リザルトの処理を開始する新
+	// public void GoToResult (bool isDisconnected)
+	// {
+	// 	int rank = playerNumber;
+	// 	Time.timeScale = 0;
+	// 	resultPanel.SetActive(true);
+	// 	if(isDisconnected)
+	// 	{
+	// 		rankText.text = "切断されました\nあなたの順位は" + rank + "!";
+	// 		return;
+	// 	}
+    //     else
+	// 	{
+	// 		rankText.text = "あなたの順位は" + rank + "です\nおつかれさま！";
+	// 	}
+
+	// 	if(rank == 2)
+	// 	{
+	// 		myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
+	// 	}
+	// 	myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
+
+	// 	Destroy(GameObject.Find("PlayerControllerUI"));
+	// }
 
 	//プレイヤー数の減少を更新,マスタークライアントで行う
 	[PunRPC]
@@ -145,6 +148,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		Time.timeScale = 0;
 		if(resultPanel.activeInHierarchy == false)
 		{
+		Destroy(GameObject.Find("PlayerControllerUI"));
 		resultPanel.SetActive(true);
 		rankText.text = "いちいだよ";
 		}
@@ -153,13 +157,12 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//切断したときリザルトを表示する
 	void OnDisconnectedFromPhoton()
 	{
-		GoToResult(false);
+		GoToResult(true);
 	}
 
 	//切断されたときの処理
 	void OnPhotonPlayerDisconnected()
 	{
-		print("切断ください！");
 		//マスター側でプレイヤー数を同期する
 		if(PhotonNetwork.masterClient.IsMasterClient)
 		{
@@ -178,7 +181,6 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	{
 		Time.timeScale = 1;
 		PhotonNetwork.LeaveRoom();
-		playerNumber -= 1;
 		SceneManager.LoadScene(lobbyScene);
 	}
 
