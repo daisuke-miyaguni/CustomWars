@@ -4676,7 +4676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 70
-  tappedEnabledTime: 0.12
+  tappedEnabledTime: 0.135
 --- !u!114 &114286670213146706
 MonoBehaviour:
   m_ObjectHideFlags: 1
