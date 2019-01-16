@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainSceneManager : Photon.MonoBehaviour {
 	private int playerNumber;    //プレイヤー数
+	private bool resultOn = true; //リザルトを一回だけ読む為
 	private float elapsedTime;    //経過時間
 	[SerializeField]private Text elapsedTimeText;    //経過時間を表示するテキストUI
 	[SerializeField]private Text playerNumberText;    //プレイヤー数を表示するテキストUI
@@ -23,6 +24,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		myPhotonView = GetComponent<PhotonView>();
 		resultPanel.SetActive(false);
 		playerNumber = PhotonNetwork.playerList.Length;
+		ShowPlayerCount();
 	}
 	
 	void Update ()
@@ -36,14 +38,14 @@ public class MainSceneManager : Photon.MonoBehaviour {
         if (stream.isWriting) {
             //データの送信
             stream.SendNext(elapsedTime);
-            stream.SendNext(playerNumber);
+            // stream.SendNext(playerNumber);
         } else {
             //データの受信
             elapsedTime = (float)stream.ReceiveNext();
-            playerNumber = (int)stream.ReceiveNext();
+            // playerNumber = (int)stream.ReceiveNext();
         }
 		
-		ShowPlayerCount();
+		// ShowPlayerCount();
 		ShowElapsedTime();
     }
 
@@ -89,7 +91,11 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	//リザルトの処理を開始する
 	public void GoToResult (bool isDisconnected)
 	{
+		if(!resultOn) return;
+		print("リザルト");
 		int rank = playerNumber;
+		myPhotonView.RPC("PlayerDecrease",PhotonTargets.AllViaServer);
+
 		resultPanel.SetActive(true);
 		if (isDisconnected)
 		{
@@ -100,14 +106,13 @@ public class MainSceneManager : Photon.MonoBehaviour {
 			rankText.text = "あなたの順位は" + rank + "位です!";
 		}
 
-		if (rank == 2)
+		if (rank <= 2)
 		{
 			myPhotonView.RPC("ShowWinnerResult",PhotonTargets.AllViaServer);
 		}
-
-		myPhotonView.RPC("PlayerDecrease",PhotonTargets.MasterClient);
-
 		Destroy(GameObject.Find("PlayerControllerUI"));
+		Time.timeScale = 0;
+		resultOn = false;
 	}
 
 	//リザルトの処理を開始する新
@@ -135,11 +140,12 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	// 	Destroy(GameObject.Find("PlayerControllerUI"));
 	// }
 
-	//プレイヤー数の減少を更新,マスタークライアントで行う
+	//プレイヤー数の減少を更新,各ローカルで行う
 	[PunRPC]
 	private void PlayerDecrease ()
 	{
 		playerNumber -= 1;
+		ShowPlayerCount();
 	}
 
 	[PunRPC]
@@ -167,6 +173,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		if(PhotonNetwork.masterClient.IsMasterClient)
 		{
 			playerNumber -= 1;
+			ShowPlayerCount();
 			//勝者が決まったならリザルトへ
 			if(playerNumber == 1)
 			{
