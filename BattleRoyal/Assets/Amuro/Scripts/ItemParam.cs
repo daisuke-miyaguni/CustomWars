@@ -14,7 +14,7 @@ public class ItemParam : MonoBehaviour
         Correction,
         Ruler,
         Recovery1,   
-        Spikes,
+        Recovery2,
         Glue,
     }
 

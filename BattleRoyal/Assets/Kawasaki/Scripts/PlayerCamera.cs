@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerCamera : MonoBehaviour
 {
-    private PlayerController playerController;
+    // private PlayerController playerController;
     private MobileInputController controller;
     private Camera myCamera;
     private PhotonView myPV;
@@ -46,7 +46,7 @@ public class PlayerCamera : MonoBehaviour
             myCamera.transform.localEulerAngles = new Vector3(15, 0, 0);
             myPos = gameObject.transform.position;
 
-            playerController = this.gameObject.GetComponent<PlayerController>();
+            // playerController = this.gameObject.GetComponent<PlayerController>();
             controller = GameObject.Find("RightJoyStick").gameObject.GetComponent<MobileInputController>();
 
             // beforeCameraAngle = myCamera.transform.rotation.y;
