@@ -5226,6 +5226,7 @@ MonoBehaviour:
   rankText: {fileID: 907730613}
   stageManager: {fileID: 1825254300}
   lobbyScene: 1
+  returnButton: {fileID: 980473658}
 --- !u!4 &591787819
 Transform:
   m_ObjectHideFlags: 0
