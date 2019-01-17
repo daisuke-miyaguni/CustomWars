@@ -167,7 +167,7 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	[PunRPC]
 	private void OnReturnButton()
 	{
-		returnButton.SetActive(true);
+		returnButton.interactable = true;
 	}
 
 	//切断したときリザルトを表示する
