@@ -17,14 +17,14 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	[SerializeField]private StageManager stageManager;    //ステージ縮小のスクリプト
 	bool isScaleDownBegan = false;    //縮小が始まったかどうか
 	[SerializeField] private int lobbyScene;
-	[SerializeField] private GameObject returnButton;
+	[SerializeField] private Button returnButton;
 
 	void Start ()
 	{
 		AudioManager.Instance.PlayBGM("game_maoudamashii_1_battle30");
 		myPhotonView = GetComponent<PhotonView>();
 		resultPanel.SetActive(false);
-		returnButton.SetActive(false);
+		returnButton.interactable = true;
 		playerNumber = PhotonNetwork.playerList.Length;
 		ShowPlayerCount();
 	}

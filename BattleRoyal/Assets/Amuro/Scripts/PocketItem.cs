@@ -57,7 +57,7 @@ public class PocketItem : MonoBehaviour
             return;
         }
 
-
+        AudioManager.Instance.PlaySE("closing-wooden-door-1");
         transform.GetChild(0).GetComponent<Image>().sprite = null;
         myItemData = null;
 
@@ -120,6 +120,7 @@ public class PocketItem : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySE("cancel2");
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData, gameObject, 3);
