@@ -63,6 +63,7 @@ public class CustomSlot : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySE("closing-wooden-door-1");
         dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
         myItemData = dragSlot.GetItem();
         id = myItemData.GetItemId();
@@ -155,6 +156,8 @@ public class CustomSlot : MonoBehaviour
         {
             return;
         }
+
+        AudioManager.Instance.PlaySE("cancel2");
 
 
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;

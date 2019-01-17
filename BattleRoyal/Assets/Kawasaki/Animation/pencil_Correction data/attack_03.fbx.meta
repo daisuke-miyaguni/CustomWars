@@ -187,7 +187,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.13835338
+      - time: 0.1316532
         functionName: PlayAttackSE
         data: 
         objectReferenceParameter: {instanceID: 0}
