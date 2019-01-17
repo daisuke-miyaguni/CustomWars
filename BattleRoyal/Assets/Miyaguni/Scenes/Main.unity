@@ -669,7 +669,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 1
   m_CellSize: {x: 168, y: 168}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 0, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &137927519
@@ -5226,7 +5226,7 @@ MonoBehaviour:
   rankText: {fileID: 907730613}
   stageManager: {fileID: 1825254300}
   lobbyScene: 1
-  returnButton: {fileID: 980473658}
+  returnButton: {fileID: 0}
 --- !u!4 &591787819
 Transform:
   m_ObjectHideFlags: 0
@@ -18037,7 +18037,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2071388331}
   m_Direction: 2
   m_Value: 0.99999976
-  m_Size: 0.5174312
+  m_Size: 0.51743114
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
