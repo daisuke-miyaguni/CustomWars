@@ -262,8 +262,6 @@ public class PlayerController : MonoBehaviour
     {
         // ジャンプアニメーションの再生
         animator.SetTrigger("jump");
-        // ジャンプSEの再生
-        AudioManager.Instance.PlaySE("landing1");
         // 武器の位置を初期化
         weapon.transform.localPosition = weaponPos;
         // 武器の角度を初期化

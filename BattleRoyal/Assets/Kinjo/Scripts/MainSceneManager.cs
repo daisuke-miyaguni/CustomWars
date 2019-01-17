@@ -17,12 +17,14 @@ public class MainSceneManager : Photon.MonoBehaviour {
 	[SerializeField]private StageManager stageManager;    //ステージ縮小のスクリプト
 	bool isScaleDownBegan = false;    //縮小が始まったかどうか
 	[SerializeField] private int lobbyScene;
+	[SerializeField] private GameObject returnButton;
 
 	void Start ()
 	{
 		AudioManager.Instance.PlayBGM("game_maoudamashii_1_battle30");
 		myPhotonView = GetComponent<PhotonView>();
 		resultPanel.SetActive(false);
+		returnButton.SetActive(false);
 		playerNumber = PhotonNetwork.playerList.Length;
 		ShowPlayerCount();
 	}
@@ -156,8 +158,16 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		{
 		Destroy(GameObject.Find("PlayerControllerUI"));
 		resultPanel.SetActive(true);
-		rankText.text = "いちいだよ";
+		rankText.text = "やった！勝ったよ！";
+		AudioManager.Instance.PlaySE("Victory");
+		myPhotonView.RPC("OnReturnButton",PhotonTargets.AllViaServer);
 		}
+	}
+
+	[PunRPC]
+	private void OnReturnButton()
+	{
+		returnButton.SetActive(true);
 	}
 
 	//切断したときリザルトを表示する
@@ -172,7 +182,11 @@ public class MainSceneManager : Photon.MonoBehaviour {
 		//マスター側でプレイヤー数を同期する
 		if(PhotonNetwork.masterClient.IsMasterClient)
 		{
+			if(resultOn)
+			{
 			playerNumber -= 1;
+			}
+
 			ShowPlayerCount();
 			//勝者が決まったならリザルトへ
 			if(playerNumber == 1)
