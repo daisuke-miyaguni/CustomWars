@@ -5226,7 +5226,6 @@ MonoBehaviour:
   rankText: {fileID: 907730613}
   stageManager: {fileID: 1825254300}
   lobbyScene: 1
-  returnButton: {fileID: 980473658}
 --- !u!4 &591787819
 Transform:
   m_ObjectHideFlags: 0
@@ -6582,8 +6581,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnWaitTime: 0.2
-  spawnPlayer: {fileID: 1827299230965776, guid: f35c4856e12251f46a4cdbbc913fbdbd,
-    type: 2}
+  spawnPlayer:
+  - MeBlue
+  - MeRed
+  - MeGreen
+  - MeYellow
   spawnPos:
   - {x: -35, y: 0.8, z: -35}
   - {x: 35, y: 0.8, z: 35}
