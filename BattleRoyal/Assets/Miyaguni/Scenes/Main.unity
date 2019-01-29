@@ -5225,8 +5225,7 @@ MonoBehaviour:
   resultPanel: {fileID: 885586865}
   rankText: {fileID: 907730613}
   stageManager: {fileID: 1825254300}
-  lobbyScene: 1
-  returnButton: {fileID: 0}
+  lobbyScene: 0
 --- !u!4 &591787819
 Transform:
   m_ObjectHideFlags: 0
