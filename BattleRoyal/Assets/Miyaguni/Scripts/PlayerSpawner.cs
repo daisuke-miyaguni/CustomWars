@@ -9,7 +9,7 @@ public class PlayerSpawner : Photon.MonoBehaviour
 {
     [SerializeField] float spawnWaitTime;    // スポーンまでのウェイトタイム
 
-    [SerializeField] GameObject spawnPlayer;    // ResorceからスポーンされるPlayerPrefabの名前 
+    [SerializeField] String[] spawnPlayer;    // ResorceからスポーンされるPlayerPrefabの名前 
 
     [SerializeField] Vector3[] spawnPos = new Vector3[] { };
 
@@ -42,7 +42,7 @@ public class PlayerSpawner : Photon.MonoBehaviour
         // スポーンウェイトタイム待ってから処理に入る
         yield return new WaitForSeconds(spawnWaitTime);
         // Playerをスポーン
-        PhotonNetwork.Instantiate(spawnPlayer.name, spawnPos[PhotonNetwork.player.ID % 4], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
+        PhotonNetwork.Instantiate(spawnPlayer[PhotonNetwork.player.ID % 4], spawnPos[PhotonNetwork.player.ID % 4], Quaternion.Euler(transform.TransformDirection(Vector3.zero)), 0);
         Destroy(this.gameObject);
     }
 }
