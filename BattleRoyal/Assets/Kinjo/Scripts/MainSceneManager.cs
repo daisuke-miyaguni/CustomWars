@@ -69,7 +69,7 @@ public class MainSceneManager : Photon.MonoBehaviour
     IEnumerator ScaleUpdate()
     {
         yield return new WaitForSeconds(2.0f);
-        scaleDownStartTime = (int)elapsedTime + 5.5f;
+        scaleDownStartTime = (int)elapsedTime + 12f;
         isScaleDownBegan = false;
     }
 

@@ -5221,7 +5221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elapsedTimeText: {fileID: 1095715753}
   playerNumberText: {fileID: 849951538}
-  scaleDownStartTime: 12
+  scaleDownStartTime: 20
   resultPanel: {fileID: 885586865}
   rankText: {fileID: 907730613}
   stageManager: {fileID: 1825254300}
@@ -18164,16 +18164,14 @@ MonoBehaviour:
   safeArea: {fileID: 152944853}
   safeAreaPosX: 5
   safeAreaPosZ: 5
-  reducingSpeed: 8
+  reducingSpeed: 20
   collisionOnTime: 0.2
   reductionScales:
-  - 65
-  - 55
-  - 45
-  - 35
-  - 25
-  - 15
-  - 3
+  - 70
+  - 50
+  - 30
+  - 10
+  - 5
   deskTag: Desk
   reductionCount: 0
 --- !u!114 &1825254301
