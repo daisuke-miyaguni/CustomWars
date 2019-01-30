@@ -40,7 +40,7 @@ public class WeaponManager : Photon.MonoBehaviour
             cap.SetActive(false);
         }
 
-        powerText.text = "Power: " + weaponPower.ToString();
+        // powerText.text = "Power: " + weaponPower.ToString();
     }
 
     private float weaponSpeed = 1.0f;
@@ -79,7 +79,7 @@ public class WeaponManager : Photon.MonoBehaviour
             correction.SetActive(false);
         }
 
-        speedText.text = "Speed: " + weaponSpeed.ToString();
+        // speedText.text = "Speed: " + weaponSpeed.ToString();
     }
 
     private float weaponDefense = 1.0f;
@@ -118,7 +118,7 @@ public class WeaponManager : Photon.MonoBehaviour
             ruler.SetActive(false);
         }
 
-        defenseText.text = "Defense: " + weaponDefense.ToString();
+        // defenseText.text = "Defense: " + weaponDefense.ToString();
     }
 
     CustomSlot customSlot;
@@ -148,12 +148,12 @@ public class WeaponManager : Photon.MonoBehaviour
                 customSlot.SetWeaponManager(this);
             }
 
-            powerText = GameObject.Find("WeaponPower").GetComponent<Text>();
+            /* powerText = GameObject.Find("WeaponPower").GetComponent<Text>();
             powerText.text = "Power: " + weaponPower.ToString();
             speedText = GameObject.Find("WeaponSpeed").GetComponent<Text>();
             speedText.text = "Speed: " + weaponSpeed.ToString();
             defenseText = GameObject.Find("WeaponDefense").GetComponent<Text>();
-            defenseText.text = "Defense: " + weaponDefense.ToString();
+            defenseText.text = "Defense: " + weaponDefense.ToString(); */
         }
 
     }

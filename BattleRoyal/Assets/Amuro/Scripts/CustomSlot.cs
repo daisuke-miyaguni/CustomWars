@@ -20,10 +20,16 @@ public class CustomSlot : MonoBehaviour
 
     private GameObject dataName;
 
+    private GameObject itemSlot;
+
+    private Transform itemslot_c;
+
+    private GameObject batsu;
+
     public static GameObject thisCustom;
 
     [SerializeField]
-    private Text informationText;
+    // private Text informationText;
 
     private float plusPower;
 
@@ -38,6 +44,9 @@ public class CustomSlot : MonoBehaviour
 
     private void Start()
     {
+        itemSlot = GameObject.Find("pocket_panel");
+        batsu = this.transform.GetChild(1).gameObject;        
+        itemslot_c = itemSlot.GetComponentInChildren<Transform>();
         // myItemStatus = FindObjectOfType<MyItemStatus>();
     }
 
@@ -62,6 +71,11 @@ public class CustomSlot : MonoBehaviour
         {
             return;
         }
+
+        foreach (Transform child in itemslot_c)
+            {
+                child.gameObject.transform.GetComponent<PocketItem>().BatsuEnd();           
+            }
 
         AudioManager.Instance.PlaySE("closing-wooden-door-1");
         dragSlot = FindObjectOfType<DragSlot>();       //　DragItemUIに設定しているDragItemDataスクリプトからアイテムデータを取得
@@ -142,12 +156,12 @@ public class CustomSlot : MonoBehaviour
     {
         transform.GetChild(0).GetComponent<Image>().sprite = myItemData.GetItemSprite();        //　アイテムイメージを設定
 
-        Text nameUI = GetComponentInChildren<Text>();                                           //　スロットのTextを取得し名前を設定
+        /* Text nameUI = GetComponentInChildren<Text>();                                           //　スロットのTextを取得し名前を設定
         nameUI.text = myItemData.GetItemName();
 
         var text = "<Color=white>" + myItemData.GetItemName() + "</Color>\n";                   //　アイテム情報を表示する
 
-        informationText.text = text;
+        informationText.text = text; */
     }
 
     public void MouseBeginDrag()                                                                //パネルをドラッグした際にアイテム画像を生成
@@ -159,6 +173,10 @@ public class CustomSlot : MonoBehaviour
 
         AudioManager.Instance.PlaySE("cancel2");
 
+        foreach (Transform child in itemslot_c)
+            {
+                child.gameObject.transform.GetComponent<PocketItem>().BatsuPanel();           
+            }
 
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform.parent.parent);
@@ -172,15 +190,30 @@ public class CustomSlot : MonoBehaviour
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
+        foreach (Transform child in itemslot_c)
+            {
+                child.gameObject.transform.GetComponent<PocketItem>().BatsuEnd();           
+            }
+
         thisCustom = null;
         Destroy(instanceDragItemUI);
+    }
+
+    public void BatsuPanel()
+    {
+        batsu.SetActive(true);
+    }
+
+    public void BatsuEnd()
+    {
+        batsu.SetActive(false);
     }
 
     public void PanelDelete()
     {
         Debug.Log(gameObject);
         transform.GetChild(0).GetComponent<Image>().sprite = null;
-        informationText.text = null;
+        // informationText.text = null;
         myItemData = null;
         panelParam = false;
         wm.AttachParts(-plusPower, id);

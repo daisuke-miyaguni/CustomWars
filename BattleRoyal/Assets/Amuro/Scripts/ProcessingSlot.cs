@@ -19,8 +19,14 @@ public class ProcessingSlot : MonoBehaviour
 
     private GameObject instanceDragItemUI;  //アイテムをドラッグしたときに生成する画像
 
+    private GameObject customSlot;
+
+    private Transform customslot_c;
+
     private GameObject itemSlot;      //アイテムスロット格納用
 
+    private Transform itemslot_c;
+    
     private Text informationText;       //アイテム情報を表示するテキストUI    
 
     private Text nameText;
@@ -28,6 +34,8 @@ public class ProcessingSlot : MonoBehaviour
     private Text countText;             //所持数を表示
 
     private bool countdisplay;
+
+    private int id;
 
 
     void OnDisable()                        //スロットが非アクティブになったら削除
@@ -48,8 +56,23 @@ public class ProcessingSlot : MonoBehaviour
         nameText = transform.Find("Name").GetChild(0).GetComponent<Text>();
         informationText = transform.Find("Information").GetChild(0).GetComponent<Text>();
 
+        customSlot = GameObject.Find("custom_panel");
+        itemSlot = GameObject.Find("pocket_panel");
+        customslot_c = customSlot.GetComponentInChildren<Transform>();
+        itemslot_c = itemSlot.GetComponentInChildren<Transform>();
+        id = myItemData.GetItemId();
+
         nameText.text = myItemData.GetItemName();
         informationText.text = myItemData.GetItemInformation();
+
+        if (id <= 2)
+        {
+            transform.GetChild(1).transform.GetComponent<Image>().color = new Color(255, 0, 0, 100);
+        }
+        else
+        {
+            transform.GetChild(1).transform.GetComponent<Image>().color = new Color(0, 0, 255, 100);
+        }
 
         StartCoroutine(displayCount());
     }
@@ -78,11 +101,36 @@ public class ProcessingSlot : MonoBehaviour
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
         instanceDragItemUI.transform.SetParent(transform.parent.parent.parent.parent);
         instanceDragItemUI.GetComponent<DragSlot>().SetDragItem(myItemData, gameObject, 1);
+
+        if (id <= 2)
+        {
+            foreach (Transform child in itemslot_c)
+            {
+                child.gameObject.transform.GetComponent<PocketItem>().BatsuPanel();           
+            }
+        }
+        else
+        {
+            foreach (Transform child in customslot_c)
+            {
+                child.gameObject.transform.GetComponent<CustomSlot>().BatsuPanel();
+            }
+        }
     }
 
 
     public void MouseEndDrag()          //ドラッグ終了時にアイテム画像を削除
     {
+        foreach (Transform child in itemslot_c)
+            {
+                child.gameObject.transform.GetComponent<PocketItem>().BatsuEnd();           
+            }
+
+        foreach (Transform child in customslot_c)
+            {
+                child.gameObject.transform.GetComponent<CustomSlot>().BatsuEnd();
+            }
+
         Destroy(instanceDragItemUI);
     }
 
