@@ -23,6 +23,12 @@ public class PocketItem : MonoBehaviour
     [SerializeField]
     private GameObject dragItemUI;
 
+    private GameObject customSlot;
+
+    private Transform customslot_c;
+
+    private GameObject batsu;
+
     public static GameObject thisPocket;
 
     [SerializeField]
@@ -38,6 +44,9 @@ public class PocketItem : MonoBehaviour
     private void Start()
     {
         pocketStatus = FindObjectOfType<PocketStatus>();
+        customSlot = GameObject.Find("custom_panel");
+        customslot_c = customSlot.GetComponentInChildren<Transform>();
+        batsu = this.transform.GetChild(1).gameObject;
         // myItemStatus = FindObjectOfType<MyItemStatus>();
     }
 
@@ -56,6 +65,11 @@ public class PocketItem : MonoBehaviour
         {
             return;
         }
+
+        foreach (Transform child in customslot_c)
+            {
+                child.gameObject.transform.GetComponent<CustomSlot>().BatsuEnd();
+            }
 
         AudioManager.Instance.PlaySE("closing-wooden-door-1");
         transform.GetChild(0).GetComponent<Image>().sprite = null;
@@ -119,6 +133,11 @@ public class PocketItem : MonoBehaviour
         {
             return;
         }
+        
+        foreach (Transform child in customslot_c)
+            {
+                child.gameObject.transform.GetComponent<CustomSlot>().BatsuPanel();
+            }
 
         AudioManager.Instance.PlaySE("cancel2");
         instanceDragItemUI = Instantiate(dragItemUI, Input.mousePosition, Quaternion.identity) as GameObject;
@@ -129,9 +148,23 @@ public class PocketItem : MonoBehaviour
 
     public void MouseEndDrag()                                                                   //ドラッグ終了時にアイテム画像を削除
     {
+        foreach (Transform child in customslot_c)
+            {
+                child.gameObject.transform.GetComponent<CustomSlot>().BatsuEnd();
+            }
+
         Destroy(instanceDragItemUI);
     }
 
+    public void BatsuPanel()
+    {
+        batsu.SetActive(true);
+    }
+
+    public void BatsuEnd()
+    {
+        batsu.SetActive(false);
+    }
 
     public void PanelDelete()
     {
