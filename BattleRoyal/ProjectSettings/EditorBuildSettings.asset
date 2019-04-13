@@ -6,11 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Miyaguni/Scenes/Title.unity
+    path: Assets/NananiTeamFolder/Miyaguni/Scenes/Title.unity
     guid: 71aa440cb094b25429215b6566b0306f
   - enabled: 1
-    path: Assets/Miyaguni/Scenes/Lobby.unity
+    path: Assets/NananiTeamFolder/Miyaguni/Scenes/Lobby.unity
     guid: ff7af83ac5dc4864fa5d3ccd650efd82
   - enabled: 1
-    path: Assets/Miyaguni/Scenes/Main.unity
+    path: Assets/NananiTeamFolder/Miyaguni/Scenes/Main.unity
     guid: 75d36789a36bb3d43b56c7f4b5811a33
+  m_configObjects: {}

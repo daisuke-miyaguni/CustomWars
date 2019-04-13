@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
     int parryState = Animator.StringToHash("Base Layer.parry");
 
+
     // player parry情報
     [SerializeField] private GameObject parry;
     private SphereCollider parryCollider;
@@ -193,12 +194,12 @@ public class PlayerController : MonoBehaviour
     {
         float x = controller.Horizontal;
         float z = controller.Vertical;
-
-        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.jump_idle")
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState)
+		int currentAnimatorStateId = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
+        if (currentAnimatorStateId == jumpStates[0]
+        || currentAnimatorStateId == attackStates[0]
+        || currentAnimatorStateId == attackStates[1]
+        || currentAnimatorStateId == attackStates[2]
+        || currentAnimatorStateId == parryState)
         {
             return Vector3.zero;
         }
@@ -240,11 +241,12 @@ public class PlayerController : MonoBehaviour
     // ジャンプ
     public void Jump()
     {
+		int animatorCurrentId = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
         // パリィ状態か攻撃状態のときはジャンプを呼ばない
-        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == parryState
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
+        if (animatorCurrentId == parryState
+        || animatorCurrentId == attackStates[0]
+        || animatorCurrentId == attackStates[1]
+        || animatorCurrentId == attackStates[2]
         || !jumping
         || desperate)
         {
@@ -475,12 +477,13 @@ public class PlayerController : MonoBehaviour
 
     public void ParryClick()
     {
+		int currentAnimatorId = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
         // 攻撃状態とジャンプ状態のときに押せなくする
-        if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[1]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == attackStates[2]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[0]
-        || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == jumpStates[1]
+        if (currentAnimatorId == attackStates[0]
+        || currentAnimatorId == attackStates[1]
+        || currentAnimatorId == attackStates[2]
+        || currentAnimatorId == jumpStates[0]
+        || currentAnimatorId == jumpStates[1]
         || parring
         || !jumping
         || desperate)

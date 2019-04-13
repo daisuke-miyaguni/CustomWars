@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ClickButton : MonoBehaviour
 {
-    MiyaguniButton miyaguniButton;
+    GetDownButton miyaguniButton;
 
     private void Update()
     {

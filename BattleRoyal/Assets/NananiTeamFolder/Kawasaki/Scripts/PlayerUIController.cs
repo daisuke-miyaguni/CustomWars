@@ -11,14 +11,14 @@ public class PlayerUIController : MonoBehaviour
 
     [SerializeField] private CreateSlotScript createSlot;
 
-    [SerializeField] public MiyaguniButton attackMiyaguniButton;
-    [SerializeField] public MiyaguniButton jumpMiyaguniButton;
-    [SerializeField] public MiyaguniButton inventoryMiyaguniButton;
-    [SerializeField] public MiyaguniButton parryMiyaguniButton;
+    [SerializeField] public GetDownButton attackMiyaguniButton;
+    [SerializeField] public GetDownButton jumpMiyaguniButton;
+    [SerializeField] public GetDownButton inventoryMiyaguniButton;
+    [SerializeField] public GetDownButton parryMiyaguniButton;
 
-    [SerializeField] public MiyaguniButton getMiyaguniButton;
+    [SerializeField] public GetDownButton getMiyaguniButton;
 
-    [SerializeField] public MiyaguniButton openMiyaguniButton;
+    [SerializeField] public GetDownButton openMiyaguniButton;
 
     [SerializeField] Slider hpSlider;
 
@@ -54,27 +54,27 @@ public class PlayerUIController : MonoBehaviour
     {
 
         // 攻撃ボタンに攻撃処理をもたせる
-        attackMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        attackMiyaguniButton.gameObject.GetComponent<GetDownButton>();
         attackMiyaguniButton.onDown.AddListener(playerController.OnClickAttack);
 
         // ジャンプボタンにジャンプ処理をもたせる
-        jumpMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        jumpMiyaguniButton.gameObject.GetComponent<GetDownButton>();
         jumpMiyaguniButton.onDown.AddListener(playerController.Jump);
 
         // インベントリーボタンにインベントリーを開く処理をもたせる
-        inventoryMiyaguniButton.GetComponent<MiyaguniButton>();
+        inventoryMiyaguniButton.GetComponent<GetDownButton>();
         inventoryMiyaguniButton.onDown.AddListener(this.OpenInventory);
 
         // ゲットボタンにアイテムを取得する処理をもたせる
-        getMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        getMiyaguniButton.gameObject.GetComponent<GetDownButton>();
         getMiyaguniButton.onDown.AddListener(myItemStatus.OnGetButton);
 
         // パリィボタンにパリィを取得する処理をもたせる
-        parryMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        parryMiyaguniButton.gameObject.GetComponent<GetDownButton>();
         parryMiyaguniButton.onDown.AddListener(playerController.ParryClick);
 
         // オープンボタンに宝箱を開く処理をもたせる
-        openMiyaguniButton.gameObject.GetComponent<MiyaguniButton>();
+        openMiyaguniButton.gameObject.GetComponent<GetDownButton>();
         openMiyaguniButton.onDown.AddListener(playerController.OnClickOpenButton);
 
         // オープンボタンを非表示にする

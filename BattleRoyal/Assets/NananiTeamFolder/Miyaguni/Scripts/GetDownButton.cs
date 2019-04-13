@@ -8,7 +8,7 @@ namespace UnityEngine.UI
 {
     // Button that's meant to work with mouse or touch-based devices.
     [AddComponentMenu("UI/Button", 30)]
-    public class MiyaguniButton : Selectable, IPointerClickHandler, IPointerDownHandler, ISubmitHandler
+    public class GetDownButton : Selectable, IPointerClickHandler, IPointerDownHandler, ISubmitHandler
     {
         [Serializable]
         public class ButtonClickedEvent : UnityEvent { }
@@ -23,7 +23,7 @@ namespace UnityEngine.UI
         [SerializeField]
         private ButtonClickedEvent m_OnDown = new ButtonClickedEvent();
 
-        protected MiyaguniButton()
+        protected GetDownButton()
         { }
 
         public ButtonClickedEvent onClick {
